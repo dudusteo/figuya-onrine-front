@@ -12,7 +12,8 @@
     "react": "latest",
     "react-dom": "latest",
     "react-router-dom": "^6.9.0",
-    "react-scripts": "latest"
+    "react-scripts": "latest",
+    "underscore": "^1.13.6"
   },
   "scripts": {
     "start": "react-scripts start",

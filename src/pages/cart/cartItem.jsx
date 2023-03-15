@@ -11,14 +11,13 @@ const Image = styled('img')({
 });
 
 const CartItem = (props) => {
-    const { id, productName, price, productImage } = props.data;
+    const { id, productName, origin, company, type, price, productImage } = props.data;
     const { removeFromCart } = React.useContext(ShopContext)
-    console.log(id);
+
     return (
         <Paper
             sx={{
                 p: 2,
-                maxWidth: 500,
                 flexGrow: 1,
             }}
         >
@@ -28,10 +27,30 @@ const CartItem = (props) => {
                         <Image alt="complex" src={productImage} />
                     </ButtonBase>
                 </Grid>
-                <Grid item spacing={{ xs: 2, md: 3 }} >
-                    <Typography>{productName}</Typography>
-                    <Typography>{price}</Typography>
-                    <Button variant="outlined" onClick={() => removeFromCart(id)}>Usuń z koszyka</Button>
+                <Grid item xs={12} sm container>
+                    <Grid item xs container direction="column" spacing={2}>
+                        <Grid item xs>
+                            <Typography gutterBottom variant="subtitle1" component="div">
+                                {productName} - {company} {type}
+                            </Typography>
+                            <Typography variant="body2" gutterBottom>
+                                {origin}
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                ID: {id}
+                            </Typography>
+                        </Grid>
+                        <Grid item>
+                            <Typography sx={{ cursor: 'pointer' }} variant="body2" onClick={() => removeFromCart(id)}>
+                                Usuń
+                            </Typography>
+                        </Grid>
+                    </Grid>
+                    <Grid item>
+                        <Typography variant="subtitle1" component="div">
+                            {price} PLN
+                        </Typography>
+                    </Grid>
                 </Grid>
             </Grid>
         </Paper>
