@@ -1,9 +1,9 @@
 import * as React from "react";
 
-import { Box, CssBaseline, Stack } from "@mui/material";
+import { Box, Button, CssBaseline, Stack } from "@mui/material";
 import { ShopContext } from "../../context/shop-context";
 
-import CartItem from "./cartItem";
+import CartItem from "./CartItem";
 
 const Cart = () => {
     const { cartItems, getDataFromId } = React.useContext(ShopContext);
@@ -20,6 +20,7 @@ const Cart = () => {
                     <CartItem data={getDataFromId(item.id)} key={item.id} />
                 )}
             </Stack>
+            <Button href="cart/checkout" variant="outlined">Złóż zamówienie</Button>
 
         </Box >
     );

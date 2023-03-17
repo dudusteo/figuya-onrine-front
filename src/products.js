@@ -9,7 +9,7 @@ export const PRODUCTS = [
   {
     id: 3007,
     productName: "Hatsune Miku",
-    origin: "Hatsune Miku -Project Diva- F 2nd",
+    origin: "Vocaloid",
     company: "SEGA",
     type: "Prize",
     price: 85,
@@ -18,7 +18,7 @@ export const PRODUCTS = [
   {
     id: 3009,
     productName: "Hatsune Miku",
-    origin: "Hatsune Miku -Project Diva- F",
+    origin: "Vocaloid",
     company: "SEGA",
     type: "Prize",
     price: 90,

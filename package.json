@@ -1,18 +1,20 @@
 {
   "name": "figuya-onrine",
   "version": "1.0.0",
+  "description": "# Material UI - Create React App example",
   "private": true,
   "dependencies": {
-    "@emotion/react": "latest",
-    "@emotion/styled": "latest",
+    "@emotion/react": "^11.10.6",
+    "@emotion/styled": "^11.10.6",
     "@mui/icons-material": "^5.11.11",
-    "@mui/material": "^5.11.12",
-    "material-ui-popup-state": "^5.0.4",
+    "@mui/material": "^5.11.13",
+    "axios": "^1.3.4",
+    "material-ui-popup-state": "^5.0.5",
     "mui-image": "^1.0.7",
-    "react": "latest",
-    "react-dom": "latest",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^6.9.0",
-    "react-scripts": "latest",
+    "react-scripts": "^5.0.1",
     "underscore": "^1.13.6"
   },
   "scripts": {

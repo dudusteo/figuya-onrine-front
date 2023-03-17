@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Button, ButtonBase, Grid, Paper, styled, Typography } from '@mui/material';
+import { ButtonBase, Grid, Paper, styled, Typography } from '@mui/material';
 
 import { ShopContext } from '../../context/shop-context';
 
