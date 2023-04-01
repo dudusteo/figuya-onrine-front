@@ -6,20 +6,21 @@ axios.defaults.headers.common = {
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const register = async (username, email, password) => {
-  const response = await axios.post(API_URL + "/auth/signup", {
-    username,
+const register = async (email, password, firstName, lastName) => {
+  const response = await axios.post(API_URL + "/auth/register", {
     email,
     password,
+    firstName,
+    lastName,
   });
   return response.data;
 };
 
-const login = async (username, password) => {
-  const response = await axios.post(API_URL + "/auth/signin", {
-     username, password 
+const login = async (email, password) => {
+  const response = await axios.post(API_URL + "/auth/login", {
+     email, password 
   });
-  if (response.data.username) {
+  if (response.data.email) {
     localStorage.setItem("user", JSON.stringify(response.data));
   }
   return response.data;
