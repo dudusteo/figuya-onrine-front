@@ -11,6 +11,7 @@ import Checkout from "./pages/cart/checkout";
 import Admin from "./pages/admin";
 import Login from "./pages/account/login";
 import Register from "./pages/account/register";
+import Home from "./pages/home";
 
 const App = () => {
   return (
@@ -18,7 +19,7 @@ const App = () => {
       <BrowserRouter>
         <SearchAppBar /> 
         <Routes>
-          <Route path="/" element={<Shop />} />
+          <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/cart/checkout" element={<Checkout />} />
