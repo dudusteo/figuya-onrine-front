@@ -7,7 +7,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 import MenuPopupState from "../menu-popup-state";
 import { Box, Button, Link } from "@mui/material";
-import Image from "mui-image";
+import figuya_logo from "../../assets/figuya_logo.svg";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -55,17 +55,23 @@ const SearchAppBar = () => {
 	return (
 		<>
 			<AppBar position="static">
-				<Toolbar sx={{ height: "120px" }}>
+				<Toolbar sx={{ mt: 1, mb: 0 }}>
 					<Link href="/">
-						<Image
-							width="50px"
-							src="https://picsum.photos/id/674/2000"
-						></Image>
+						<img
+							color="white"
+							height="80px"
+							alt=""
+							src={figuya_logo}
+						></img>
 					</Link>
 				</Toolbar>
 			</AppBar>
-			<AppBar position="static" color="primary" sx={{ opacity: "50%" }}>
-				<Toolbar>
+			<AppBar
+				position="static"
+				color="primary"
+				sx={{ opacity: "50%", height: "3em" }}
+			>
+				<Toolbar sx={{ my: -1 }}>
 					<Box sx={{ flexGrow: 1 }}>
 						<MenuPopupState
 							text="Szukaj wg serii"
