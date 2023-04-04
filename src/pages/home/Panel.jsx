@@ -2,12 +2,19 @@ import * as React from "react";
 import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-const Image = styled("img")(({ theme }) => ({
+const Image = styled("img")(({ theme, small }) => ({
 	height: "100%",
 	position: "absolute",
 	top: "50%",
 	left: "50%",
 	transform: "translateX(-50%) translateY(-50%)",
+}));
+
+const SmallImage = styled("img")(({ theme, small }) => ({
+	height: "180%",
+	position: "absolute",
+	left: "50%",
+	transform: "translateX(-50%)",
 }));
 
 const size = {
@@ -35,7 +42,11 @@ const Panel = ({ img, small, sx }) => {
 				...sx,
 			}}
 		>
-			<Image alt="" src={img} />
+			{small ? (
+				<SmallImage alt="" src={img} />
+			) : (
+				<Image alt="" src={img} />
+			)}
 		</Box>
 	);
 };
