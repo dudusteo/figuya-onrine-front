@@ -28,7 +28,7 @@ const Home = () => {
 			<Grid
 				container
 				columns={{ xs: 6, sm: 12, md: 16 }}
-				sx={{ my: 5, mx: 7 }}
+				sx={{ my: 5, px: 7 }}
 			>
 				{main.map((product, index) => (
 					<Panel
