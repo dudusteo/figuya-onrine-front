@@ -6,7 +6,7 @@ import Panel from "./Panel";
 
 const Home = () => {
 	const main = PRODUCTS.slice(0, 2);
-	const sub = PRODUCTS.slice(2, 6);
+	const sub = PRODUCTS.slice(0, 6);
 
 	const rows = sub.reduce(function (rows, key, index) {
 		return (

@@ -56,22 +56,29 @@ const SearchAppBar = () => {
 		<>
 			<AppBar position="static">
 				<Toolbar sx={{ mt: 1, mb: 0 }}>
-					<Link href="/">
-						<img
-							color="white"
-							height="80px"
-							alt=""
-							src={figuya_logo}
-						></img>
-					</Link>
+					<Box sx={{ flexGrow: 1 }}>
+						<Link href="/">
+							<img
+								color="white"
+								height="80px"
+								alt=""
+								src={figuya_logo}
+							></img>
+						</Link>
+					</Box>
+					<Search>
+						<SearchIconWrapper>
+							<SearchIcon />
+						</SearchIconWrapper>
+						<StyledInputBase
+							placeholder="Wyszukaj…"
+							inputProps={{ "aria-label": "search" }}
+						/>
+					</Search>
 				</Toolbar>
 			</AppBar>
-			<AppBar
-				position="static"
-				color="primary"
-				sx={{ opacity: "50%", height: "3em" }}
-			>
-				<Toolbar sx={{ my: -1 }}>
+			<AppBar position="static" color="primary" sx={{ opacity: "50%" }}>
+				<Toolbar variant="dense">
 					<Box sx={{ flexGrow: 1 }}>
 						<MenuPopupState
 							text="Szukaj wg serii"
@@ -81,21 +88,12 @@ const SearchAppBar = () => {
 							text="Szukaj wg firmy"
 							items={["Furyu", "Sega", "Alter", "Freeing"]}
 						/>
-						<MenuPopupState text="Przeceny" items={[""]} />
+						<MenuPopupState text="Inny merch" items={[""]} />
+						<MenuPopupState text="Promocje" items={[""]} />
 						<Button href="/cart" variant="h6">
 							Koszyk
 						</Button>
 					</Box>
-
-					<Search>
-						<SearchIconWrapper>
-							<SearchIcon />
-						</SearchIconWrapper>
-						<StyledInputBase
-							placeholder="Search…"
-							inputProps={{ "aria-label": "search" }}
-						/>
-					</Search>
 				</Toolbar>
 			</AppBar>
 		</>
