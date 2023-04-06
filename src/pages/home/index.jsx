@@ -22,14 +22,11 @@ const Home = () => {
 				display: "flex",
 				flexDirection: "column",
 				minHeight: "100vh",
+				m: 4,
 			}}
 		>
 			<CssBaseline />
-			<Grid
-				container
-				columns={{ xs: 6, sm: 12, md: 16 }}
-				sx={{ my: 5, px: 7 }}
-			>
+			<Grid container columns={{ xs: 6, sm: 12, md: 16 }} sx={{ px: 7 }}>
 				{main.map((product, index) => (
 					<Panel
 						key={index}

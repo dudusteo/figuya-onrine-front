@@ -81,12 +81,22 @@ const SearchAppBar = () => {
 				<Toolbar variant="dense">
 					<Box sx={{ flexGrow: 1 }}>
 						<MenuPopupState
+							href="/shop"
 							text="Szukaj wg serii"
-							items={["Vocaloid", "Demon Slayer", "Love Live"]}
+							items={[
+								{ name: "Vocaloid" },
+								{ name: "Demon Slayer" },
+								{ name: "Love Live" },
+							]}
 						/>
 						<MenuPopupState
 							text="Szukaj wg firmy"
-							items={["Furyu", "Sega", "Alter", "Freeing"]}
+							items={[
+								{ name: "Furyu" },
+								{ name: "Sega" },
+								{ name: "Alter" },
+								{ name: "Freeing" },
+							]}
 						/>
 						<MenuPopupState text="Inny merch" items={[""]} />
 						<MenuPopupState text="Promocje" items={[""]} />

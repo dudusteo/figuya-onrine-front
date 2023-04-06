@@ -12,6 +12,7 @@ import Admin from "./pages/admin";
 import Login from "./pages/account/login";
 import Register from "./pages/account/register";
 import Home from "./pages/home";
+import Item from "./pages/item";
 
 const App = () => {
   return (
@@ -20,6 +21,7 @@ const App = () => {
         <SearchAppBar /> 
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/itme" element={<Item />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/cart/checkout" element={<Checkout />} />
