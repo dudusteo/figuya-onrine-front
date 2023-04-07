@@ -22,6 +22,7 @@ const Product = (props) => {
 
 	const title = productName + " - " + origin + " - " + company;
 	const priceTitle = t("price") + " " + price.toFixed(2) + " " + t("unit");
+
 	return (
 		<Paper
 			variant="outlined"

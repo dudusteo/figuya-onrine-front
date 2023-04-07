@@ -6,7 +6,7 @@ import Panel from "./Panel";
 
 const Home = () => {
 	const main = PRODUCTS.slice(0, 2);
-	const sub = PRODUCTS.slice(0, 6);
+	const sub = PRODUCTS.slice(2, 6);
 
 	const rows = sub.reduce(function (rows, key, index) {
 		return (
@@ -36,16 +36,14 @@ const Home = () => {
 				))}
 				<Box sx={{ mx: 2 }}></Box>
 				{rows.map((row, index) => (
-					<Grid item sx={{ my: 3 }}>
+					<Grid item key={index + main.length} sx={{ my: 3 }}>
 						<Panel
-							key={index}
 							img={row[0].productImage}
 							sx={{ mx: -1, my: -3 }}
 							small
 						/>
 						<Box sx={{ my: 7 }}></Box>
 						<Panel
-							key={index}
 							img={row[1].productImage}
 							sx={{ mx: -8.5, mt: -3 }}
 							small

@@ -21,13 +21,14 @@ const App = () => {
         <SearchAppBar /> 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/itme" element={<Item />} />
+          <Route path="/item/:itemId" element={<Item />} />
           <Route path="/shop" element={<Shop />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/cart/checkout" element={<Checkout />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/account/login" element={<Login />} />
           <Route path="/account/register" element={<Register />} />
+          <Route path="*" element={<div>404</div>} />
         </Routes>
         <StickyFooter />
       </BrowserRouter>

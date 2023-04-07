@@ -82,7 +82,11 @@ const Shop = () => {
 							theme.palette.primary.main + "20",
 					}}
 				>
-					<List component="nav" aria-label="mailbox folders">
+					<List
+						component="nav"
+						aria-label="mailbox folders"
+						sx={{ color: "primary.main" }}
+					>
 						<ListItemButton onClick={() => setType(!list.type)}>
 							<ListItemText primary={t("shop.type")} />
 						</ListItemButton>
