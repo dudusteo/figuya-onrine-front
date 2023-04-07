@@ -3,6 +3,7 @@ import { styled } from "@mui/material/styles";
 import { Box, Button, Paper, Typography } from "@mui/material";
 
 import { ShopContext } from "../../context/shop-context";
+import { useTranslation } from "react-i18next";
 
 const Image = styled("img")(({ theme, small }) => ({
 	height: "100%",
@@ -13,25 +14,50 @@ const Image = styled("img")(({ theme, small }) => ({
 }));
 
 const Product = (props) => {
-	const { id, productName, price, productImage } = props.data;
+	const { id, productName, origin, company, type, price, productImage } =
+		props.data;
+
+	const { t } = useTranslation();
 	const { addToCart } = React.useContext(ShopContext);
 
+	const title = productName + " - " + origin + " - " + company;
+	const priceTitle = t("price") + " " + price.toFixed(2) + " " + t("unit");
 	return (
-		<Paper variant="outlined" sx={{ p: 2 }}>
+		<Paper
+			variant="outlined"
+			sx={{
+				p: 2,
+				width: "16rem",
+				height: "30rem",
+				display: "flex",
+				flexDirection: "column",
+			}}
+		>
 			<Box
 				sx={{
 					position: "relative",
-					height: "300px",
-					width: "220px",
+					height: "18rem",
+					width: "14rem",
 					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);",
 				}}
 			>
 				<Image alt="" src={productImage} />
 			</Box>
-			<Typography>{productName}</Typography>
-			<Typography>{price}</Typography>
-			<Button variant="outlined" onClick={() => addToCart(id)}>
-				Dodaj do koszyka
+			<Box sx={{ flexGrow: 1, py: 1 }}>
+				<Typography variant="subtitle2" sx={{ color: "primary.main" }}>
+					{title}
+				</Typography>
+			</Box>
+
+			<Typography
+				variant="h6"
+				align="right"
+				sx={{ color: "primary.main" }}
+			>
+				{priceTitle}
+			</Typography>
+			<Button variant="contained" onClick={() => addToCart(id)}>
+				{t("add-to-cart")}
 			</Button>
 		</Paper>
 	);

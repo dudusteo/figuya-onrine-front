@@ -1,0 +1,43 @@
+{
+	"add-to-cart": "dodaj do koszyka",
+	"price": "Cena",
+	"unit": "ZŁ",
+	"nav-bar": {
+		"search": "Szukaj...",
+		"bar1": "szukaj wg serii",
+		"bar2": "szukaj wg firmy",
+		"bar3": "inny merch",
+		"bar4": "promocje"
+	},
+	"shop": {
+		"type": "Rodzaje",
+		"prize": "Prize figurki",
+		"scale": "Scale figurki",
+		"mini": "Mini figurki",
+		"action": "Figurki akcji",
+		"gadget": "Gadżety",
+		"condition": "Stan",
+		"new": "Nowy",
+		"used": "Używany",
+		"popular": "Popularne serie"
+	},
+	"account": {
+		"login": {
+			"sign-in": "Zaloguj się",
+			"email": "Adres mailowy",
+			"password": "Hasło",
+			"remember": "Zapamiętaj mnie",
+			"forgot": "Zapomniałeś hasła?",
+			"no-account": "Nie posiadasz konta? Zarejestruj się"
+		},
+		"register": {
+			"sign-up": "Zarejestruj się",
+			"first-name": "Imię",
+			"last-name": "Nazwisko",
+			"email": "Adres mailowy",
+			"password": "Hasło",
+			"newsletter": "Chcę dostawać promocje i aktualizacja na maila",
+			"have-account": "Posiadasz już konto? Zaloguj się"
+		}
+	}
+}

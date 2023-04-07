@@ -8,6 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import MenuPopupState from "../menu-popup-state";
 import { Box, Button, Link } from "@mui/material";
 import figuya_logo from "../../assets/figuya_logo.svg";
+import { useTranslation } from "react-i18next";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -52,6 +53,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 const SearchAppBar = () => {
+	const { t } = useTranslation();
+
 	return (
 		<>
 			<AppBar position="static">
@@ -71,7 +74,7 @@ const SearchAppBar = () => {
 							<SearchIcon />
 						</SearchIconWrapper>
 						<StyledInputBase
-							placeholder="Wyszukaj…"
+							placeholder={t("nav-bar.search")}
 							inputProps={{ "aria-label": "search" }}
 						/>
 					</Search>
@@ -82,7 +85,7 @@ const SearchAppBar = () => {
 					<Box sx={{ flexGrow: 1 }}>
 						<MenuPopupState
 							href="/shop"
-							text="Szukaj wg serii"
+							text={t("nav-bar.bar1")}
 							items={[
 								{ name: "Vocaloid" },
 								{ name: "Demon Slayer" },
@@ -90,7 +93,7 @@ const SearchAppBar = () => {
 							]}
 						/>
 						<MenuPopupState
-							text="Szukaj wg firmy"
+							text={t("nav-bar.bar2")}
 							items={[
 								{ name: "Furyu" },
 								{ name: "Sega" },
@@ -98,8 +101,8 @@ const SearchAppBar = () => {
 								{ name: "Freeing" },
 							]}
 						/>
-						<MenuPopupState text="Inny merch" items={[""]} />
-						<MenuPopupState text="Promocje" items={[""]} />
+						<MenuPopupState text={t("nav-bar.bar3")} items={[""]} />
+						<MenuPopupState text={t("nav-bar.bar4")} items={[""]} />
 						<Button href="/cart" variant="h6">
 							Koszyk
 						</Button>

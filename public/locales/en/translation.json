@@ -1,0 +1,43 @@
+{
+	"add-to-cart": "add to cart",
+	"price": "Price",
+	"unit": "PLN",
+	"nav-bar": {
+		"search": "Search...",
+		"bar1": "search by series",
+		"bar2": "search by company",
+		"bar3": "other merch",
+		"bar4": "discounts"
+	},
+	"shop": {
+		"type": "Type",
+		"prize": "Prize figurines",
+		"scale": "Scale figurines",
+		"mini": "Mini figurines",
+		"action": "Action figurines",
+		"gadget": "Gadgets",
+		"condition": "Condition",
+		"new": "New",
+		"used": "Used",
+		"popular": "Popular series"
+	},
+	"account": {
+		"login": {
+			"sign-in": "Sign in",
+			"email": "Email Address",
+			"password": "Password",
+			"remember": "Remember me",
+			"forgot": "Forgot password?",
+			"no-account": "Don't have an account? Sign up"
+		},
+		"register": {
+			"sign-up": "Sign up",
+			"first-name": "First Name",
+			"last-name": "Last Name",
+			"email": "Email Address",
+			"password": "Password",
+			"newsletter": "I want to receive inspiration, marketing promotions and updates via email.",
+			"have-account": "Already have an account? Sign in"
+		}
+	}
+}

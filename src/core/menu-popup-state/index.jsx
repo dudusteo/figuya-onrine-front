@@ -27,13 +27,12 @@ const MenuPopupState = (props) => {
 				{text}
 			</Button>
 			<HoverMenu {...bindMenu(popupState)}>
-				{items.map((item, key) => (
-					<ItemLink to={href + "/item"}>
+				{items.map((item, index) => (
+					<ItemLink key={index} to={href + "/item"}>
 						<MenuItem
 							onClick={() => {
 								popupState.close();
 							}}
-							key={key}
 						>
 							{item.name}
 						</MenuItem>

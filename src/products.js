@@ -12,7 +12,7 @@ export const PRODUCTS = [
     origin: "Vocaloid",
     company: "SEGA",
     type: "Prize",
-    price: 85,
+    price: 85.00,
     productImage: img_miku,
   },
   {
@@ -35,6 +35,24 @@ export const PRODUCTS = [
   },
   {
     id: 3060,
+    productName: "Rem",
+    origin: "Re:ZERO -Starting Life in Another World-",
+    company: "Bandai Spirits",
+    type: "Prize",
+    price: 75,
+    productImage: img_rem,
+  },
+  {
+    id: 31,
+    productName: "Rem",
+    origin: "Re:ZERO -Starting Life in Another World-",
+    company: "Bandai Spirits",
+    type: "Prize",
+    price: 75,
+    productImage: img_rem,
+  },
+  {
+    id: 32,
     productName: "Rem",
     origin: "Re:ZERO -Starting Life in Another World-",
     company: "Bandai Spirits",

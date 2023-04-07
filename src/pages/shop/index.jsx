@@ -18,23 +18,43 @@ import {
 } from "@mui/material";
 import { PRODUCTS } from "../../products";
 import Product from "./Product";
+import { useTranslation } from "react-i18next";
+
+const data = {
+	type: [
+		{ name: "prize", count: 0 },
+		{ name: "scale", count: 0 },
+		{ name: "mini", count: 0 },
+		{ name: "action", count: 0 },
+		{ name: "gadget", count: 0 },
+	],
+	condition: [
+		{ name: "new", count: 0 },
+		{ name: "used", count: 0 },
+	],
+	popularSeries: [
+		{ name: "Vocaloid", count: 0 },
+		{ name: "Love live", count: 0 },
+	],
+};
 
 const Shop = () => {
+	const { t } = useTranslation();
 	const [list, setList] = React.useState({
-		category: true,
-		stock: true,
+		type: true,
+		condition: true,
 		popularSeries: true,
 	});
 
-	const setCategory = (newCategory) => {
+	const setType = (newType) => {
 		setList((prevList) => {
-			return { ...prevList, category: newCategory };
+			return { ...prevList, type: newType };
 		});
 	};
 
-	const setStock = (newStock) => {
+	const setCondition = (newCondition) => {
 		setList((prevList) => {
-			return { ...prevList, stock: newStock };
+			return { ...prevList, condition: newCondition };
 		});
 	};
 
@@ -54,7 +74,7 @@ const Shop = () => {
 			}}
 		>
 			<CssBaseline />
-			<Box sx={{ flexGrow: 1, minWidth: "10vw", maxWidth: "40vw" }}>
+			<Box sx={{ flexGrow: 1, minWidth: "12rem", maxWidth: "8vw" }}>
 				<Paper
 					variant="outlined"
 					sx={{
@@ -63,46 +83,49 @@ const Shop = () => {
 					}}
 				>
 					<List component="nav" aria-label="mailbox folders">
+						<ListItemButton onClick={() => setType(!list.type)}>
+							<ListItemText primary={t("shop.type")} />
+						</ListItemButton>
+						<Collapse in={list.type} timeout="auto" unmountOnExit>
+							<List component="div" disablePadding>
+								{data.type.map((type, index) => (
+									<ListItemButton key={index} sx={{ pl: 4 }}>
+										<ListItemText
+											primary={t("shop." + type.name)}
+										/>
+										<ListItemText
+											align="right"
+											primary={type.count}
+										/>
+									</ListItemButton>
+								))}
+							</List>
+						</Collapse>
+						<Divider />
 						<ListItemButton
-							onClick={() => setCategory(!list.category)}
+							onClick={() => setCondition(!list.condition)}
 						>
-							<ListItemText primary="Rodzaje" />
+							<ListItemText primary={t("shop.condition")} />
 						</ListItemButton>
 						<Collapse
-							in={list.category}
+							in={list.condition}
 							timeout="auto"
 							unmountOnExit
 						>
 							<List component="div" disablePadding>
-								<ListItemButton sx={{ pl: 4 }}>
-									<ListItemText primary="Prize figurki" />
-								</ListItemButton>
-								<ListItemButton sx={{ pl: 4 }}>
-									<ListItemText primary="Scale figurki" />
-								</ListItemButton>
-								<ListItemButton sx={{ pl: 4 }}>
-									<ListItemText primary="Mini figurki" />
-								</ListItemButton>
-								<ListItemButton sx={{ pl: 4 }}>
-									<ListItemText primary="Figruki akcji" />
-								</ListItemButton>
-								<ListItemButton sx={{ pl: 4 }}>
-									<ListItemText primary="Gadżety" />
-								</ListItemButton>
-							</List>
-						</Collapse>
-						<Divider />
-						<ListItemButton onClick={() => setStock(!list.stock)}>
-							<ListItemText primary="Stan towaru" />
-						</ListItemButton>
-						<Collapse in={list.stock} timeout="auto" unmountOnExit>
-							<List component="div" disablePadding>
-								<ListItemButton sx={{ pl: 4 }}>
-									<ListItemText primary="Nowy" />
-								</ListItemButton>
-								<ListItemButton sx={{ pl: 4 }}>
-									<ListItemText primary="Używany" />
-								</ListItemButton>
+								{data.condition.map((condition, index) => (
+									<ListItemButton key={index} sx={{ pl: 4 }}>
+										<ListItemText
+											primary={t(
+												"shop." + condition.name
+											)}
+										/>
+										<ListItemText
+											align="right"
+											primary={condition.count}
+										/>
+									</ListItemButton>
+								))}
 							</List>
 						</Collapse>
 						<Divider />
@@ -111,7 +134,7 @@ const Shop = () => {
 								setPopularSeries(!list.popularSeries)
 							}
 						>
-							<ListItemText primary="Popularne serie" />
+							<ListItemText primary={t("shop.popular")} />
 						</ListItemButton>
 						<Collapse
 							in={list.popularSeries}
@@ -119,34 +142,31 @@ const Shop = () => {
 							unmountOnExit
 						>
 							<List component="div" disablePadding>
-								<ListItemButton sx={{ pl: 4 }}>
-									<ListItemText primary="Vocaloid" />
-								</ListItemButton>
-								<ListItemButton sx={{ pl: 4 }}>
-									<ListItemText primary="Love live" />
-								</ListItemButton>
+								{data.popularSeries.map((condition, index) => (
+									<ListItemButton key={index} sx={{ pl: 4 }}>
+										<ListItemText
+											primary={condition.name}
+										/>
+										<ListItemText
+											align="right"
+											primary={condition.count}
+										/>
+									</ListItemButton>
+								))}
 							</List>
 						</Collapse>
 					</List>
 				</Paper>
 			</Box>
-			<Grid
-				container
-				spacing={{ xs: 2, md: 3 }}
-				columns={{ xs: 6, sm: 12, md: 16 }}
-				sx={{ px: 2 }}
-			>
-				{PRODUCTS.map((product) => (
-					<>
+			<Box>
+				<Grid container spacing={2} sx={{ pl: 2 }}>
+					{PRODUCTS.map((product) => (
 						<Grid item key={product.id}>
 							<Product data={product} />
 						</Grid>
-						<Grid item key={product.id}>
-							<Product data={product} />
-						</Grid>
-					</>
-				))}
-			</Grid>
+					))}
+				</Grid>
+			</Box>
 		</Box>
 	);
 };
