@@ -14,8 +14,13 @@ const addFigurine = async (formData) => {
 		.then((response) => response.data);
 };
 
+const getFiles = async () => {
+	return axios.post(API_URL + "/files").then((response) => response.data);
+};
+
 const FigurineService = {
 	addFigurine,
+	getFiles,
 };
 
 export default FigurineService;

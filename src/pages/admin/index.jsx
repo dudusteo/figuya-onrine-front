@@ -1,14 +1,10 @@
 import * as React from "react";
 
 import {
-	Autocomplete,
 	Box,
 	Button,
 	CssBaseline,
-	FormControl,
 	FormControlLabel,
-	FormLabel,
-	Grid,
 	Radio,
 	RadioGroup,
 	TextField,
@@ -149,7 +145,7 @@ const Admin = () => {
 	const { t } = useTranslation();
 	const [content, setContent] = React.useState("");
 
-	//const [data, setData] = React.useState([{ name: "1" }, { name: "1" }]);
+	const [images, setImages] = React.useState([]);
 
 	React.useEffect(() => {
 		UserService.getAdminBoard().then(
@@ -167,8 +163,11 @@ const Admin = () => {
 				setContent(_content);
 			}
 		);
+		FigurineService.getFiles().then((data) => {
+			setImages(data);
+		});
 	}, []);
-
+	console.log(images);
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -262,7 +261,7 @@ const Admin = () => {
 					{t("button.upload")}
 					<input
 						hidden
-						accept="image/*"
+						accept="image/jpeg"
 						multiple
 						type="file"
 						name="image"
@@ -272,6 +271,9 @@ const Admin = () => {
 					{t("button.add")}
 				</Button>
 			</Box>
+			{images.map((image, index) => (
+				<img key={index} alt={image.name} src={image.url}></img>
+			))}
 		</Box>
 	);
 };
