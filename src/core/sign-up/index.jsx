@@ -22,7 +22,7 @@ export default function SignUp() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		AuthService.signUp(
+		AuthService.register(
 			data.get("email"),
 			data.get("password"),
 			data.get("firstName"),

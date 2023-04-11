@@ -22,7 +22,7 @@ export default function SignIn() {
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		AuthService.signIn(data.get("email"), data.get("password"))
+		AuthService.login(data.get("email"), data.get("password"))
 			.then((result) => {
 				console.log(result);
 				navigate("/account");
