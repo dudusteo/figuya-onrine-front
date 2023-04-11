@@ -9,7 +9,7 @@ import {
 	RadioGroup,
 	TextField,
 } from "@mui/material";
-import UserService from "../../services/user.service";
+import AuthService from "../../services/auth.service";
 import FreeSoloCreateOption from "../../core/free-solo-create-option";
 import FigurineService from "../../services/figurine.service";
 import { useTranslation } from "react-i18next";
@@ -143,31 +143,21 @@ const top100Films = [
 
 const Admin = () => {
 	const { t } = useTranslation();
-	const [content, setContent] = React.useState("");
 
 	const [images, setImages] = React.useState([]);
+	const [showAdminBoard, setShowAdminBoard] = React.useState(false);
 
 	React.useEffect(() => {
-		UserService.getAdminBoard().then(
-			(response) => {
-				setContent(response.data);
-			},
-			(error) => {
-				const _content =
-					(error.response &&
-						error.response.data &&
-						error.response.data.message) ||
-					error.message ||
-					error.toString();
+		const user = AuthService.getCurrentUser();
 
-				setContent(_content);
-			}
-		);
+		if (user) {
+			setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
+		}
 		FigurineService.getFiles().then((data) => {
 			setImages(data);
 		});
 	}, []);
-	console.log(images);
+
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -188,92 +178,99 @@ const Admin = () => {
 			}}
 		>
 			<CssBaseline />
-			<h3>{content}</h3>
-			<Box
-				component="form"
-				onSubmit={handleSubmit}
-				noValidate
-				sx={{
-					display: "flex",
-					flexDirection: "row",
-				}}
-			>
-				<FreeSoloCreateOption
-					id="productName"
-					options={top100Films}
-					renderInput={(params) => (
-						<TextField
-							{...params}
-							label={t("item.productName")}
-							name="productName"
+			{showAdminBoard && (
+				<>
+					<Box
+						component="form"
+						onSubmit={handleSubmit}
+						noValidate
+						sx={{
+							display: "flex",
+							flexDirection: "row",
+						}}
+					>
+						<FreeSoloCreateOption
+							id="productName"
+							options={top100Films}
+							renderInput={(params) => (
+								<TextField
+									{...params}
+									label={t("item.productName")}
+									name="productName"
+								/>
+							)}
 						/>
-					)}
-				/>
-				<FreeSoloCreateOption
-					id="origin"
-					options={top100Films}
-					renderInput={(params) => (
-						<TextField
-							{...params}
-							label={t("item.origin")}
-							name="origin"
+						<FreeSoloCreateOption
+							id="origin"
+							options={top100Films}
+							renderInput={(params) => (
+								<TextField
+									{...params}
+									label={t("item.origin")}
+									name="origin"
+								/>
+							)}
 						/>
-					)}
-				/>
-				<FreeSoloCreateOption
-					id="company"
-					options={top100Films}
-					renderInput={(params) => (
-						<TextField
-							{...params}
-							label={t("item.company")}
-							name="company"
+						<FreeSoloCreateOption
+							id="company"
+							options={top100Films}
+							renderInput={(params) => (
+								<TextField
+									{...params}
+									label={t("item.company")}
+									name="company"
+								/>
+							)}
 						/>
-					)}
-				/>
-				<FreeSoloCreateOption
-					id="type"
-					options={top100Films}
-					renderInput={(params) => (
-						<TextField
-							{...params}
-							label={t("item.type")}
-							name="type"
+						<FreeSoloCreateOption
+							id="type"
+							options={top100Films}
+							renderInput={(params) => (
+								<TextField
+									{...params}
+									label={t("item.type")}
+									name="type"
+								/>
+							)}
 						/>
-					)}
-				/>
 
-				<RadioGroup defaultValue="used" name="condition">
-					<FormControlLabel
-						value="used"
-						control={<Radio />}
-						label={t("item.used")}
-					/>
-					<FormControlLabel
-						value="new"
-						control={<Radio />}
-						label={t("item.new")}
-					/>
-				</RadioGroup>
+						<RadioGroup defaultValue="used" name="condition">
+							<FormControlLabel
+								value="used"
+								control={<Radio />}
+								label={t("item.used")}
+							/>
+							<FormControlLabel
+								value="new"
+								control={<Radio />}
+								label={t("item.new")}
+							/>
+						</RadioGroup>
 
-				<TextField id="price" name="price" label={t("item.price")} />
-				<Button variant="contained" component="label">
-					{t("button.upload")}
-					<input
-						hidden
-						accept="image/jpeg"
-						multiple
-						type="file"
-						name="image"
-					/>
-				</Button>
-				<Button variant="contained" type="submit">
-					{t("button.add")}
-				</Button>
-			</Box>
-			{images.map((image, index) => (
-				<img key={index} alt={image.name} src={image.url}></img>
-			))}
+						<TextField
+							id="price"
+							name="price"
+							label={t("item.price")}
+						/>
+						<Button variant="contained" component="label">
+							{t("button.upload")}
+							<input
+								hidden
+								accept="image/jpeg"
+								multiple
+								type="file"
+								name="image"
+							/>
+						</Button>
+						<Button variant="contained" type="submit">
+							{t("button.add")}
+						</Button>
+					</Box>
+					{images.map((image, index) => (
+						<img key={index} alt={image.name} src={image.url}></img>
+					))}
+				</>
+			)}
 		</Box>
 	);
 };
