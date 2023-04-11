@@ -13,18 +13,21 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import AuthService from "../../services/auth.service";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
 	const { t } = useTranslation();
+	const navigate = useNavigate();
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		// console.log({
-		//   email: data.get('email'),
-		//   password: data.get('password'),
-		// });
-		AuthService.login(data.get("email"), data.get("password"));
+		AuthService.signIn(data.get("email"), data.get("password"))
+			.then((result) => {
+				console.log(result);
+				navigate("/account");
+			})
+			.catch((error) => console.log(error.response.data.message));
 	};
 
 	return (
