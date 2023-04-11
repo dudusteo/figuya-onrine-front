@@ -1,9 +1,5 @@
 import axios from "axios";
 
-// axios.defaults.headers.common = {
-// 	"Content-Type": "application/json",
-// };
-
 const API_URL = process.env.REACT_APP_API_URL;
 
 const signUp = async (email, password, firstName, lastName) => {
@@ -33,11 +29,22 @@ const signOut = async () => {
 	return response.data;
 };
 
+const getContent = async () => {
+	const user = getCurrentUser();
+	const response = await axios.get(API_URL + "/test/user", {
+		headers: {
+			"x-access-token": user.accessToken,
+		},
+	});
+	return response.data;
+};
+
 const getCurrentUser = () => {
 	return JSON.parse(localStorage.getItem("user"));
 };
 
 const AuthService = {
+	getContent,
 	signUp,
 	signIn,
 	signOut,
