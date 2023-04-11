@@ -39,5 +39,18 @@
 			"newsletter": "I want to receive inspiration, marketing promotions and updates via email.",
 			"have-account": "Already have an account? Sign in"
 		}
+	},
+	"item": {
+		"productName": "Product name",
+		"origin": "Origin",
+		"company": "Company",
+		"type": "Type",
+		"new": "New",
+		"used": "Used",
+		"price": "Price"
+	},
+	"button": {
+		"add": "Add",
+		"upload": "Upload"
 	}
 }

@@ -9,6 +9,7 @@ import MenuPopupState from "../menu-popup-state";
 import { Box, Button, Link } from "@mui/material";
 import figuya_logo from "../../assets/figuya_logo.svg";
 import { useTranslation } from "react-i18next";
+import AuthService from "../../services/auth.service";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -105,6 +106,24 @@ const SearchAppBar = () => {
 						<MenuPopupState text={t("nav-bar.bar4")} items={[""]} />
 						<Button href="/cart" variant="h6">
 							Koszyk
+						</Button>
+						<Button href="/admin" variant="h6">
+							Admin
+						</Button>
+						<Button href="/account" variant="h6">
+							Konto
+						</Button>
+						<Button href="/account/login" variant="h6">
+							Zaloguj się
+						</Button>
+						<Button href="/account/register" variant="h6">
+							Zarejestruj się
+						</Button>
+						<Button
+							onClick={() => AuthService.logout()}
+							variant="h6"
+						>
+							Wyloguj się
 						</Button>
 					</Box>
 				</Toolbar>

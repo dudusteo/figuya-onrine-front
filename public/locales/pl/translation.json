@@ -39,5 +39,18 @@
 			"newsletter": "Chcę dostawać promocje i aktualizacja na maila",
 			"have-account": "Posiadasz już konto? Zaloguj się"
 		}
+	},
+	"item": {
+		"productName": "Nazwa produktu",
+		"origin": "Seria",
+		"company": "Producent",
+		"type": "Typ",
+		"new": "Nowy",
+		"used": "Używany",
+		"price": "Cena"
+	},
+	"button": {
+		"add": "Dodaj",
+		"upload": "Załącz"
 	}
 }
