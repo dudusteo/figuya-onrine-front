@@ -1,18 +1,21 @@
 import * as React from "react";
 
 import {
+	Alert,
 	Box,
 	Button,
 	CssBaseline,
 	FormControlLabel,
 	Radio,
 	RadioGroup,
+	Snackbar,
 	TextField,
 } from "@mui/material";
 import AuthService from "../../services/auth.service";
 import FreeSoloCreateOption from "../../core/free-solo-create-option";
 import FigurineService from "../../services/figurine.service";
 import { useTranslation } from "react-i18next";
+import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
 const top100Films = [
 	{ title: "The Shawshank Redemption", year: 1994 },
@@ -143,8 +146,6 @@ const top100Films = [
 
 const Admin = () => {
 	const { t } = useTranslation();
-
-	const [images, setImages] = React.useState([]);
 	const [showAdminBoard, setShowAdminBoard] = React.useState(false);
 
 	React.useEffect(() => {
@@ -153,125 +154,143 @@ const Admin = () => {
 		if (user) {
 			setShowAdminBoard(user.roles.includes("ROLE_ADMIN"));
 		}
-		FigurineService.getFiles().then((data) => {
-			setImages(data);
-		});
 	}, []);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 
-		FigurineService.addFigurine(data)
-			.then((result) => {
-				console.log(result);
-			})
-			.catch((error) => console.log(error.response.data.message));
+		let count = 0;
+
+		for (let [key, value] of data.entries()) {
+			if (
+				(typeof value === "string" && value.length === 0) ||
+				(key === "images" && value.size === 0)
+			) {
+				count++;
+				enqueueSnackbar("Puste pole: " + key, {
+					autoHideDuration: 3000,
+					variant: "error",
+				});
+			}
+		}
+		console.log(count);
+		if (count === 0) {
+			FigurineService.addFigurine(data)
+				.then((result) => {
+					console.log(result);
+				})
+				.catch((error) =>
+					enqueueSnackbar(error.response.data.message, {
+						autoHideDuration: 3000,
+						variant: "error",
+					})
+				);
+		}
 	};
 
 	return (
-		<Box
-			sx={{
-				display: "flex",
-				flexDirection: "column",
-				minHeight: "100vh",
-			}}
-		>
-			<CssBaseline />
-			{showAdminBoard && (
-				<>
-					<Box
-						component="form"
-						onSubmit={handleSubmit}
-						noValidate
-						sx={{
-							display: "flex",
-							flexDirection: "row",
-						}}
-					>
-						<FreeSoloCreateOption
-							id="productName"
-							options={top100Films}
-							renderInput={(params) => (
-								<TextField
-									{...params}
-									label={t("item.productName")}
-									name="productName"
-								/>
-							)}
-						/>
-						<FreeSoloCreateOption
-							id="origin"
-							options={top100Films}
-							renderInput={(params) => (
-								<TextField
-									{...params}
-									label={t("item.origin")}
-									name="origin"
-								/>
-							)}
-						/>
-						<FreeSoloCreateOption
-							id="company"
-							options={top100Films}
-							renderInput={(params) => (
-								<TextField
-									{...params}
-									label={t("item.company")}
-									name="company"
-								/>
-							)}
-						/>
-						<FreeSoloCreateOption
-							id="type"
-							options={top100Films}
-							renderInput={(params) => (
-								<TextField
-									{...params}
-									label={t("item.type")}
-									name="type"
-								/>
-							)}
-						/>
+		<SnackbarProvider maxSnack={10}>
+			<Box
+				sx={{
+					display: "flex",
+					flexDirection: "column",
+					minHeight: "100vh",
+				}}
+			>
+				<CssBaseline />
+				{showAdminBoard && (
+					<>
+						<Box
+							component="form"
+							onSubmit={handleSubmit}
+							noValidate
+							sx={{
+								display: "flex",
+								flexDirection: "row",
+							}}
+						>
+							<FreeSoloCreateOption
+								id="name"
+								options={top100Films}
+								renderInput={(params) => (
+									<TextField
+										{...params}
+										label={t("item.productName")}
+										name="name"
+									/>
+								)}
+							/>
+							<FreeSoloCreateOption
+								id="origin"
+								options={top100Films}
+								renderInput={(params) => (
+									<TextField
+										{...params}
+										label={t("item.origin")}
+										name="origin"
+									/>
+								)}
+							/>
+							<FreeSoloCreateOption
+								id="company"
+								options={top100Films}
+								renderInput={(params) => (
+									<TextField
+										{...params}
+										label={t("item.company")}
+										name="company"
+									/>
+								)}
+							/>
+							<FreeSoloCreateOption
+								id="type"
+								options={top100Films}
+								renderInput={(params) => (
+									<TextField
+										{...params}
+										label={t("item.type")}
+										name="type"
+									/>
+								)}
+							/>
 
-						<RadioGroup defaultValue="used" name="condition">
-							<FormControlLabel
-								value="used"
-								control={<Radio />}
-								label={t("item.used")}
-							/>
-							<FormControlLabel
-								value="new"
-								control={<Radio />}
-								label={t("item.new")}
-							/>
-						</RadioGroup>
+							<RadioGroup defaultValue="used" name="condition">
+								<FormControlLabel
+									value="used"
+									control={<Radio />}
+									label={t("item.used")}
+								/>
+								<FormControlLabel
+									value="new"
+									control={<Radio />}
+									label={t("item.new")}
+								/>
+							</RadioGroup>
 
-						<TextField
-							id="price"
-							name="price"
-							label={t("item.price")}
-						/>
-						<Button variant="contained" component="label">
-							{t("button.upload")}
-							<input
-								hidden
-								accept="image/jpeg"
-								multiple
-								type="file"
-								name="image"
+							<TextField
+								id="price"
+								name="price"
+								label={t("item.price")}
 							/>
-						</Button>
-						<Button variant="contained" type="submit">
-							{t("button.add")}
-						</Button>
-					</Box>
-					{images.map((image, index) => (
-						<img key={index} alt={image.name} src={image.url}></img>
-					))}
-				</>
-			)}
-		</Box>
+							<Button variant="contained" component="label">
+								{t("button.upload")}
+								<input
+									hidden
+									accept="image/jpeg"
+									multiple
+									type="file"
+									name="images"
+								/>
+							</Button>
+							<Button variant="contained" type="submit">
+								{t("button.add")}
+							</Button>
+						</Box>
+					</>
+				)}
+			</Box>
+		</SnackbarProvider>
 	);
 };
 
