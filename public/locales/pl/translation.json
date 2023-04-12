@@ -47,7 +47,8 @@
 		"type": "Typ",
 		"new": "Nowy",
 		"used": "Używany",
-		"price": "Cena"
+		"price": "Cena",
+		"damaged": "Uszkodzony"
 	},
 	"button": {
 		"add": "Dodaj",

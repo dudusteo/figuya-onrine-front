@@ -174,18 +174,21 @@ const Admin = () => {
 				});
 			}
 		}
-		console.log(count);
 		if (count === 0) {
 			FigurineService.addFigurine(data)
 				.then((result) => {
-					console.log(result);
+					enqueueSnackbar(result.message, {
+						autoHideDuration: 3000,
+						variant: "success",
+					});
 				})
-				.catch((error) =>
+				.catch((error) => {
+					console.log(error);
 					enqueueSnackbar(error.response.data.message, {
 						autoHideDuration: 3000,
 						variant: "error",
-					})
-				);
+					});
+				});
 		}
 	};
 
@@ -257,14 +260,19 @@ const Admin = () => {
 
 							<RadioGroup defaultValue="used" name="condition">
 								<FormControlLabel
+									value="new"
+									control={<Radio />}
+									label={t("item.new")}
+								/>
+								<FormControlLabel
 									value="used"
 									control={<Radio />}
 									label={t("item.used")}
 								/>
 								<FormControlLabel
-									value="new"
+									value="damaged"
 									control={<Radio />}
-									label={t("item.new")}
+									label={t("item.damaged")}
 								/>
 							</RadioGroup>
 

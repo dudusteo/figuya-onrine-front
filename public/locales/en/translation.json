@@ -47,7 +47,8 @@
 		"type": "Type",
 		"new": "New",
 		"used": "Used",
-		"price": "Price"
+		"price": "Price",
+		"damaged": "Damaged"
 	},
 	"button": {
 		"add": "Add",
