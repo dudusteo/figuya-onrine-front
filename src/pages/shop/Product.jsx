@@ -14,13 +14,12 @@ const Image = styled("img")(({ theme, small }) => ({
 }));
 
 const Product = (props) => {
-	const { id, productName, origin, company, type, price, productImage } =
-		props.data;
+	const { id, name, origin, company, type, price, images } = props.data;
 
 	const { t } = useTranslation();
 	const { addToCart } = React.useContext(ShopContext);
 
-	const title = productName + " - " + origin + " - " + company;
+	const title = name + " - " + origin + " - " + company;
 	const priceTitle = t("price") + " " + price.toFixed(2) + " " + t("unit");
 
 	return (
@@ -42,7 +41,7 @@ const Product = (props) => {
 					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);",
 				}}
 			>
-				<Image alt="" src={productImage} />
+				<Image alt="" src={images[0].path} />
 			</Box>
 			<Box sx={{ flexGrow: 1, py: 1 }}>
 				<Typography variant="subtitle2" sx={{ color: "primary.main" }}>

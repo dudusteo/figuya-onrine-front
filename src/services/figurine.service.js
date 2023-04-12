@@ -14,12 +14,24 @@ const addFigurine = async (formData) => {
 		.then((response) => response.data);
 };
 
+const getFigurines = async () => {
+	return axios
+		.get(API_URL + "/figurine/get", {
+			headers: {
+				...authHeader(),
+				"Content-Type": "multipart/form-data",
+			},
+		})
+		.then((response) => response.data);
+};
+
 const getFiles = async () => {
 	return axios.post(API_URL + "/files").then((response) => response.data);
 };
 
 const FigurineService = {
 	addFigurine,
+	getFigurines,
 	getFiles,
 };
 

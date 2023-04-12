@@ -3,22 +3,18 @@ import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import {
-	Accordion,
-	AccordionDetails,
-	AccordionSummary,
 	Collapse,
 	Divider,
 	Grid,
 	List,
-	ListItem,
 	ListItemButton,
 	ListItemText,
 	Paper,
-	Typography,
 } from "@mui/material";
 import { PRODUCTS } from "../../products";
 import Product from "./Product";
 import { useTranslation } from "react-i18next";
+import FigurineService from "../../services/figurine.service";
 
 const data = {
 	type: [
@@ -40,6 +36,7 @@ const data = {
 
 const Shop = () => {
 	const { t } = useTranslation();
+	const [products, setProducts] = React.useState([]);
 	const [list, setList] = React.useState({
 		type: true,
 		condition: true,
@@ -63,6 +60,10 @@ const Shop = () => {
 			return { ...prevList, popularSeries: newPopularSeries };
 		});
 	};
+
+	React.useEffect(() => {
+		FigurineService.getFigurines().then((data) => setProducts(data));
+	}, []);
 
 	return (
 		<Box
@@ -164,7 +165,7 @@ const Shop = () => {
 			</Box>
 			<Box>
 				<Grid container spacing={2} sx={{ pl: 2 }}>
-					{PRODUCTS.map((product) => (
+					{products.map((product) => (
 						<Grid item key={product.id}>
 							<Product data={product} />
 						</Grid>
