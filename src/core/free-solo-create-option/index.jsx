@@ -13,12 +13,13 @@ export default function FreeSoloCreateOption(props) {
 			onChange={(event, newValue) => {
 				if (typeof newValue === "string") {
 					setValue({
-						title: newValue,
+						name: newValue,
 					});
 				} else if (newValue && newValue.inputValue) {
 					// Create a new value from the user input
+					console.log("new value: here update database");
 					setValue({
-						title: newValue.inputValue,
+						name: newValue.inputValue,
 					});
 				} else {
 					setValue(newValue);
@@ -30,12 +31,12 @@ export default function FreeSoloCreateOption(props) {
 				const { inputValue } = params;
 				// Suggest the creation of a new value
 				const isExisting = options.some(
-					(option) => inputValue === option.title
+					(option) => inputValue === option.name
 				);
 				if (inputValue !== "" && !isExisting) {
 					filtered.push({
 						inputValue,
-						title: `Add "${inputValue}"`,
+						name: `Add "${inputValue}"`,
 					});
 				}
 
@@ -55,9 +56,9 @@ export default function FreeSoloCreateOption(props) {
 					return option.inputValue;
 				}
 				// Regular option
-				return option.title;
+				return option.name;
 			}}
-			renderOption={(props, option) => <li {...props}>{option.title}</li>}
+			renderOption={(props, option) => <li {...props}>{option.name}</li>}
 			sx={{ width: 300 }}
 			freeSolo
 			renderInput={(params) => (

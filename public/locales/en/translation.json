@@ -42,6 +42,7 @@
 	},
 	"item": {
 		"productName": "Product name",
+		"character": "Character",
 		"origin": "Origin",
 		"company": "Company",
 		"type": "Type",
