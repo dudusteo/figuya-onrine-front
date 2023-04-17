@@ -128,6 +128,7 @@ const SearchAppBar = () => {
 								href: "/admin",
 							},
 						]}
+						sx={{ ml: 1 }}
 					>
 						<AccountCircleIcon fontSize="large" />
 					</IconPopupState>
