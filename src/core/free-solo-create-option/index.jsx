@@ -4,8 +4,9 @@ import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 
 const filter = createFilterOptions();
 
-export default function FreeSoloCreateOption(props) {
+const FreeSoloCreateOption = (props) => {
 	const [value, setValue] = React.useState(null);
+	const { addOption, ...rest } = props;
 
 	return (
 		<Autocomplete
@@ -17,7 +18,7 @@ export default function FreeSoloCreateOption(props) {
 					});
 				} else if (newValue && newValue.inputValue) {
 					// Create a new value from the user input
-					console.log("new value: here update database");
+					addOption && addOption(newValue.inputValue);
 					setValue({
 						name: newValue.inputValue,
 					});
@@ -64,7 +65,9 @@ export default function FreeSoloCreateOption(props) {
 			renderInput={(params) => (
 				<TextField {...params} label="Free solo with text demo" />
 			)}
-			{...props}
+			{...rest}
 		/>
 	);
-}
+};
+
+export default FreeSoloCreateOption;

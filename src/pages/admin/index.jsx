@@ -15,6 +15,20 @@ import FigurineService from "../../services/figurine.service";
 import { useTranslation } from "react-i18next";
 import { SnackbarProvider, enqueueSnackbar } from "notistack";
 
+const addServiceSnackbarWrapper = (func) => {
+	func.then((result) =>
+		enqueueSnackbar(result.message, {
+			autoHideDuration: 3000,
+			variant: "success",
+		})
+	).catch((error) =>
+		enqueueSnackbar(error.response.data.message, {
+			autoHideDuration: 3000,
+			variant: "error",
+		})
+	);
+};
+
 const Admin = () => {
 	const { t } = useTranslation();
 	const [showAdminBoard, setShowAdminBoard] = React.useState(false);
@@ -57,20 +71,7 @@ const Admin = () => {
 			}
 		}
 		if (count === 0) {
-			FigurineService.addFigurine(data)
-				.then((result) => {
-					enqueueSnackbar(result.message, {
-						autoHideDuration: 3000,
-						variant: "success",
-					});
-				})
-				.catch((error) => {
-					console.log(error);
-					enqueueSnackbar(error.response.data.message, {
-						autoHideDuration: 3000,
-						variant: "error",
-					});
-				});
+			addServiceSnackbarWrapper(FigurineService.addFigurine(data));
 		}
 	};
 
@@ -102,6 +103,13 @@ const Admin = () => {
 							/>
 
 							<FreeSoloCreateOption
+								addOption={(value) =>
+									addServiceSnackbarWrapper(
+										FigurineService.addCharacterOption(
+											value
+										)
+									)
+								}
 								id="character"
 								options={options.character}
 								renderInput={(params) => (
@@ -113,6 +121,11 @@ const Admin = () => {
 								)}
 							/>
 							<FreeSoloCreateOption
+								addOption={(value) =>
+									addServiceSnackbarWrapper(
+										FigurineService.addOriginOption(value)
+									)
+								}
 								id="origin"
 								options={options.origin}
 								renderInput={(params) => (
@@ -124,6 +137,11 @@ const Admin = () => {
 								)}
 							/>
 							<FreeSoloCreateOption
+								addOption={(value) =>
+									addServiceSnackbarWrapper(
+										FigurineService.addCompanyOption(value)
+									)
+								}
 								id="company"
 								options={options.company}
 								renderInput={(params) => (
@@ -135,6 +153,11 @@ const Admin = () => {
 								)}
 							/>
 							<FreeSoloCreateOption
+								addOption={(value) =>
+									addServiceSnackbarWrapper(
+										FigurineService.addTypeOption(value)
+									)
+								}
 								id="type"
 								options={options.type}
 								renderInput={(params) => (
@@ -146,19 +169,19 @@ const Admin = () => {
 								)}
 							/>
 
-							<RadioGroup defaultValue="used" name="condition">
+							<RadioGroup defaultValue="Used" name="condition">
 								<FormControlLabel
-									value="new"
+									value="New"
 									control={<Radio />}
 									label={t("item.new")}
 								/>
 								<FormControlLabel
-									value="used"
+									value="Used"
 									control={<Radio />}
 									label={t("item.used")}
 								/>
 								<FormControlLabel
-									value="damaged"
+									value="Damaged"
 									control={<Radio />}
 									label={t("item.damaged")}
 								/>
