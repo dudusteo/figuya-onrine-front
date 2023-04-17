@@ -4,6 +4,12 @@
 	"unit": "ZŁ",
 	"nav-bar": {
 		"search": "Wyszukaj...",
+		"menu1": {
+			"account": "Konto",
+			"sign-in": "Zaloguj się",
+			"sign-up": "Zarejestruj się",
+			"sign-out": "Wyloguj się"
+		},
 		"bar1": "szukaj wg serii",
 		"bar2": "szukaj wg firmy",
 		"bar3": "inny merch",

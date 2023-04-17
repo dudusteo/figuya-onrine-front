@@ -4,12 +4,17 @@ import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import MenuPopupState from "../menu-popup-state";
-import { Box, Button, Link } from "@mui/material";
+import { Avatar, Badge, Box, Button, IconButton, Link } from "@mui/material";
 import figuya_logo from "../../assets/figuya_logo.svg";
 import { useTranslation } from "react-i18next";
 import AuthService from "../../services/auth.service";
+import FigurineService from "../../services/figurine.service";
+import IconPopupState from "../icon-popup-state";
+import { ShopContext } from "../../context/shop-context";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -53,8 +58,27 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 	},
 }));
 
+const SmallAvatar = styled(Avatar)(({ theme }) => ({
+	width: 22,
+	height: 22,
+	border: `1px solid ${theme.palette.background.paper}`,
+}));
+
 const SearchAppBar = () => {
 	const { t } = useTranslation();
+
+	const [options, setOptions] = React.useState({
+		character: [],
+		origin: [],
+		company: [],
+		type: [],
+	});
+
+	React.useEffect(() => {
+		FigurineService.getOptions().then((data) => setOptions(data));
+	}, []);
+
+	const { cartItems } = React.useContext(ShopContext);
 
 	return (
 		<>
@@ -79,6 +103,52 @@ const SearchAppBar = () => {
 							inputProps={{ "aria-label": "search" }}
 						/>
 					</Search>
+					<IconPopupState
+						href="/account"
+						items={[
+							{
+								name: t("nav-bar.menu1.account"),
+								href: "/account",
+							},
+							{
+								name: t("nav-bar.menu1.sign-in"),
+								href: "/account/login",
+							},
+							{
+								name: t("nav-bar.menu1.sign-up"),
+								href: "/account/register",
+							},
+							{
+								name: t("nav-bar.menu1.sign-out"),
+								href: "/",
+								onClick: () => AuthService.logout(),
+							},
+							{
+								name: "Admin",
+								href: "/admin",
+							},
+						]}
+					>
+						<AccountCircleIcon fontSize="large" />
+					</IconPopupState>
+					<IconPopupState href="/cart">
+						<Badge
+							overlap="circular"
+							anchorOrigin={{
+								vertical: "bottom",
+								horizontal: "right",
+							}}
+							badgeContent={
+								cartItems.length && (
+									<SmallAvatar>
+										{cartItems.length}
+									</SmallAvatar>
+								)
+							}
+						>
+							<ShoppingCartIcon fontSize="large" />
+						</Badge>
+					</IconPopupState>
 				</Toolbar>
 			</AppBar>
 			<AppBar position="static" color="primary" sx={{ opacity: "50%" }}>
@@ -87,44 +157,14 @@ const SearchAppBar = () => {
 						<MenuPopupState
 							href="/shop"
 							text={t("nav-bar.bar1")}
-							items={[
-								{ name: "Vocaloid" },
-								{ name: "Demon Slayer" },
-								{ name: "Love Live" },
-							]}
+							items={options.origin}
 						/>
 						<MenuPopupState
 							text={t("nav-bar.bar2")}
-							items={[
-								{ name: "Furyu" },
-								{ name: "Sega" },
-								{ name: "Alter" },
-								{ name: "Freeing" },
-							]}
+							items={options.company}
 						/>
 						<MenuPopupState text={t("nav-bar.bar3")} items={[""]} />
 						<MenuPopupState text={t("nav-bar.bar4")} items={[""]} />
-						<Button href="/cart" variant="h6">
-							Koszyk
-						</Button>
-						<Button href="/admin" variant="h6">
-							Admin
-						</Button>
-						<Button href="/account" variant="h6">
-							Konto
-						</Button>
-						<Button href="/account/login" variant="h6">
-							Zaloguj się
-						</Button>
-						<Button href="/account/register" variant="h6">
-							Zarejestruj się
-						</Button>
-						<Button
-							onClick={() => AuthService.logout()}
-							variant="h6"
-						>
-							Wyloguj się
-						</Button>
 					</Box>
 				</Toolbar>
 			</AppBar>

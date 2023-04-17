@@ -24,7 +24,6 @@ export default function SignIn() {
 		const data = new FormData(event.currentTarget);
 		AuthService.login(data.get("email"), data.get("password"))
 			.then((result) => {
-				console.log(result);
 				navigate("/account");
 			})
 			.catch((error) => console.log(error.response.data.message));

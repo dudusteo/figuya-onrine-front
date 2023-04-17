@@ -4,6 +4,12 @@
 	"unit": "PLN",
 	"nav-bar": {
 		"search": "Search...",
+		"menu1": {
+			"account": "Account",
+			"sign-in": "Sign in",
+			"sign-up": "Sign up",
+			"sign-out": "Sign out"
+		},
 		"bar1": "search by series",
 		"bar2": "search by company",
 		"bar3": "other merch",

@@ -29,8 +29,7 @@ export default function SignUp() {
 			data.get("lastName")
 		)
 			.then((result) => {
-				console.log(result);
-				navigate("/account");
+				navigate("/account/login");
 			})
 			.catch((error) => console.log(error.response.data.message));
 	};
