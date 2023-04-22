@@ -13,6 +13,8 @@ const Image = styled("img")(({ theme, small }) => ({
 	transform: "translateX(-50%) translateY(-50%)",
 }));
 
+const STATIC_URL = process.env.REACT_APP_STATIC_URL;
+
 const Product = (props) => {
 	const { id, name, origin, company, type, price, images } = props.data;
 
@@ -20,7 +22,7 @@ const Product = (props) => {
 	const { addToCart } = React.useContext(ShopContext);
 
 	const title = name + " - " + origin + " - " + company;
-	const priceTitle = t("price") + " " + price.toFixed(2) + " " + t("unit");
+	const priceTitle = t("price") + " " + price + " " + t("unit");
 
 	return (
 		<Paper
@@ -41,7 +43,7 @@ const Product = (props) => {
 					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);",
 				}}
 			>
-				<Image alt="" src={images[0].path} />
+				<Image alt="" src={STATIC_URL + images[0]?.path} />
 			</Box>
 			<Box sx={{ flexGrow: 1, py: 1 }}>
 				<Typography variant="subtitle2" sx={{ color: "primary.main" }}>

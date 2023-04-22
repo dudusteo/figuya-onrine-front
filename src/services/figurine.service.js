@@ -40,6 +40,17 @@ const getOptions = async () => {
 		.then((response) => response.data);
 };
 
+const getPackageOptions = async () => {
+	return axios
+		.get(API_URL + "/figurine/option/package/get", {
+			headers: {
+				...authHeader(),
+				"Content-Type": "multipart/form-data",
+			},
+		})
+		.then((response) => response.data);
+};
+
 const addCharacterOption = async (value) => {
 	return axios
 		.post(API_URL + "/figurine/option/character/add", {
@@ -72,6 +83,17 @@ const addTypeOption = async (value) => {
 		.then((response) => response.data);
 };
 
+const addPackageOption = async (formData) => {
+	return axios
+		.post(API_URL + "/figurine/option/package/add", formData, {
+			headers: {
+				...authHeader(),
+				"Content-Type": "multipart/form-data",
+			},
+		})
+		.then((response) => response.data);
+};
+
 const FigurineService = {
 	addFigurine,
 	getFigurines,
@@ -81,6 +103,8 @@ const FigurineService = {
 	addCompanyOption,
 	addTypeOption,
 	getOptions,
+	getPackageOptions,
+	addPackageOption,
 };
 
 export default FigurineService;

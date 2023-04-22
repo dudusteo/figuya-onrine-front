@@ -11,7 +11,6 @@ import {
 	ListItemText,
 	Paper,
 } from "@mui/material";
-import { PRODUCTS } from "../../products";
 import Product from "./Product";
 import { useTranslation } from "react-i18next";
 import FigurineService from "../../services/figurine.service";
