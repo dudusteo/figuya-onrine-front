@@ -58,6 +58,10 @@ const Table = (props) => {
 		}
 	};
 
+	React.useEffect(() => {
+		onSelect(rows[selectionModel[0] - 1]?.name);
+	}, [rows, onSelect, selectionModel]);
+
 	return (
 		<Box {...rest}>
 			<DataGrid

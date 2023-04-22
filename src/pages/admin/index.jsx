@@ -34,7 +34,12 @@ const Admin = () => {
 						sx={{ my: 2 }}
 						setCurrent={setCurrentPackage}
 					></PackageTable>
-					<FigurineTable sx={{ my: 2 }}></FigurineTable>
+					{currentPackage && (
+						<FigurineTable
+							sx={{ my: 2 }}
+							currentPackage={currentPackage}
+						></FigurineTable>
+					)}
 				</>
 			)}
 		</Box>

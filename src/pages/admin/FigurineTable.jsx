@@ -19,7 +19,7 @@ import { useTranslation } from "react-i18next";
 const STATIC_URL = process.env.REACT_APP_STATIC_URL;
 
 const FigurineTable = (props) => {
-	const { ...rest } = props;
+	const { currentPackage, ...rest } = props;
 	const { t } = useTranslation();
 	const [options, setOptions] = React.useState({
 		character: [],
@@ -32,12 +32,16 @@ const FigurineTable = (props) => {
 
 	React.useEffect(() => {
 		FigurineService.getOptions().then((data) => setOptions(data));
-		FigurineService.getFigurines().then((data) => setFigurines(data));
-	}, []);
+		FigurineService.getFigurinesByPackage(currentPackage).then((data) =>
+			setFigurines(data)
+		);
+	}, [currentPackage]);
 
 	const handleSubmit = (event) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
+
+		data.append("packageName", currentPackage);
 
 		let count = 0;
 
@@ -60,12 +64,16 @@ const FigurineTable = (props) => {
 
 	const columns = [
 		{
-			field: "image",
+			field: "images",
 			headerName: "Image",
 			width: 150,
 			editable: true,
 			renderCell: (params) => (
-				<img alt="" src={STATIC_URL + params.value} />
+				<img
+					width="52px"
+					alt={STATIC_URL + params.value[0].path}
+					src={STATIC_URL + params.value[0].path}
+				/>
 			),
 		},
 		{ field: "id", headerName: "ID", flex: 1 },
@@ -77,6 +85,8 @@ const FigurineTable = (props) => {
 		{ field: "company", headerName: t("item.company"), flex: 1 },
 		{ field: "type", headerName: t("item.type"), flex: 1 },
 	];
+
+	console.log(figurines);
 
 	return (
 		<Box {...rest}>

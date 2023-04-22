@@ -27,7 +27,7 @@ const PackageTable = (props) => {
 				rows={packages}
 				columns={columns}
 				submit={FigurineService.addPackageOption}
-				onSelect={(x) => setPackages(x)}
+				onSelect={(x) => setCurrent(x)}
 			></Table>
 		</Box>
 	);

@@ -94,6 +94,14 @@ const addPackageOption = async (formData) => {
 		.then((response) => response.data);
 };
 
+const getFigurinesByPackage = async (packageName) => {
+	return axios
+		.get(API_URL + "/figurine/get/package", {
+			params: { packageName: packageName },
+		})
+		.then((response) => response.data);
+};
+
 const FigurineService = {
 	addFigurine,
 	getFigurines,
@@ -105,6 +113,7 @@ const FigurineService = {
 	getOptions,
 	getPackageOptions,
 	addPackageOption,
+	getFigurinesByPackage,
 };
 
 export default FigurineService;
