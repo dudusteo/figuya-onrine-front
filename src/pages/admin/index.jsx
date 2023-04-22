@@ -9,6 +9,8 @@ import FigurineTable from "./FigurineTable";
 const Admin = () => {
 	const [showAdminBoard, setShowAdminBoard] = React.useState(false);
 
+	const [currentPackage, setCurrentPackage] = React.useState("");
+
 	React.useEffect(() => {
 		const user = AuthService.getCurrentUser();
 
@@ -28,7 +30,10 @@ const Admin = () => {
 			<CssBaseline />
 			{showAdminBoard && (
 				<>
-					<PackageTable sx={{ my: 2 }}></PackageTable>
+					<PackageTable
+						sx={{ my: 2 }}
+						setCurrent={setCurrentPackage}
+					></PackageTable>
 					<FigurineTable sx={{ my: 2 }}></FigurineTable>
 				</>
 			)}

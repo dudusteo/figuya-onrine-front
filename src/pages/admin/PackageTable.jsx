@@ -14,7 +14,7 @@ const columns = [
 ];
 
 const PackageTable = (props) => {
-	const { ...rest } = props;
+	const { setCurrent, ...rest } = props;
 	const [packages, setPackages] = React.useState([]);
 
 	React.useEffect(() => {
@@ -27,6 +27,7 @@ const PackageTable = (props) => {
 				rows={packages}
 				columns={columns}
 				submit={FigurineService.addPackageOption}
+				onSelect={(x) => setPackages(x)}
 			></Table>
 		</Box>
 	);

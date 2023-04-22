@@ -11,13 +11,12 @@ import {
 	TextField,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import FigurineService from "../../services/figurine.service";
 import { enqueueSnackbar } from "notistack";
 import { addServiceSnackbarWrapper } from "../../utils";
 import { useTranslation } from "react-i18next";
 
 const Table = (props) => {
-	const { columns, rows, submit, ...rest } = props;
+	const { columns, rows, submit, onSelect, ...rest } = props;
 	const { t } = useTranslation();
 	const [open, setOpen] = React.useState(false);
 
@@ -49,6 +48,16 @@ const Table = (props) => {
 		}
 	};
 
+	const [selectionModel, setSelectionModel] = React.useState([]);
+
+	const handleSelectionChange = (newSelection) => {
+		if (newSelection.length > 1) {
+			setSelectionModel([newSelection[newSelection.length - 1]]);
+		} else {
+			setSelectionModel(newSelection);
+		}
+	};
+
 	return (
 		<Box {...rest}>
 			<DataGrid
@@ -58,6 +67,8 @@ const Table = (props) => {
 				rowsPerPageOptions={[5]}
 				checkboxSelection
 				autoHeight
+				onRowSelectionModelChange={handleSelectionChange}
+				rowSelectionModel={selectionModel}
 			/>
 			<Box sx={{ display: "flex" }}>
 				<Box sx={{ flexGrow: 1 }}></Box>
