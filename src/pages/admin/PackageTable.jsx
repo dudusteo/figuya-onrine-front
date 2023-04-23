@@ -6,11 +6,21 @@ import FigurineService from "../../services/figurine.service";
 import Table from "../../core/table";
 
 const columns = [
-	{ field: "id", headerName: "ID", flex: 1 },
-	{ field: "name", headerName: "NAME", flex: 1 },
-	{ field: "item_cost", headerName: "ITEM COST", flex: 1 },
-	{ field: "shipment_cost", headerName: "SHIPMENT COST", flex: 1 },
-	{ field: "additional_cost", headerName: "ADDITIONAL COST", flex: 1 },
+	{ field: "id", headerName: "ID", width: 80 },
+	{ field: "name", headerName: "NAME", flex: 1, editable: true },
+	{ field: "item_cost", headerName: "ITEM COST", flex: 1, editable: true },
+	{
+		field: "shipment_cost",
+		headerName: "SHIPMENT COST",
+		flex: 1,
+		editable: true,
+	},
+	{
+		field: "additional_cost",
+		headerName: "ADDITIONAL COST",
+		flex: 1,
+		editable: true,
+	},
 ];
 
 const PackageTable = (props) => {
@@ -26,7 +36,7 @@ const PackageTable = (props) => {
 			<Table
 				rows={packages}
 				columns={columns}
-				submit={FigurineService.addPackageOption}
+				addRow={FigurineService.addPackageOption}
 				onSelect={(x) => setCurrent(x)}
 			></Table>
 		</Box>

@@ -9,14 +9,13 @@ import {
 	TextField,
 } from "@mui/material";
 
-import { DataGrid } from "@mui/x-data-grid";
 import FigurineService from "../../services/figurine.service";
 import { enqueueSnackbar } from "notistack";
 import { addServiceSnackbarWrapper } from "../../utils";
 import FreeSoloCreateOption from "../../core/free-solo-create-option";
 import { useTranslation } from "react-i18next";
-
-const STATIC_URL = process.env.REACT_APP_STATIC_URL;
+import Table from "../../core/table";
+import ImageCell from "../../core/table/ImageCell";
 
 const FigurineTable = (props) => {
 	const { currentPackage, ...rest } = props;
@@ -29,6 +28,7 @@ const FigurineTable = (props) => {
 	});
 
 	const [figurines, setFigurines] = React.useState([]);
+	const [open, setOpen] = React.useState(false);
 
 	React.useEffect(() => {
 		FigurineService.getOptions().then((data) => setOptions(data));
@@ -63,43 +63,62 @@ const FigurineTable = (props) => {
 	};
 
 	const columns = [
+		{ field: "id", headerName: "ID", width: 80 },
 		{
 			field: "images",
 			headerName: "Image",
 			width: 150,
-			editable: true,
-			renderCell: (params) => (
-				<img
-					width="52px"
-					alt={STATIC_URL + params.value[0].path}
-					src={STATIC_URL + params.value[0].path}
-				/>
-			),
+			renderCell: (params) => <ImageCell value={params.value} />,
 		},
-		{ field: "id", headerName: "ID", flex: 1 },
-		{ field: "name", headerName: t("item.productName"), flex: 1 },
-		{ field: "condition", headerName: t("item.condition"), flex: 1 },
-		{ field: "price", headerName: t("item.price"), flex: 1 },
-		{ field: "character", headerName: t("item.character"), flex: 1 },
-		{ field: "origin", headerName: t("item.origin"), flex: 1 },
-		{ field: "company", headerName: t("item.company"), flex: 1 },
-		{ field: "type", headerName: t("item.type"), flex: 1 },
+		{
+			field: "name",
+			headerName: t("item.productName"),
+			flex: 1,
+			editable: true,
+		},
+		{
+			field: "condition",
+			headerName: t("item.condition"),
+			flex: 1,
+			editable: true,
+		},
+		{
+			field: "price",
+			headerName: t("item.price"),
+			flex: 1,
+			editable: true,
+		},
+		{
+			field: "character",
+			headerName: t("item.character"),
+			flex: 1,
+			editable: true,
+		},
+		{
+			field: "origin",
+			headerName: t("item.origin"),
+			flex: 1,
+			editable: true,
+		},
+		{
+			field: "company",
+			headerName: t("item.company"),
+			flex: 1,
+			editable: true,
+		},
+		{ field: "type", headerName: t("item.type"), flex: 1, editable: true },
 	];
-
-	console.log(figurines);
 
 	return (
 		<Box {...rest}>
-			<Box>
-				<DataGrid
-					rows={figurines}
-					columns={columns}
-					pageSize={20}
-					rowsPerPageOptions={[5]}
-					checkboxSelection
-					autoHeight
-				/>
-			</Box>
+			<Table
+				rows={figurines}
+				columns={columns}
+				addRow={FigurineService.addFigurine}
+				deleteRow={FigurineService.removeFigurine}
+				uploadImage={setOpen}
+			/>
+
 			<Box
 				component="form"
 				onSubmit={handleSubmit}

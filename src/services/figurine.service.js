@@ -97,7 +97,18 @@ const addPackageOption = async (formData) => {
 const getFigurinesByPackage = async (packageName) => {
 	return axios
 		.get(API_URL + "/figurine/get/package", {
-			params: { packageName: packageName },
+			params: { packageName },
+		})
+		.then((response) => response.data);
+};
+
+const removeFigurine = async (id) => {
+	return axios
+		.delete(API_URL + "/figurine/remove", {
+			params: { id },
+			headers: {
+				...authHeader(),
+			},
 		})
 		.then((response) => response.data);
 };
@@ -114,6 +125,7 @@ const FigurineService = {
 	getPackageOptions,
 	addPackageOption,
 	getFigurinesByPackage,
+	removeFigurine,
 };
 
 export default FigurineService;
