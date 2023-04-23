@@ -15,25 +15,23 @@ import {
 	GridRowModes,
 	GridToolbarContainer,
 } from "@mui/x-data-grid";
-import { enqueueSnackbar } from "notistack";
-import { addServiceSnackbarWrapper } from "../../utils";
 
 import PropTypes from "prop-types";
+import UtilsService from "../../services/utils.service";
 
 function EditToolbar(props) {
 	const { setRows, setRowModesModel, emptyRow } = props;
 
 	const handleClick = () => {
-		let id;
-
-		setRows((oldRows) => {
-			id = oldRows.length + 1;
-			return [...oldRows, { id, ...emptyRow, isNew: true }];
+		UtilsService.getNextAutoIncrementId("figurines").then((id) => {
+			setRows((oldRows) => {
+				return [...oldRows, { id, ...emptyRow, isNew: true }];
+			});
+			setRowModesModel((oldModel) => ({
+				...oldModel,
+				[id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
+			}));
 		});
-		setRowModesModel((oldModel) => ({
-			...oldModel,
-			[id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
-		}));
 	};
 
 	return (
@@ -59,7 +57,6 @@ const Table = (props) => {
 	const {
 		addRow,
 		deleteRow,
-		uploadImage,
 		columns: initialColumns,
 		rows: initialRows,
 		onSelect,
@@ -103,7 +100,7 @@ const Table = (props) => {
 
 				if (isInEditMode) {
 					return [
-						uploadImage ? (
+						emptyRow?.images ? (
 							<IconButton variant="contained" component="label">
 								<UploadIcon />
 								<input
@@ -205,13 +202,13 @@ const Table = (props) => {
 
 	const handleDeleteClick = (id) => () => {
 		setRows(rows.filter((row) => row.id !== id));
-		addServiceSnackbarWrapper(deleteRow(id));
+		deleteRow(id);
 	};
 
 	const processRowUpdate = (newRow) => {
 		const updatedRow = { ...newRow, isNew: false };
 		setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
-		console.log(updatedRow);
+		addRow(updatedRow);
 		return updatedRow;
 	};
 

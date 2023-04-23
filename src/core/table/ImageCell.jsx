@@ -16,7 +16,7 @@ const ImageCell = ({ value }) => {
 		}
 	}, [value]);
 
-	const path = value?.[0]?.path ? STATIC_URL + value[0].path : STATIC_URL;
+	const path = STATIC_URL + value?.[0]?.path;
 
 	return <img width="52px" alt={path} src={image || path} />;
 };
