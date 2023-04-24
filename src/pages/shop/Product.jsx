@@ -4,6 +4,7 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 
 import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const Image = styled("img")(({ theme, small }) => ({
 	height: "100%",
@@ -18,6 +19,7 @@ const STATIC_URL = process.env.REACT_APP_STATIC_URL;
 const Product = (props) => {
 	const { id, name, origin, company, type, price, images } = props.data;
 
+	const navigate = useNavigate();
 	const { t } = useTranslation();
 	const { addToCart } = React.useContext(ShopContext);
 
@@ -34,6 +36,7 @@ const Product = (props) => {
 				display: "flex",
 				flexDirection: "column",
 			}}
+			onClick={() => navigate(`/item/${id}`)}
 		>
 			<Box
 				sx={{

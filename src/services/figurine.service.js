@@ -14,12 +14,23 @@ const addFigurine = async (formData) => {
 		.then((response) => response.data);
 };
 
-const getFigurines = async () => {
+const getAllFigurines = async () => {
 	return axios
-		.get(API_URL + "/figurine/get", {
+		.get(API_URL + "/figurine/all", {
 			headers: {
 				...authHeader(),
 				"Content-Type": "multipart/form-data",
+			},
+		})
+		.then((response) => response.data);
+};
+
+const getFigurine = async (id) => {
+	return axios
+		.get(API_URL + "/figurine/get", {
+			params: { id },
+			headers: {
+				...authHeader(),
 			},
 		})
 		.then((response) => response.data);
@@ -115,7 +126,8 @@ const removeFigurine = async (id) => {
 
 const FigurineService = {
 	addFigurine,
-	getFigurines,
+	getFigurine,
+	getAllFigurines,
 	getFiles,
 	addCharacterOption,
 	addOriginOption,

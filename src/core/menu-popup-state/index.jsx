@@ -1,6 +1,5 @@
 import * as React from "react";
 import HoverMenu from "material-ui-popup-state/HoverMenu";
-import { styled } from "@mui/material/styles";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
 import {
@@ -8,12 +7,7 @@ import {
 	bindHover,
 	bindMenu,
 } from "material-ui-popup-state/hooks";
-import { Link } from "react-router-dom";
-
-const ItemLink = styled(Link)(({ theme }) => ({
-	color: "inherit",
-	textDecoration: "inherit",
-}));
+import { Link } from "@mui/material";
 
 const MenuPopupState = (props) => {
 	const { text, items = [], href = "" } = props;
@@ -28,7 +22,7 @@ const MenuPopupState = (props) => {
 			</Button>
 			<HoverMenu {...bindMenu(popupState)}>
 				{items.map((item, index) => (
-					<ItemLink key={index} to={href + "/item"}>
+					<Link underline="hover" key={index} href={href + "/item"}>
 						<MenuItem
 							onClick={() => {
 								popupState.close();
@@ -36,7 +30,7 @@ const MenuPopupState = (props) => {
 						>
 							{item.name}
 						</MenuItem>
-					</ItemLink>
+					</Link>
 				))}
 			</HoverMenu>
 		</React.Fragment>

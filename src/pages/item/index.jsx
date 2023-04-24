@@ -1,20 +1,34 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
-import { Box, CssBaseline } from "@mui/material";
-import { useParams } from "react-router-dom";
-import { PRODUCTS } from "../../products";
 
-const Image = styled("img")(({ theme, small }) => ({
-	height: "100%",
-	position: "absolute",
-	top: "50%",
-	left: "50%",
-	transform: "translateX(-50%) translateY(-50%)",
-}));
+import {
+	Box,
+	Breadcrumbs,
+	Button,
+	CssBaseline,
+	Link,
+	Typography,
+} from "@mui/material";
+import { useParams } from "react-router-dom";
+import FigurineService from "../../services/figurine.service";
+import { ShopContext } from "../../context/shop-context";
+import { useTranslation } from "react-i18next";
+import ImageProduct from "./ImageProduct";
 
 const Item = (props) => {
 	const { itemId } = useParams();
-	const { productImage } = PRODUCTS[0];
+	const [item, setItem] = React.useState({});
+
+	const { addToCart } = React.useContext(ShopContext);
+
+	const { t } = useTranslation();
+
+	React.useEffect(() => {
+		FigurineService.getFigurine(itemId).then((data) => setItem(data));
+	}, [itemId]);
+
+	const title = item.name + " - " + item.origin + " - " + item.company;
+	const priceTitle = t("price") + " " + item.price + " " + t("unit");
+
 	return (
 		<Box
 			sx={{
@@ -25,17 +39,78 @@ const Item = (props) => {
 			}}
 		>
 			<CssBaseline />
+
 			<Box
 				sx={{
-					position: "relative",
-					height: "24rem",
-					width: "18em",
-					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);",
+					height: "30rem",
+					display: "flex",
+					flexDirection: "column",
 				}}
 			>
-				<Image alt="" src={productImage}></Image>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "row",
+						my: 2,
+					}}
+				>
+					<Breadcrumbs separator="-" sx={{ flexGrow: 1 }}>
+						<Link underline="hover" href="/">
+							Figuya Onrine
+						</Link>
+						<Link underline="hover" href="/">
+							{item.origin}
+						</Link>
+					</Breadcrumbs>
+					<Typography>{"Similiar products"}</Typography>
+				</Box>
+				<Box
+					sx={{
+						display: "flex",
+						flexDirection: "row",
+					}}
+				>
+					<ImageProduct images={item.images}></ImageProduct>
+					<Box
+						sx={{
+							display: "flex",
+							flexDirection: "column",
+							mx: 4,
+						}}
+					>
+						<Typography
+							variant="h5"
+							sx={{ color: "primary.main", flexGrow: 1 }}
+						>
+							{title}
+						</Typography>
+						<Typography
+							variant="h4"
+							sx={{
+								color: "primary.main",
+								fontWeight: "bold",
+								my: 1,
+							}}
+						>
+							{priceTitle}
+						</Typography>
+						<Button
+							variant="contained"
+							onClick={() => addToCart(itemId)}
+							sx={{ width: "11rem" }}
+						>
+							{t("add-to-cart")}
+						</Button>
+						<Box sx={{ flexGrow: 1 }}></Box>
+						<Typography
+							variant="subtitle1"
+							sx={{ color: "primary.main" }}
+						>
+							{"rest"}
+						</Typography>
+					</Box>
+				</Box>
 			</Box>
-			{itemId}
 		</Box>
 	);
 };

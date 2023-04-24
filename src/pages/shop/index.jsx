@@ -61,7 +61,7 @@ const Shop = () => {
 	};
 
 	React.useEffect(() => {
-		FigurineService.getFigurines().then((data) => setProducts(data));
+		FigurineService.getAllFigurines().then((data) => setProducts(data));
 	}, []);
 
 	return (
