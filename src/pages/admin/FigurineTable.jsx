@@ -12,29 +12,21 @@ import {
 import FigurineService from "../../services/figurine.service";
 import { enqueueSnackbar } from "notistack";
 import { addServiceSnackbarWrapper } from "../../utils";
-import FreeSoloCreateOption from "../../core/free-solo-create-option";
 import { useTranslation } from "react-i18next";
 import Table from "../../core/table";
 import ImageCell from "../../core/table/ImageCell";
 
 const FigurineTable = (props) => {
-	const { currentPackage, ...rest } = props;
+	const { currentPackageId, ...rest } = props;
 	const { t } = useTranslation();
-	const [options, setOptions] = React.useState({
-		character: [],
-		origin: [],
-		company: [],
-		type: [],
-	});
 
 	const [figurines, setFigurines] = React.useState([]);
 
 	React.useEffect(() => {
-		FigurineService.getOptions().then((data) => setOptions(data));
-		FigurineService.getFigurinesByPackage(currentPackage).then((data) =>
+		FigurineService.getFigurinesByPackage(currentPackageId).then((data) =>
 			setFigurines(data)
 		);
-	}, [currentPackage]);
+	}, [currentPackageId]);
 
 	const addRow = (object) => {
 		const formData = new FormData();
@@ -49,7 +41,7 @@ const FigurineTable = (props) => {
 			}
 		});
 
-		formData.append("packageName", currentPackage);
+		formData.append("packageId", currentPackageId);
 
 		let count = 0;
 
@@ -115,11 +107,20 @@ const FigurineTable = (props) => {
 			editable: true,
 		},
 		{ field: "type", headerName: t("item.type"), flex: 1, editable: true },
+		{
+			field: "soldAt",
+			headerName: t("item.soldAt"),
+			type: "dateTime",
+			// valueGetter: ({ value }) => value && new Date(value),
+			flex: 1,
+			editable: true,
+		},
 	];
 
 	return (
 		<Box {...rest}>
 			<Table
+				tableName="figurines"
 				rows={figurines}
 				columns={columns}
 				addRow={addRow}

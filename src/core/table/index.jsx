@@ -20,10 +20,10 @@ import PropTypes from "prop-types";
 import UtilsService from "../../services/utils.service";
 
 function EditToolbar(props) {
-	const { setRows, setRowModesModel, emptyRow } = props;
+	const { setRows, setRowModesModel, emptyRow, tableName } = props;
 
 	const handleClick = () => {
-		UtilsService.getNextAutoIncrementId("figurines").then((id) => {
+		UtilsService.getNextAutoIncrementId(tableName).then((id) => {
 			setRows((oldRows) => {
 				return [...oldRows, { id, ...emptyRow, isNew: true }];
 			});
@@ -51,6 +51,7 @@ EditToolbar.propTypes = {
 	setRowModesModel: PropTypes.func.isRequired,
 	setRows: PropTypes.func.isRequired,
 	emptyRow: PropTypes.object.isRequired,
+	tableName: PropTypes.string.isRequired,
 };
 
 const Table = (props) => {
@@ -61,6 +62,7 @@ const Table = (props) => {
 		rows: initialRows,
 		onSelect,
 		DataGridParams,
+		tableName,
 		...rest
 	} = props;
 
@@ -78,6 +80,10 @@ const Table = (props) => {
 		delete t_object["id"];
 		if (t_object.images === "") {
 			t_object.images = [];
+		}
+
+		if (t_object.soldAt === "") {
+			t_object.soldAt = null;
 		}
 
 		setEmptyRow(t_object);
@@ -154,7 +160,7 @@ const Table = (props) => {
 	}, [initialColumns, rowModesModel, rows]);
 
 	React.useEffect(() => {
-		onSelect && onSelect(rows[selectionModel[0] - 1]?.name);
+		onSelect && onSelect(rows[selectionModel[0] - 1]?.id);
 	}, [rows, onSelect, selectionModel]);
 
 	const handleSelectionChange = (newSelection) => {
@@ -244,7 +250,7 @@ const Table = (props) => {
 					toolbar: EditToolbar,
 				}}
 				slotProps={{
-					toolbar: { setRows, setRowModesModel, emptyRow },
+					toolbar: { setRows, setRowModesModel, emptyRow, tableName },
 				}}
 				{...DataGridParams}
 			/>

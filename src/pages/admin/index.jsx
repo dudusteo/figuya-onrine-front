@@ -9,7 +9,7 @@ import FigurineTable from "./FigurineTable";
 const Admin = () => {
 	const [showAdminBoard, setShowAdminBoard] = React.useState(false);
 
-	const [currentPackage, setCurrentPackage] = React.useState("");
+	const [currentPackageId, setCurrentPackageId] = React.useState("");
 
 	React.useEffect(() => {
 		const user = AuthService.getCurrentUser();
@@ -32,12 +32,12 @@ const Admin = () => {
 				<>
 					<PackageTable
 						sx={{ my: 2 }}
-						setCurrent={setCurrentPackage}
+						setCurrentId={setCurrentPackageId}
 					></PackageTable>
-					{currentPackage && (
+					{currentPackageId && (
 						<FigurineTable
 							sx={{ my: 2 }}
-							currentPackage={currentPackage}
+							currentPackageId={currentPackageId}
 						></FigurineTable>
 					)}
 				</>

@@ -13,8 +13,6 @@ const CartItem = (props) => {
 	const title = item.name + " - " + item.origin + " - " + item.company;
 	const priceTitle = t("price") + " " + item.price + " " + t("unit");
 
-	console.log(item);
-
 	return (
 		<Paper
 			sx={{

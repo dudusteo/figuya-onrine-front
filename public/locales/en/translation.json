@@ -52,6 +52,7 @@
 		"origin": "Origin",
 		"company": "Company",
 		"type": "Type",
+		"soldAt": "Sold At",
 		"conditon": "Condition",
 		"new": "New",
 		"used": "Used",
