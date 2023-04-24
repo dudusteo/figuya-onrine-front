@@ -78,11 +78,14 @@ const Item = (props) => {
 							mx: 4,
 						}}
 					>
+						<Typography variant="h5" sx={{ color: "primary.main" }}>
+							{title}
+						</Typography>
 						<Typography
-							variant="h5"
+							variant="subtitle"
 							sx={{ color: "primary.main", flexGrow: 1 }}
 						>
-							{title}
+							{item.condition}
 						</Typography>
 						<Typography
 							variant="h4"
@@ -96,7 +99,7 @@ const Item = (props) => {
 						</Typography>
 						<Button
 							variant="contained"
-							onClick={() => addToCart(itemId)}
+							onClick={() => addToCart(item)}
 							sx={{ width: "11rem" }}
 						>
 							{t("add-to-cart")}

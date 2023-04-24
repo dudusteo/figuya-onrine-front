@@ -16,15 +16,15 @@ const Image = styled("img")(({ theme, small }) => ({
 
 const STATIC_URL = process.env.REACT_APP_STATIC_URL;
 
-const Product = (props) => {
-	const { id, name, origin, company, type, price, images } = props.data;
+const Item = (props) => {
+	const { item } = props;
 
 	const navigate = useNavigate();
 	const { t } = useTranslation();
 	const { addToCart } = React.useContext(ShopContext);
 
-	const title = name + " - " + origin + " - " + company;
-	const priceTitle = t("price") + " " + price + " " + t("unit");
+	const title = item.name + " - " + item.origin + " - " + item.company;
+	const priceTitle = t("price") + " " + item.price + " " + t("unit");
 
 	return (
 		<Paper
@@ -36,7 +36,7 @@ const Product = (props) => {
 				display: "flex",
 				flexDirection: "column",
 			}}
-			onClick={() => navigate(`/item/${id}`)}
+			onClick={() => navigate(`/item/${item.id}`)}
 		>
 			<Box
 				sx={{
@@ -46,7 +46,7 @@ const Product = (props) => {
 					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);",
 				}}
 			>
-				<Image alt="" src={STATIC_URL + images[0]?.path} />
+				<Image alt="" src={STATIC_URL + item.images[0]?.path} />
 			</Box>
 			<Box sx={{ flexGrow: 1, py: 1 }}>
 				<Typography variant="subtitle2" sx={{ color: "primary.main" }}>
@@ -61,11 +61,17 @@ const Product = (props) => {
 			>
 				{priceTitle}
 			</Typography>
-			<Button variant="contained" onClick={() => addToCart(id)}>
+			<Button
+				variant="contained"
+				onClick={(e) => {
+					e.stopPropagation();
+					addToCart(item);
+				}}
+			>
 				{t("add-to-cart")}
 			</Button>
 		</Paper>
 	);
 };
 
-export default Product;
+export default Item;

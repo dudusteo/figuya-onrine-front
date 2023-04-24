@@ -6,8 +6,7 @@ import { ShopContext } from "../../context/shop-context";
 import CartItem from "./CartItem";
 
 const Cart = () => {
-	const { cartItems, getDataFromId } = React.useContext(ShopContext);
-	console.log(cartItems);
+	const { cartItems } = React.useContext(ShopContext);
 	return (
 		<Box
 			sx={{
@@ -19,8 +18,8 @@ const Cart = () => {
 			<CssBaseline />
 
 			<Stack sx={{ px: 50 }}>
-				{cartItems.map((item) => (
-					<CartItem data={getDataFromId(item.id)} key={item.id} />
+				{cartItems.map((item, index) => (
+					<CartItem item={item} key={index} />
 				))}
 			</Stack>
 			<Button href="cart/checkout" variant="outlined">

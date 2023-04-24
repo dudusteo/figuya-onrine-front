@@ -11,9 +11,9 @@ import {
 	ListItemText,
 	Paper,
 } from "@mui/material";
-import Product from "./Product";
 import { useTranslation } from "react-i18next";
 import FigurineService from "../../services/figurine.service";
+import Item from "./Item";
 
 const data = {
 	type: [
@@ -35,7 +35,7 @@ const data = {
 
 const Shop = () => {
 	const { t } = useTranslation();
-	const [products, setProducts] = React.useState([]);
+	const [items, setItems] = React.useState([]);
 	const [list, setList] = React.useState({
 		type: true,
 		condition: true,
@@ -61,7 +61,7 @@ const Shop = () => {
 	};
 
 	React.useEffect(() => {
-		FigurineService.getAllFigurines().then((data) => setProducts(data));
+		FigurineService.getAllFigurines().then((data) => setItems(data));
 	}, []);
 
 	return (
@@ -164,9 +164,9 @@ const Shop = () => {
 			</Box>
 			<Box>
 				<Grid container spacing={2} sx={{ pl: 2 }}>
-					{products.map((product) => (
-						<Grid item key={product.id}>
-							<Product data={product} />
+					{items.map((item) => (
+						<Grid item key={item.id}>
+							<Item item={item} />
 						</Grid>
 					))}
 				</Grid>
