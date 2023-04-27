@@ -6,7 +6,6 @@ Stack:
 
 **FE: React.js / JS / MUI**
 
-BE: JS + Express.js + Docker / PostgreSQL
-
+BE: Express.js / JS / Sequelize + Docker / PostgreSQL
 
 Back-end side of this project at: https://github.com/DuDuSteo/figuya-onrine-api
