@@ -1,13 +1,6 @@
 import * as React from "react";
 
-import {
-	Box,
-	Button,
-	FormControlLabel,
-	Radio,
-	RadioGroup,
-	TextField,
-} from "@mui/material";
+import { Box } from "@mui/material";
 
 import FigurineService from "../../services/figurine.service";
 import { enqueueSnackbar } from "notistack";

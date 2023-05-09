@@ -3,11 +3,11 @@ import authHeader from "./auth-header";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const getNextAutoIncrementId = async (table) => {
+const getNextAutoIncrementId = async (tableName: string) => {
 	return axios
 		.get(API_URL + "/utils/autoincrement/get", {
 			params: {
-				table,
+				table: tableName,
 			},
 			headers: {
 				...authHeader(),

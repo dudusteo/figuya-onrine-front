@@ -3,7 +3,7 @@ import authHeader from "./auth-header";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const addPackage = async (formData) => {
+const addPackage = async (formData: FormData) => {
 	return axios
 		.post(API_URL + "/package/add", formData, {
 			headers: {

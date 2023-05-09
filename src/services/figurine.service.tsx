@@ -3,7 +3,7 @@ import authHeader from "./auth-header";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const addFigurine = async (formData) => {
+const addFigurine = async (formData: FormData) => {
 	return axios
 		.post(API_URL + "/figurine/add", formData, {
 			headers: {
@@ -14,7 +14,7 @@ const addFigurine = async (formData) => {
 		.then((response) => response.data);
 };
 
-const getFigurine = async (id) => {
+const getFigurine = async (id: number) => {
 	return axios
 		.get(API_URL + "/figurine/get", {
 			params: { id },
@@ -36,7 +36,7 @@ const getAllFigurines = async () => {
 		.then((response) => response.data);
 };
 
-const removeFigurine = async (id) => {
+const removeFigurine = async (id: number) => {
 	return axios
 		.delete(API_URL + "/figurine/remove", {
 			params: { id },
@@ -58,7 +58,7 @@ const getOptions = async () => {
 		.then((response) => response.data);
 };
 
-const getFigurinesByPackage = async (packageId) => {
+const getFigurinesByPackage = async (packageId: number) => {
 	return axios
 		.get(API_URL + "/figurine/all/package/get", {
 			params: { packageId },

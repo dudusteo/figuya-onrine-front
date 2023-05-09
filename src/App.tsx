@@ -1,9 +1,9 @@
-import * as React from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { SnackbarProvider } from "notistack";
 
+import { ShopContextProvider } from "./context/shop-context";
 import SearchAppBar from "./core/search-app-bar";
 import StickyFooter from "./core/sticky-footer";
-import { ShopContextProvider } from "./context/shop-context";
 
 import Shop from "./pages/shop";
 import Cart from "./pages/cart";
@@ -14,7 +14,7 @@ import Register from "./pages/account/register";
 import Home from "./pages/home";
 import Item from "./pages/item";
 import Account from "./pages/account";
-import { SnackbarProvider } from "notistack";
+
 
 const App = () => {
 	return (
