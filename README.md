@@ -4,7 +4,7 @@ Personal project for e-commerce figurine shop - font-end side
 
 Stack:
 
-**FE: React.js / JS / MUI**
+**FE: React.js / JS (Migration to TSX in progress) / MUI**
 
 BE: Express.js / JS / Sequelize + Docker / PostgreSQL
 
