@@ -7,9 +7,9 @@ import PackageTable from "./PackageTable";
 import FigurineTable from "./FigurineTable";
 
 const Admin = () => {
-	const [showAdminBoard, setShowAdminBoard] = React.useState(false);
+	const [showAdminBoard, setShowAdminBoard] = React.useState<boolean>(false);
 
-	const [currentPackageId, setCurrentPackageId] = React.useState("");
+	const [currentPackageId, setCurrentPackageId] = React.useState<number>();
 
 	React.useEffect(() => {
 		const user = AuthService.getCurrentUser();
@@ -31,12 +31,10 @@ const Admin = () => {
 			{showAdminBoard && (
 				<>
 					<PackageTable
-						sx={{ my: 2 }}
 						setCurrentId={setCurrentPackageId}
 					></PackageTable>
 					{currentPackageId && (
 						<FigurineTable
-							sx={{ my: 2 }}
 							currentPackageId={currentPackageId}
 						></FigurineTable>
 					)}

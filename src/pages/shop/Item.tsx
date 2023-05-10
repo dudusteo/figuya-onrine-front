@@ -19,10 +19,9 @@ const STATIC_URL = process.env.REACT_APP_STATIC_URL;
 
 interface ItemProps {
 	item: Figurine;
-	[x: string]: any;
 }
 
-const Item = ({ item, ...rest }: ItemProps) => {
+const Item = ({ item }: ItemProps) => {
 	const navigate = useNavigate();
 	const { t } = useTranslation();
 	const { addToCart } = React.useContext(ShopContext);

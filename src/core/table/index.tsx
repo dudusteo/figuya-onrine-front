@@ -12,22 +12,39 @@ import UploadIcon from "@mui/icons-material/Upload";
 import {
 	DataGrid,
 	GridActionsCellItem,
+	GridColDef,
+	GridRowId,
 	GridRowModes,
+	GridRowModesModel,
+	GridRowParams,
+	GridRowSelectionModel,
 	GridToolbarContainer,
+	MuiBaseEvent,
+	MuiEvent,
 } from "@mui/x-data-grid";
 
-import PropTypes from "prop-types";
 import UtilsService from "../../services/utils.service";
 
-function EditToolbar(props) {
-	const { setRows, setRowModesModel, emptyRow, tableName } = props;
+interface EditToolbarProps {
+	setRows: React.Dispatch<React.SetStateAction<Row[]>>;
+	setRowModesModel: React.Dispatch<React.SetStateAction<GridRowModesModel>>;
+	emptyRow: EmptyRow;
+	tableName: string;
+}
 
+const EditToolbar = ({
+	setRows,
+	setRowModesModel,
+	emptyRow,
+	tableName,
+}: EditToolbarProps) => {
 	const handleClick = () => {
-		UtilsService.getNextAutoIncrementId(tableName).then((id) => {
-			setRows((oldRows) => {
-				return [...oldRows, { id, ...emptyRow, isNew: true }];
-			});
-			setRowModesModel((oldModel) => ({
+		UtilsService.getNextAutoIncrementId(tableName).then((id: GridRowId) => {
+			setRows((prevRows: Row[]) => [
+				...prevRows,
+				{ id, ...emptyRow, isNew: true },
+			]);
+			setRowModesModel((oldModel: GridRowModesModel) => ({
 				...oldModel,
 				[id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
 			}));
@@ -45,48 +62,62 @@ function EditToolbar(props) {
 			</Button>
 		</GridToolbarContainer>
 	);
-}
-
-EditToolbar.propTypes = {
-	setRowModesModel: PropTypes.func.isRequired,
-	setRows: PropTypes.func.isRequired,
-	emptyRow: PropTypes.object.isRequired,
-	tableName: PropTypes.string.isRequired,
 };
 
-const Table = (props) => {
-	const {
-		addRow,
-		deleteRow,
-		columns: initialColumns,
-		rows: initialRows,
-		onSelect,
-		DataGridParams,
-		tableName,
-		...rest
-	} = props;
+interface Row {
+	id: GridRowId;
+	mode?: boolean;
+	isNew?: boolean;
+	images?: FileList;
+}
 
+interface EmptyRow {
+	mode?: boolean;
+	isNew?: boolean;
+	images?: FileList;
+}
+
+interface TableProps {
+	addRow: (row: Row) => void;
+	deleteRow: (id: number) => void;
+	columns: GridColDef[];
+	rows: any[];
+	tableName: string;
+	onSelect?: (id: number) => void;
+}
+
+const Table = ({
+	addRow,
+	deleteRow,
+	columns: initialColumns,
+	rows: initialRows,
+	onSelect,
+	tableName,
+	...rest
+}: TableProps) => {
 	const [columns, setColumns] = React.useState(initialColumns);
-	const [rows, setRows] = React.useState(initialRows);
-	const [rowModesModel, setRowModesModel] = React.useState({});
-	const [selectionModel, setSelectionModel] = React.useState([]);
-	const [emptyRow, setEmptyRow] = React.useState({});
+	const [rows, setRows] = React.useState<Row[]>(initialRows);
+	const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
+		{}
+	);
+	const [selectionModel, setSelectionModel] =
+		React.useState<GridRowSelectionModel>([]);
+	const [emptyRow, setEmptyRow] = React.useState<EmptyRow>();
 
 	React.useEffect(() => {
-		let t_object = {};
-		initialColumns.forEach(
-			(column) => (t_object = { ...t_object, [column.field]: "" })
+		const emptyRow: any = initialColumns.reduce(
+			(accumulator: any, column: any) => {
+				if (column.field === "images") {
+					return { ...accumulator, [column.field]: [] };
+				} else if (column.field === "soldAt") {
+					return { ...accumulator, [column.field]: null };
+				}
+				return { ...accumulator, [column.field]: "" };
+			},
+			{}
 		);
-		delete t_object["id"];
-		if (t_object.images === "") {
-			t_object.images = [];
-		}
-
-		if (t_object.soldAt === "") {
-			t_object.soldAt = null;
-		}
-
-		setEmptyRow(t_object);
+		delete emptyRow.id;
+		setEmptyRow(emptyRow);
 	}, [initialColumns]);
 
 	React.useEffect(() => {
@@ -100,14 +131,14 @@ const Table = (props) => {
 			headerName: "Actions",
 			width: 120,
 			cellClassName: "actions",
-			getActions: ({ id }) => {
+			getActions: ({ id }: GridRowParams) => {
 				const isInEditMode =
 					rowModesModel[id]?.mode === GridRowModes.Edit;
 
 				if (isInEditMode) {
 					return [
 						emptyRow?.images ? (
-							<IconButton variant="contained" component="label">
+							<IconButton component="label">
 								<UploadIcon />
 								<input
 									hidden
@@ -116,7 +147,9 @@ const Table = (props) => {
 									type="file"
 									name="images"
 									onChange={(e) => {
-										handleImages(id, e.target.files);
+										if (e.target.files) {
+											handleImages(id, e.target.files);
+										}
 									}}
 								/>
 							</IconButton>
@@ -143,15 +176,11 @@ const Table = (props) => {
 						onClick={handleEditClick(id)}
 					/>,
 
-					deleteRow ? (
-						<GridActionsCellItem
-							icon={<DeleteIcon />}
-							label="Delete"
-							onClick={handleDeleteClick(id)}
-						/>
-					) : (
-						<></>
-					),
+					<GridActionsCellItem
+						icon={<DeleteIcon />}
+						label="Delete"
+						onClick={handleDeleteClick(id)}
+					/>,
 				];
 			},
 		};
@@ -160,10 +189,13 @@ const Table = (props) => {
 	}, [initialColumns, rowModesModel, rows]);
 
 	React.useEffect(() => {
-		onSelect && onSelect(rows[selectionModel[0] - 1]?.id);
+		if (selectionModel && selectionModel?.length > 0) {
+			onSelect &&
+				onSelect(Number(rows[(selectionModel[0] as number) - 1].id));
+		}
 	}, [rows, onSelect, selectionModel]);
 
-	const handleSelectionChange = (newSelection) => {
+	const handleSelectionChange = (newSelection: GridRowSelectionModel) => {
 		if (newSelection.length > 1) {
 			setSelectionModel([newSelection[newSelection.length - 1]]);
 		} else {
@@ -171,22 +203,22 @@ const Table = (props) => {
 		}
 	};
 
-	const handleImages = (id, images) => {
+	const handleImages = (id: GridRowId, images: FileList) => {
 		setRows(
-			rows.map((row) =>
+			rows.map((row: Row) =>
 				row.id === id ? { ...row, images: images } : row
 			)
 		);
 	};
 
-	const handleSaveClick = (id) => () => {
+	const handleSaveClick = (id: GridRowId) => () => {
 		setRowModesModel({
 			...rowModesModel,
 			[id]: { mode: GridRowModes.View },
 		});
 	};
 
-	const handleCancelClick = (id) => () => {
+	const handleCancelClick = (id: GridRowId) => () => {
 		setRowModesModel({
 			...rowModesModel,
 			[id]: { mode: GridRowModes.View, ignoreModifications: true },
@@ -194,39 +226,45 @@ const Table = (props) => {
 
 		const editedRow = rows.find((row) => row.id === id);
 		//delete if thats new row
-		if (editedRow.isNew) {
+		if (editedRow && editedRow.isNew) {
 			setRows(rows.filter((row) => row.id !== id));
 		}
 	};
 
-	const handleEditClick = (id) => () => {
+	const handleEditClick = (id: GridRowId) => () => {
 		setRowModesModel({
 			...rowModesModel,
 			[id]: { mode: GridRowModes.Edit },
 		});
 	};
 
-	const handleDeleteClick = (id) => () => {
+	const handleDeleteClick = (id: GridRowId) => () => {
 		setRows(rows.filter((row) => row.id !== id));
-		deleteRow(id);
+		deleteRow(id as number);
 	};
 
-	const processRowUpdate = (newRow) => {
+	const processRowUpdate = (newRow: any, oldRow: any) => {
 		const updatedRow = { ...newRow, isNew: false };
 		setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
 		addRow(updatedRow);
 		return updatedRow;
 	};
 
-	const handleRowModesModelChange = (newRowModesModel) => {
+	const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
 		setRowModesModel(newRowModesModel);
 	};
 
-	const handleRowEditStart = (params, event) => {
+	const handleRowEditStart = (
+		params: GridRowParams,
+		event: MuiEvent<React.KeyboardEvent | React.MouseEvent>
+	) => {
 		event.defaultMuiPrevented = true;
 	};
 
-	const handleRowEditStop = (params, event) => {
+	const handleRowEditStop = (
+		params: GridRowParams,
+		event: MuiEvent<MuiBaseEvent>
+	) => {
 		event.defaultMuiPrevented = true;
 	};
 
@@ -252,7 +290,6 @@ const Table = (props) => {
 				slotProps={{
 					toolbar: { setRows, setRowModesModel, emptyRow, tableName },
 				}}
-				{...DataGridParams}
 			/>
 		</Box>
 	);

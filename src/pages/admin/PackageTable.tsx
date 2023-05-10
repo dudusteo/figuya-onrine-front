@@ -25,15 +25,18 @@ const columns = [
 	},
 ];
 
-const PackageTable = (props) => {
-	const { setCurrentId, ...rest } = props;
+interface PackageTableProps {
+	setCurrentId: (id: number) => void;
+}
+
+const PackageTable = ({ setCurrentId }: PackageTableProps) => {
 	const [packages, setPackages] = React.useState([]);
 
-	const addRow = (object) => {
+	const addRow = (row: any) => {
 		const formData = new FormData();
 
-		Object.keys(object).forEach((key) => {
-			formData.append(key, object[key]);
+		Object.keys(row).forEach((key) => {
+			formData.append(key, row[key]);
 		});
 
 		let count = 0;
@@ -41,7 +44,7 @@ const PackageTable = (props) => {
 		for (let [key, value] of formData.entries()) {
 			if (
 				(typeof value === "string" && value.length === 0) ||
-				(key === "images" && value.size === 0)
+				(key === "images" && value.length === 0)
 			) {
 				count++;
 				enqueueSnackbar("Puste pole: " + key, {
@@ -60,12 +63,13 @@ const PackageTable = (props) => {
 	}, []);
 
 	return (
-		<Box {...rest}>
+		<Box sx={{ my: 2 }}>
 			<Table
 				tableName="packages"
 				rows={packages}
 				columns={columns}
 				addRow={addRow}
+				deleteRow={(id: number) => console.log("TODO")}
 				onSelect={(x) => setCurrentId(x)}
 			></Table>
 		</Box>
