@@ -19,15 +19,11 @@ export default function SignUp() {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 
-	const handleSubmit = (event) => {
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
-		AuthService.register(
-			data.get("email"),
-			data.get("password"),
-			data.get("firstName"),
-			data.get("lastName")
-		)
+
+		AuthService.register(data)
 			.then((result) => {
 				navigate("/account/login");
 			})

@@ -2,29 +2,19 @@ import axios from "axios";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-const register = async (email: string, password: string, firstName: string, lastName: string) => {
+const register = async (formData: FormData) => {
 	return axios
-		.post(API_URL + "/auth/signup", {
-			email,
-			password,
-			firstName,
-			lastName,
-		})
+		.post(API_URL + "/auth/signup", formData)
 		.then((response) => response.data);
 };
 
-const login = async (email: string, password: string) => {
-	return axios
-		.post(API_URL + "/auth/signin", {
-			email,
-			password,
-		})
-		.then((response) => {
-			if (response.data.accessToken) {
-				localStorage.setItem("user", JSON.stringify(response.data));
-			}
-			return response.data;
-		});
+const login = async (formData: FormData) => {
+	return axios.post(API_URL + "/auth/signin", formData).then((response) => {
+		if (response.data.accessToken) {
+			localStorage.setItem("user", JSON.stringify(response.data));
+		}
+		return response.data;
+	});
 };
 
 const logout = async () => {
