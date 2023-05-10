@@ -70,10 +70,7 @@ const ImageDialog = ({ images = [], open, onClose }: ImageDialogProps) => {
 								Selected image
 							</Typography>
 							{selectedImage ? (
-								<StaticImage
-									src={selectedImage.path}
-									alt={selectedImage.path}
-								/>
+								<StaticImage src={selectedImage.path} />
 							) : (
 								<Typography
 									variant="body2"

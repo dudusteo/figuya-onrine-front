@@ -38,7 +38,6 @@ const ImageProduct = ({ images }: ImageProductProps) => {
 					width: "21rem",
 					mr: "0.5rem",
 				}}
-				alt=""
 				src={main.path}
 				onClick={() => setOpenDialog(true)}
 			/>
@@ -55,7 +54,6 @@ const ImageProduct = ({ images }: ImageProductProps) => {
 								height: "5rem",
 								width: "5rem",
 							}}
-							alt=""
 							src={image.path}
 						/>
 					</ImageListItem>

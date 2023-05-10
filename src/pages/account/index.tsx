@@ -15,8 +15,8 @@ const Account = () => {
 			}}
 		>
 			<CssBaseline />
-			<div className="container">
-				<header className="jumbotron">
+			<div>
+				<header>
 					<h3>
 						<strong>{currentUser?.username}</strong> Profile
 					</h3>
@@ -37,9 +37,11 @@ const Account = () => {
 				<strong>Authorities:</strong>
 				<ul>
 					{currentUser?.roles &&
-						currentUser?.roles.map((role, index) => (
-							<li key={index}>{role}</li>
-						))}
+						currentUser?.roles.map(
+							(role: string, index: number) => (
+								<li key={index}>{role}</li>
+							)
+						)}
 				</ul>
 			</div>
 		</Box>

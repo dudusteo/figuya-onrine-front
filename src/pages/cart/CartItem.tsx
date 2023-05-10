@@ -27,7 +27,7 @@ const CartItem = ({ item }: CartItemProps) => {
 			<Grid container spacing={2}>
 				<Grid item>
 					<ButtonBase sx={{ width: 200, height: 200 }}>
-						<StaticImage alt="complex" src={item.images[0].path} />
+						<StaticImage src={item.images[0].path} />
 					</ButtonBase>
 				</Grid>
 				<Grid item xs={12} sm container>

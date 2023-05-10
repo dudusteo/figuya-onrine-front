@@ -1,19 +1,23 @@
-import { Box } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
 
-const Image = styled("img")(({ theme, small }) => ({
+const Image = styled("img")({
 	height: "100%",
 	position: "absolute",
 	top: "50%",
 	left: "50%",
 	transform: "translateX(-50%) translateY(-50%)",
-}));
+});
 
 const STATIC_URL = process.env.REACT_APP_STATIC_URL;
 
-const StaticImage = (props) => {
-	const { src, sx, ...rest } = props;
+interface StaticImageProps extends React.HTMLAttributes<HTMLDivElement> {
+	src: string;
+	sx?: SxProps;
+}
+
+const StaticImage = ({ src, sx, ...rest }: StaticImageProps) => {
 	return (
 		<Box
 			sx={{
@@ -25,7 +29,7 @@ const StaticImage = (props) => {
 			}}
 			{...rest}
 		>
-			<Image alt="" src={STATIC_URL + src} />
+			<Image alt={STATIC_URL + src} src={STATIC_URL + src} />
 		</Box>
 	);
 };

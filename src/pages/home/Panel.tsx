@@ -35,7 +35,7 @@ const STATIC_URL = process.env.REACT_APP_STATIC_URL;
 
 interface PanelProps {
 	image: Image;
-	sx: SxProps;
+	sx?: SxProps;
 	small?: boolean;
 }
 
