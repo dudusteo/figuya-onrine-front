@@ -9,12 +9,13 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import MenuPopupState from "../menu-popup-state";
 import { Avatar, Badge, Box, Button, IconButton, Link } from "@mui/material";
-import figuya_logo from "../../assets/figuya_logo.svg";
 import { useTranslation } from "react-i18next";
 import AuthService from "../../services/auth.service";
 import FigurineService from "../../services/figurine.service";
 import IconPopupState from "../icon-popup-state";
 import { ShopContext } from "../../context/shop-context";
+import { Options } from "../../interfaces";
+import figuya_logo from "../../assets/figuya_logo.svg";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -67,7 +68,7 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 const SearchAppBar = () => {
 	const { t } = useTranslation();
 
-	const [options, setOptions] = React.useState({
+	const [options, setOptions] = React.useState<Options>({
 		character: [],
 		origin: [],
 		company: [],
@@ -75,7 +76,7 @@ const SearchAppBar = () => {
 	});
 
 	React.useEffect(() => {
-		FigurineService.getOptions().then((data) => setOptions(data));
+		FigurineService.getOptions().then((data: Options) => setOptions(data));
 	}, []);
 
 	const { cartItems } = React.useContext(ShopContext);
@@ -99,7 +100,7 @@ const SearchAppBar = () => {
 							<SearchIcon />
 						</SearchIconWrapper>
 						<StyledInputBase
-							placeholder={t("nav-bar.search")}
+							placeholder={t("nav-bar.search") as string}
 							inputProps={{ "aria-label": "search" }}
 						/>
 					</Search>
@@ -132,7 +133,7 @@ const SearchAppBar = () => {
 					>
 						<AccountCircleIcon fontSize="large" />
 					</IconPopupState>
-					<IconPopupState href="/cart">
+					<IconButton href="/cart">
 						<Badge
 							overlap="circular"
 							anchorOrigin={{
@@ -149,7 +150,7 @@ const SearchAppBar = () => {
 						>
 							<ShoppingCartIcon fontSize="large" />
 						</Badge>
-					</IconPopupState>
+					</IconButton>
 				</Toolbar>
 			</AppBar>
 			<AppBar position="static" color="primary" sx={{ opacity: "50%" }}>
@@ -164,8 +165,14 @@ const SearchAppBar = () => {
 							text={t("nav-bar.bar2")}
 							items={options.company}
 						/>
-						<MenuPopupState text={t("nav-bar.bar3")} items={[""]} />
-						<MenuPopupState text={t("nav-bar.bar4")} items={[""]} />
+						<MenuPopupState
+							text={t("nav-bar.bar3")}
+							items={[{ name: "" }]}
+						/>
+						<MenuPopupState
+							text={t("nav-bar.bar4")}
+							items={[{ name: "" }]}
+						/>
 					</Box>
 				</Toolbar>
 			</AppBar>

@@ -17,6 +17,13 @@ export interface Figurine {
 	images: Image[];
 }
 
+export interface Options {
+	character: Option[];
+	origin: Option[];
+	company: Option[];
+	type: Option[];
+}
+
 export interface Option {
 	id: number;
 	name: string;

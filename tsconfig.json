@@ -9,9 +9,11 @@
     "allowJs": true,
     "moduleResolution": "node",
 		"strict": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
 	},
+  "use": ["url-loader"],
   "include": [
-    "src"
+    "src",
+    "custom.d.ts"
   ]
 }

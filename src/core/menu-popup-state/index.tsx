@@ -7,17 +7,37 @@ import {
 	bindHover,
 	bindMenu,
 } from "material-ui-popup-state/hooks";
-import { Link } from "@mui/material";
+import { Link, SxProps } from "@mui/material";
 
-const MenuPopupState = (props) => {
-	const { text, items = [], href = "" } = props;
+interface LinkItem {
+	name: string;
+	href?: string;
+}
+
+interface IconPopupStateProps {
+	text: string;
+	items: LinkItem[];
+	href?: string;
+	sx?: SxProps;
+}
+const MenuPopupState = ({
+	text,
+	items = [],
+	href = "",
+	sx,
+}: IconPopupStateProps) => {
 	const popupState = usePopupState({
 		variant: "popover",
 		popupId: "demoMenu",
 	});
 	return (
 		<React.Fragment>
-			<Button variant="h6" href={href} {...bindHover(popupState)}>
+			<Button
+				color="inherit"
+				href={href}
+				{...bindHover(popupState)}
+				sx={{ ...sx }}
+			>
 				{text}
 			</Button>
 			<HoverMenu {...bindMenu(popupState)}>

@@ -1,10 +1,8 @@
 import axios from "axios";
 import authHeader from "./auth-header";
-import { Figurine, Option } from "../interfaces";
+import { Figurine, Options } from "../interfaces";
 
 const API_URL = process.env.REACT_APP_API_URL;
-
-
 
 const addFigurine = async (formData: FormData): Promise<string> => {
 	return axios
@@ -50,7 +48,7 @@ const removeFigurine = async (id: number): Promise<string> => {
 		.then((response) => response.data);
 };
 
-const getOptions = async (): Promise<Option[]> => {
+const getOptions = async (): Promise<Options> => {
 	return axios
 		.get(API_URL + "/figurine/option/get", {
 			headers: {
@@ -61,7 +59,9 @@ const getOptions = async (): Promise<Option[]> => {
 		.then((response) => response.data);
 };
 
-const getFigurinesByPackage = async (packageId: number): Promise<Figurine[]> => {
+const getFigurinesByPackage = async (
+	packageId: number
+): Promise<Figurine[]> => {
 	return axios
 		.get(API_URL + "/figurine/all/package/get", {
 			params: { packageId },

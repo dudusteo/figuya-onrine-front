@@ -7,10 +7,22 @@ import {
 	bindMenu,
 } from "material-ui-popup-state/hooks";
 import { useNavigate } from "react-router-dom";
-import { IconButton } from "@mui/material";
+import { IconButton, SxProps } from "@mui/material";
 
-const IconPopupState = (props) => {
-	const { children, items = [], ...rest } = props;
+interface LinkItem {
+	name: string;
+	href: string;
+	onClick?: () => void;
+}
+
+interface IconPopupStateProps {
+	children: React.ReactNode;
+	items: LinkItem[];
+	href?: string;
+	sx?: SxProps;
+}
+
+const IconPopupState = ({ children, items = [], sx }: IconPopupStateProps) => {
 	const navigate = useNavigate();
 
 	const popupState = usePopupState({
@@ -19,11 +31,15 @@ const IconPopupState = (props) => {
 	});
 	return (
 		<React.Fragment>
-			<IconButton color="inherit" {...bindHover(popupState)} {...rest}>
+			<IconButton
+				color="inherit"
+				{...bindHover(popupState)}
+				sx={{ ...sx }}
+			>
 				{children}
 			</IconButton>
 			<HoverMenu {...bindMenu(popupState)}>
-				{items.map((item, index) => (
+				{items.map((item: LinkItem, index: number) => (
 					<MenuItem
 						href={item.href}
 						onClick={() => {
