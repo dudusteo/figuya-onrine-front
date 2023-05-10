@@ -4,10 +4,10 @@ Personal project for e-commerce figurine shop - font-end side
 
 Stack:
 
-**FE: React.js / JS (Migration to TSX in progress) / MUI**
+**FE: React.js / TypeScript / MUI**
 
 BE: Express.js / JS / Sequelize + Docker / PostgreSQL
 
 Back-end side of this project at: https://github.com/DuDuSteo/figuya-onrine-api
 
-![image](https://user-images.githubusercontent.com/30495650/236636216-be97f41a-5e9c-4496-8a00-40607c87169d.png)
+![image](https://github.com/DuDuSteo/figuya-onrine/assets/30495650/3b6a5c92-d6cc-4fa3-88d6-a0f5d04bec85)
