@@ -13,18 +13,27 @@ import FigurineService from "../../services/figurine.service";
 import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
 import ImageProduct from "./ImageProduct";
+import { Figurine } from "../../interfaces";
 
-const Item = (props) => {
-	const { itemId } = useParams();
-	const [item, setItem] = React.useState({});
+const Item = () => {
+	const { itemId } = useParams<{ itemId: string }>();
+	const [item, setItem] = React.useState<Figurine>();
 
 	const { addToCart } = React.useContext(ShopContext);
 
 	const { t } = useTranslation();
 
 	React.useEffect(() => {
-		FigurineService.getFigurine(itemId).then((data) => setItem(data));
+		if (itemId) {
+			FigurineService.getFigurine(parseInt(itemId)).then(
+				(data: Figurine) => setItem(data)
+			);
+		}
 	}, [itemId]);
+
+	if (!item) {
+		return <div>Loading...</div>;
+	}
 
 	const title = item.name + " - " + item.origin + " - " + item.company;
 	const priceTitle = t("price") + " " + item.price + " " + t("unit");
@@ -82,7 +91,7 @@ const Item = (props) => {
 							{title}
 						</Typography>
 						<Typography
-							variant="subtitle"
+							variant="subtitle1"
 							sx={{ color: "primary.main", flexGrow: 1 }}
 						>
 							{item.condition}
