@@ -5,8 +5,9 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { Figurine } from "../../interfaces";
 
-const Image = styled("img")(({ theme, small }) => ({
+const Image = styled("img")(({ theme }) => ({
 	height: "100%",
 	position: "absolute",
 	top: "50%",
@@ -16,9 +17,12 @@ const Image = styled("img")(({ theme, small }) => ({
 
 const STATIC_URL = process.env.REACT_APP_STATIC_URL;
 
-const Item = (props) => {
-	const { item } = props;
+interface ItemProps {
+	item: Figurine;
+	[x: string]: any;
+}
 
+const Item = ({ item, ...rest }: ItemProps) => {
 	const navigate = useNavigate();
 	const { t } = useTranslation();
 	const { addToCart } = React.useContext(ShopContext);

@@ -1,34 +1,10 @@
 import axios from "axios";
 import authHeader from "./auth-header";
+import { Figurine, Option } from "../interfaces";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
-interface Image {
-	id: number,
-	path: string,
-	createdAt: Date,
-	updatedAt: Date,
-}
 
-interface Figurine {
-	id: number,
-	name: string,
-	character: string,
-	origin: string,
-	company: string,
-	type: string,
-	condition: string,
-	price: number,
-	images: Array<Image>,
-
-}
-
-interface Option {
-	id: number,
-	name: string,
-	createdAt: Date,
-	updatedAt: Date,
-}
 
 const addFigurine = async (formData: FormData): Promise<string> => {
 	return axios
@@ -52,7 +28,7 @@ const getFigurine = async (id: number): Promise<Figurine> => {
 		.then((response) => response.data);
 };
 
-const getAllFigurines = async (): Promise<Array<Figurine>> => {
+const getAllFigurines = async (): Promise<Figurine[]> => {
 	return axios
 		.get(API_URL + "/figurine/all", {
 			headers: {
@@ -74,7 +50,7 @@ const removeFigurine = async (id: number): Promise<string> => {
 		.then((response) => response.data);
 };
 
-const getOptions = async (): Promise<Array<Option>> => {
+const getOptions = async (): Promise<Option[]> => {
 	return axios
 		.get(API_URL + "/figurine/option/get", {
 			headers: {
@@ -85,7 +61,7 @@ const getOptions = async (): Promise<Array<Option>> => {
 		.then((response) => response.data);
 };
 
-const getFigurinesByPackage = async (packageId: number): Promise<Array<Figurine>> => {
+const getFigurinesByPackage = async (packageId: number): Promise<Figurine[]> => {
 	return axios
 		.get(API_URL + "/figurine/all/package/get", {
 			params: { packageId },

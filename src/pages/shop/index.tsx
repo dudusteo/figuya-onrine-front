@@ -14,6 +14,7 @@ import {
 import { useTranslation } from "react-i18next";
 import FigurineService from "../../services/figurine.service";
 import Item from "./Item";
+import { Figurine } from "../../interfaces";
 
 const data = {
 	type: [
@@ -33,35 +34,43 @@ const data = {
 	],
 };
 
+interface BooleanList {
+	type: boolean;
+	condition: boolean;
+	popularSeries: boolean;
+}
+
 const Shop = () => {
 	const { t } = useTranslation();
-	const [items, setItems] = React.useState([]);
-	const [list, setList] = React.useState({
+	const [items, setItems] = React.useState<Figurine[]>([]);
+	const [list, setList] = React.useState<BooleanList>({
 		type: true,
 		condition: true,
 		popularSeries: true,
 	});
 
-	const setType = (newType) => {
+	const setType = (newType: boolean) => {
 		setList((prevList) => {
 			return { ...prevList, type: newType };
 		});
 	};
 
-	const setCondition = (newCondition) => {
+	const setCondition = (newCondition: boolean) => {
 		setList((prevList) => {
 			return { ...prevList, condition: newCondition };
 		});
 	};
 
-	const setPopularSeries = (newPopularSeries) => {
+	const setPopularSeries = (newPopularSeries: boolean) => {
 		setList((prevList) => {
 			return { ...prevList, popularSeries: newPopularSeries };
 		});
 	};
 
 	React.useEffect(() => {
-		FigurineService.getAllFigurines().then((data) => setItems(data));
+		FigurineService.getAllFigurines().then((data: Figurine[]) =>
+			setItems(data)
+		);
 	}, []);
 
 	return (
@@ -98,7 +107,7 @@ const Shop = () => {
 											primary={t("shop." + type.name)}
 										/>
 										<ListItemText
-											align="right"
+											sx={{ textAlign: "right" }}
 											primary={type.count}
 										/>
 									</ListItemButton>
@@ -125,7 +134,7 @@ const Shop = () => {
 											)}
 										/>
 										<ListItemText
-											align="right"
+											sx={{ textAlign: "right" }}
 											primary={condition.count}
 										/>
 									</ListItemButton>
@@ -152,7 +161,7 @@ const Shop = () => {
 											primary={condition.name}
 										/>
 										<ListItemText
-											align="right"
+											sx={{ textAlign: "right" }}
 											primary={condition.count}
 										/>
 									</ListItemButton>

@@ -1,8 +1,9 @@
 import * as React from "react";
-import { Box } from "@mui/material";
+import { Box, SxProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
+import { Image } from "../../interfaces";
 
-const Image = styled("img")(({ theme }) => ({
+const BigImage = styled("img")(({ theme }) => ({
 	height: "100%",
 	position: "absolute",
 	top: "50%",
@@ -30,7 +31,15 @@ const size = {
 	},
 };
 
-const Panel = ({ img, small, sx }) => {
+const STATIC_URL = process.env.REACT_APP_STATIC_URL;
+
+interface PanelProps {
+	image: Image;
+	sx: SxProps;
+	small?: boolean;
+}
+
+const Panel = ({ image, sx, small }: PanelProps) => {
 	const sizing = small ? size.small : size.base;
 	return (
 		<Box
@@ -43,9 +52,9 @@ const Panel = ({ img, small, sx }) => {
 			}}
 		>
 			{small ? (
-				<SmallImage alt="" src={img} />
+				<SmallImage alt="" src={STATIC_URL + image.path} />
 			) : (
-				<Image alt="" src={img} />
+				<BigImage alt="" src={STATIC_URL + image.path} />
 			)}
 		</Box>
 	);

@@ -1,20 +1,32 @@
 import { Box, CssBaseline, Grid } from "@mui/material";
 import * as React from "react";
 
-import { PRODUCTS } from "../../products";
 import Panel from "./Panel";
+import FigurineService from "../../services/figurine.service";
+import { Figurine } from "../../interfaces";
 
 const Home = () => {
-	const main = PRODUCTS.slice(0, 2);
-	const sub = PRODUCTS.slice(2, 6);
+	const [items, setItems] = React.useState<Figurine[]>([]);
 
-	const rows = sub.reduce(function (rows, key, index) {
-		return (
-			(index % 2 === 0
-				? rows.push([key])
-				: rows[rows.length - 1].push(key)) && rows
+	React.useEffect(() => {
+		FigurineService.getAllFigurines().then((data: Figurine[]) =>
+			setItems(data)
 		);
 	}, []);
+
+	const main: Figurine[] = items.slice(0, 2);
+	const sub: Figurine[] = items.slice(2, 6);
+
+	const rows: Figurine[][] = sub.reduce(function (
+		rows: Figurine[][],
+		key: Figurine,
+		index: number
+	) {
+		return ((index % 2 === 0
+			? rows.push([key])
+			: rows[rows.length - 1].push(key)) && rows) as Figurine[][];
+	},
+	[]);
 
 	return (
 		<Box
@@ -30,7 +42,7 @@ const Home = () => {
 				{main.map((product, index) => (
 					<Panel
 						key={index}
-						img={product.productImage}
+						image={product.images[0]}
 						sx={{ mx: -5 }}
 					/>
 				))}
@@ -38,13 +50,13 @@ const Home = () => {
 				{rows.map((row, index) => (
 					<Grid item key={index + main.length} sx={{ my: 3 }}>
 						<Panel
-							img={row[0].productImage}
+							image={row[0].images[0]}
 							sx={{ mx: -1, my: -3 }}
 							small
 						/>
 						<Box sx={{ my: 7 }}></Box>
 						<Panel
-							img={row[1].productImage}
+							image={row[1].images[0]}
 							sx={{ mx: -8.5, mt: -3 }}
 							small
 						/>
