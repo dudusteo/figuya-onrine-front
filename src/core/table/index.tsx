@@ -192,6 +192,8 @@ const Table = ({
 		if (selectionModel && selectionModel?.length > 0) {
 			onSelect &&
 				onSelect(Number(rows[(selectionModel[0] as number) - 1].id));
+		} else {
+			onSelect && onSelect(0);
 		}
 	}, [rows, onSelect, selectionModel]);
 
