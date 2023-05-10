@@ -1,15 +1,13 @@
 import * as React from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
+import { Figurine } from "../interfaces";
 
 const KEY = "cart";
 
-// TODO
-// Update any type
-
 interface ShopContextProps {
-	cartItems: any[];
-	addToCart: (item: any) => void;
-	removeFromCart: (itemId: any) => void;
+	cartItems: Figurine[];
+	addToCart: (item: Figurine) => void;
+	removeFromCart: (itemId: number) => void;
 }
 
 export const ShopContext = React.createContext<ShopContextProps>({
@@ -25,13 +23,13 @@ interface ShopContextProviderProps {
 export const ShopContextProvider = ({ children }: ShopContextProviderProps) => {
 	const [cartItems, setCartItems] = useLocalStorage(KEY, []);
 
-	const addToCart = (item: any) => {
-		setCartItems((prev: any[]) => [...prev, item]);
+	const addToCart = (item: Figurine) => {
+		setCartItems((prev: Figurine[]) => [...prev, item]);
 	};
 
-	const removeFromCart = (itemId: any) => {
-		setCartItems((prev: any[]) =>
-			prev.filter((item: any) => item.id !== itemId)
+	const removeFromCart = (itemId: number) => {
+		setCartItems((prev: Figurine[]) =>
+			prev.filter((item: Figurine) => item.id !== itemId)
 		);
 	};
 

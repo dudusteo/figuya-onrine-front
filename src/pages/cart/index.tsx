@@ -4,6 +4,7 @@ import { Box, Button, CssBaseline, Stack } from "@mui/material";
 import { ShopContext } from "../../context/shop-context";
 
 import CartItem from "./CartItem";
+import { Figurine } from "../../interfaces";
 
 const Cart = () => {
 	const { cartItems } = React.useContext(ShopContext);
@@ -18,7 +19,7 @@ const Cart = () => {
 			<CssBaseline />
 
 			<Stack sx={{ px: 50 }}>
-				{cartItems.map((item, index) => (
+				{cartItems.map((item: Figurine, index: number) => (
 					<CartItem item={item} key={index} />
 				))}
 			</Stack>

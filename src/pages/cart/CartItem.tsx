@@ -4,9 +4,13 @@ import { ButtonBase, Grid, Paper, Typography } from "@mui/material";
 import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
 import StaticImage from "../../core/static-image";
+import { Figurine } from "../../interfaces";
 
-const CartItem = (props) => {
-	const { item } = props;
+interface CartItemProps {
+	item: Figurine;
+}
+
+const CartItem = ({ item }: CartItemProps) => {
 	const { removeFromCart } = React.useContext(ShopContext);
 	const { t } = useTranslation();
 
