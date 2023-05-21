@@ -1,5 +1,12 @@
 import * as React from "react";
-import { ButtonBase, Grid, Paper, Typography } from "@mui/material";
+import {
+	Box,
+	Button,
+	ButtonBase,
+	Grid,
+	Paper,
+	Typography,
+} from "@mui/material";
 
 import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
@@ -26,39 +33,37 @@ const CartItem = ({ item }: CartItemProps) => {
 		>
 			<Grid container spacing={2}>
 				<Grid item>
-					<ButtonBase sx={{ width: 200, height: 200 }}>
-						<StaticImage src={item.images[0].path} />
-					</ButtonBase>
+					<StaticImage
+						sx={{ height: "13.5rem", width: "10.5rem" }}
+						src={item.images[0].path}
+					/>
 				</Grid>
-				<Grid item xs={12} sm container>
-					<Grid item xs container direction="column" spacing={2}>
-						<Grid item xs>
-							<Typography
-								gutterBottom
-								variant="subtitle1"
-								component="div"
-							>
-								{title}
-							</Typography>
-							<Typography variant="body2" gutterBottom>
-								{item.condition}
-							</Typography>
-							<Typography variant="body2" color="text.secondary">
-								ID: {item.id}
-							</Typography>
-						</Grid>
-						<Grid item>
-							<Typography
-								sx={{ cursor: "pointer" }}
-								variant="body2"
-								onClick={() => removeFromCart(item.id)}
-							>
-								Usuń
-							</Typography>
-						</Grid>
+
+				<Grid item sm container direction="column">
+					<Grid item xs>
+						<Typography variant="h5" sx={{ color: "primary.main" }}>
+							{title}
+						</Typography>
 					</Grid>
+
 					<Grid item>
-						<Typography variant="subtitle1" component="div">
+						<Typography
+							align="right"
+							sx={{ cursor: "pointer" }}
+							variant="body2"
+							onClick={() => removeFromCart(item.id)}
+						>
+							Usuń
+						</Typography>
+						<Typography
+							align="right"
+							variant="h4"
+							sx={{
+								color: "primary.main",
+								fontWeight: "bold",
+								my: 1,
+							}}
+						>
 							{priceTitle}
 						</Typography>
 					</Grid>

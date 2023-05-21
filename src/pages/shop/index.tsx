@@ -88,7 +88,7 @@ const Shop = () => {
 					variant="outlined"
 					sx={{
 						backgroundColor: (theme) =>
-							theme.palette.primary.main + "20",
+							theme.palette.primary.light + 50,
 					}}
 				>
 					<List

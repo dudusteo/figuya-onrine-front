@@ -153,7 +153,7 @@ const SearchAppBar = () => {
 					</IconButton>
 				</Toolbar>
 			</AppBar>
-			<AppBar position="static" color="primary" sx={{ opacity: "50%" }}>
+			<AppBar position="static" sx={{ backgroundColor: "primary.light" }}>
 				<Toolbar variant="dense">
 					<Box sx={{ flexGrow: 1 }}>
 						<MenuPopupState
