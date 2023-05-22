@@ -9,9 +9,12 @@ import {
 	Typography,
 } from "@mui/material";
 
-interface PurchaseSummaryProps {}
+interface PurchaseSummaryProps {
+	totalCost: number;
+	shipmentCost: number;
+}
 
-const PurchaseSummary = ({}: PurchaseSummaryProps) => {
+const PurchaseSummary = ({ totalCost, shipmentCost }: PurchaseSummaryProps) => {
 	return (
 		<Card>
 			<Typography variant="h4" sx={{ p: 2 }}>
@@ -28,15 +31,15 @@ const PurchaseSummary = ({}: PurchaseSummaryProps) => {
 					<Grid item container direction="column" xs={6}>
 						<Grid item container justifyContent="space-between">
 							<Typography>Wartość przedmiotów</Typography>
-							<Typography>130,00 zł</Typography>
+							<Typography>{totalCost}</Typography>
 						</Grid>
 						<Grid item container justifyContent="space-between">
 							<Typography>Wysyłka</Typography>
-							<Typography>13,00 zł</Typography>
+							<Typography>{shipmentCost}</Typography>
 						</Grid>
 						<Grid item container justifyContent="space-between">
 							<Typography>Cały koszt</Typography>
-							<Typography>143,00 zł</Typography>
+							<Typography>{totalCost + shipmentCost}</Typography>
 						</Grid>
 					</Grid>
 				</Grid>

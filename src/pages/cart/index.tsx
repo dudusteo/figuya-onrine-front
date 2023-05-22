@@ -9,6 +9,17 @@ import PurchaseSummary from "./PurchaseSummary";
 
 const Cart = () => {
 	const { cartItems } = React.useContext(ShopContext);
+	const [totalCost, setTotalCost] = React.useState<number>(0);
+
+	React.useEffect(() => {
+		setTotalCost(() =>
+			cartItems.reduce(
+				(sum: number, item: Figurine) => sum + item.price,
+				0 as number
+			)
+		);
+	}, [cartItems]);
+
 	return (
 		<Box
 			sx={{
@@ -35,7 +46,7 @@ const Cart = () => {
 					<CartItem item={item} key={index} />
 				))}
 			</Stack>
-			<PurchaseSummary />
+			<PurchaseSummary totalCost={totalCost} shipmentCost={13.0} />
 		</Box>
 	);
 };

@@ -21,7 +21,7 @@ interface ShopContextProviderProps {
 }
 
 export const ShopContextProvider = ({ children }: ShopContextProviderProps) => {
-	const [cartItems, setCartItems] = useLocalStorage(KEY, []);
+	const [cartItems, setCartItems] = useLocalStorage<Figurine[]>(KEY, []);
 
 	const addToCart = (item: Figurine) => {
 		setCartItems((prev: Figurine[]) => [...prev, item]);
@@ -33,7 +33,7 @@ export const ShopContextProvider = ({ children }: ShopContextProviderProps) => {
 		);
 	};
 
-	const contextValue = {
+	const contextValue: ShopContextProps = {
 		cartItems,
 		addToCart,
 		removeFromCart,

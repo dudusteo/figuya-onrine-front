@@ -34,7 +34,7 @@ const getAllFigurines = async (): Promise<Figurine[]> => {
 				"Content-Type": "multipart/form-data",
 			},
 		})
-		.then((response) => response.data);
+		.then((response) => response.data as Figurine[]);
 };
 
 const removeFigurine = async (id: number): Promise<string> => {
