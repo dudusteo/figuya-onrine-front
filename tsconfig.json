@@ -1,18 +1,12 @@
 {
 	"compilerOptions": {
 		"target": "ESNext",
-    "lib": [
-      "dom", 
-      "dom.iterable", 
-      "esnext"
-    ],
-    "moduleResolution": "node",
+		"lib": ["dom", "dom.iterable", "esnext"],
+		"moduleResolution": "node",
 		"strict": true,
-    "jsx": "react-jsx",
+		"jsx": "react-jsx"
 	},
-  "use": ["url-loader"],
-  "include": [
-    "src",
-    "custom.d.ts"
-  ]
+	"use": ["url-loader"],
+	"include": ["src", "custom.d.ts"],
+	"exclude": ["node_modules"]
 }
