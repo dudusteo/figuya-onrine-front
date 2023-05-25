@@ -1,14 +1,10 @@
-import axios from "axios";
-import authHeader from "./auth-header";
 import { Figurine } from "../interfaces";
-
-const API_URL = process.env.REACT_APP_API_URL;
+import axiosInstance from "./axiosInstance";
 
 const addFigurine = async (formData: FormData): Promise<string> => {
-	return axios
-		.post(API_URL + "/figurine/add", formData, {
+	return axiosInstance
+		.post("/figurine/add", formData, {
 			headers: {
-				...authHeader(),
 				"Content-Type": "multipart/form-data",
 			},
 		})
@@ -16,21 +12,17 @@ const addFigurine = async (formData: FormData): Promise<string> => {
 };
 
 const getFigurine = async (id: number): Promise<Figurine> => {
-	return axios
-		.get(API_URL + "/figurine/get", {
+	return axiosInstance
+		.get("/figurine/get", {
 			params: { id },
-			headers: {
-				...authHeader(),
-			},
 		})
 		.then((response) => response.data);
 };
 
 const getAllFigurines = async (): Promise<Figurine[]> => {
-	return axios
-		.get(API_URL + "/figurine/all", {
+	return axiosInstance
+		.get("/figurine/all", {
 			headers: {
-				...authHeader(),
 				"Content-Type": "multipart/form-data",
 			},
 		})
@@ -38,12 +30,9 @@ const getAllFigurines = async (): Promise<Figurine[]> => {
 };
 
 const removeFigurine = async (id: number): Promise<string> => {
-	return axios
-		.delete(API_URL + "/figurine/remove", {
+	return axiosInstance
+		.delete("/figurine/remove", {
 			params: { id },
-			headers: {
-				...authHeader(),
-			},
 		})
 		.then((response) => response.data);
 };
@@ -51,8 +40,8 @@ const removeFigurine = async (id: number): Promise<string> => {
 const getFigurinesByPackage = async (
 	packageId: number
 ): Promise<Figurine[]> => {
-	return axios
-		.get(API_URL + "/figurine/all/package/get", {
+	return axiosInstance
+		.get("/figurine/all/package/get", {
 			params: { packageId },
 		})
 		.then((response) => response.data);

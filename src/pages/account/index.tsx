@@ -1,10 +1,21 @@
 import * as React from "react";
 
 import { Box, CssBaseline } from "@mui/material";
-import AuthService from "../../services/auth.service";
+import UserService from "../../services/userService";
+import { User } from "../../interfaces";
 
 const Account = () => {
-	const currentUser = AuthService.getCurrentUser();
+	const [currentUser, setCurrentUser] = React.useState<User>();
+
+	React.useEffect(() => {
+		UserService.getCurrentUser()
+			.then((currentUser) => setCurrentUser(currentUser))
+			.catch((error: Error) => {});
+	}, []);
+
+	if (!currentUser) {
+		return <div>loading...</div>;
+	}
 
 	return (
 		<Box
@@ -23,10 +34,8 @@ const Account = () => {
 				</header>
 				<p>
 					<strong>Token:</strong>{" "}
-					{currentUser?.accessToken.substring(0, 20)} ...{" "}
-					{currentUser?.accessToken.substr(
-						currentUser?.accessToken.length - 20
-					)}
+					{currentUser?.token.substring(0, 20)} ...{" "}
+					{currentUser?.token.substr(currentUser?.token.length - 20)}
 				</p>
 				<p>
 					<strong>Id:</strong> {currentUser?.id}
@@ -34,7 +43,7 @@ const Account = () => {
 				<p>
 					<strong>Email:</strong> {currentUser?.email}
 				</p>
-				<strong>Authorities:</strong>
+				{/* <strong>Authorities:</strong>
 				<ul>
 					{currentUser?.roles &&
 						currentUser?.roles.map(
@@ -42,7 +51,7 @@ const Account = () => {
 								<li key={index}>{role}</li>
 							)
 						)}
-				</ul>
+				</ul> */}
 			</div>
 		</Box>
 	);

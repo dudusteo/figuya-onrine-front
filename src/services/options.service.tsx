@@ -1,8 +1,4 @@
-import axios from "axios";
-import authHeader from "./auth-header";
 import { Options } from "../interfaces";
-
-const API_URL = process.env.REACT_APP_API_URL;
 
 const getOptions = async (): Promise<Options> => {
 	return new Promise((resolve, reject) => {
@@ -33,15 +29,6 @@ const getOptions = async (): Promise<Options> => {
 			],
 		});
 	});
-
-	// return axios
-	// 	.get(API_URL + "/figurine/option/get", {
-	// 		headers: {
-	// 			...authHeader(),
-	// 			"Content-Type": "multipart/form-data",
-	// 		},
-	// 	})
-	// 	.then((response) => response.data);
 };
 
 const OptionService = {

@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import AuthService from "../../services/auth.service";
+import AuthService from "../../services/authService";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -23,11 +23,19 @@ export default function SignUp() {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 
-		AuthService.register(data)
-			.then((result) => {
-				navigate("/account/login");
+		AuthService.register({
+			firstName: data.get("firstName") as string,
+			lastName: data.get("lastName") as string,
+			username: data.get("username") as string,
+			email: data.get("email") as string,
+			password: data.get("password") as string,
+		})
+			.then((token: string) => {
+				navigate("/account");
 			})
-			.catch((error) => console.log(error.response.data.message));
+			.catch((error: Error) =>
+				console.error("Registration failed:", error.message)
+			);
 	};
 
 	return (

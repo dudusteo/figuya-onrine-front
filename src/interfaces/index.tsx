@@ -30,3 +30,12 @@ export interface Option {
 	createdAt?: Date;
 	updatedAt?: Date;
 }
+
+export interface User {
+	id: number;
+	firstName: string;
+	lastName: string;
+	username: string;
+	email: string;
+	token: string;
+}

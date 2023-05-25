@@ -10,7 +10,7 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuPopupState from "../menu-popup-state";
 import { Avatar, Badge, Box, Button, IconButton, Link } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import AuthService from "../../services/auth.service";
+import AuthService from "../../services/authService";
 import IconPopupState from "../icon-popup-state";
 import { ShopContext } from "../../context/shop-context";
 import { Options } from "../../interfaces";

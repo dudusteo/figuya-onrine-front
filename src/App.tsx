@@ -8,13 +8,11 @@ import StickyFooter from "./core/sticky-footer";
 import Shop from "./pages/shop";
 import Cart from "./pages/cart";
 import Checkout from "./pages/cart/checkout";
-import Admin from "./pages/admin";
 import Login from "./pages/account/login";
 import Register from "./pages/account/register";
 import Home from "./pages/home";
 import Item from "./pages/item";
 import Account from "./pages/account";
-
 
 const App = () => {
 	return (
@@ -28,7 +26,6 @@ const App = () => {
 						<Route path="/shop" element={<Shop />} />
 						<Route path="/cart" element={<Cart />} />
 						<Route path="/cart/checkout" element={<Checkout />} />
-						<Route path="/admin" element={<Admin />} />
 						<Route path="/account" element={<Account />} />
 						<Route path="/account/login" element={<Login />} />
 						<Route
