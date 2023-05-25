@@ -4,12 +4,12 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 const register = async (formData: FormData) => {
 	return axios
-		.post(API_URL + "/auth/signup", formData)
+		.post(API_URL + "/auth/register", formData)
 		.then((response) => response.data);
 };
 
 const login = async (formData: FormData) => {
-	return axios.post(API_URL + "/auth/signin", formData).then((response) => {
+	return axios.post(API_URL + "/auth/login", formData).then((response) => {
 		if (response.data.accessToken) {
 			localStorage.setItem("user", JSON.stringify(response.data));
 		}

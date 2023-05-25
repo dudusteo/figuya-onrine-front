@@ -57,9 +57,9 @@ export default function SignIn() {
 						margin="normal"
 						required
 						fullWidth
-						id="email"
-						label={t("account.login.email")}
-						name="email"
+						id="login"
+						label={t("account.login.login")}
+						name="login"
 						autoComplete="email"
 						autoFocus
 					/>

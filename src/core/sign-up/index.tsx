@@ -79,6 +79,16 @@ export default function SignUp() {
 							<TextField
 								required
 								fullWidth
+								id="username"
+								label={t("account.register.username")}
+								name="username"
+								autoComplete="username"
+							/>
+						</Grid>
+						<Grid item xs={12}>
+							<TextField
+								required
+								fullWidth
 								id="email"
 								label={t("account.register.email")}
 								name="email"

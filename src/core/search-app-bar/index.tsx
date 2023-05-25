@@ -11,11 +11,11 @@ import MenuPopupState from "../menu-popup-state";
 import { Avatar, Badge, Box, Button, IconButton, Link } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import AuthService from "../../services/auth.service";
-import FigurineService from "../../services/figurine.service";
 import IconPopupState from "../icon-popup-state";
 import { ShopContext } from "../../context/shop-context";
 import { Options } from "../../interfaces";
 import figuya_logo from "../../assets/figuya_logo.svg";
+import OptionService from "../../services/options.service";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -76,7 +76,7 @@ const SearchAppBar = () => {
 	});
 
 	React.useEffect(() => {
-		FigurineService.getOptions().then((data: Options) => setOptions(data));
+		OptionService.getOptions().then((data: Options) => setOptions(data));
 	}, []);
 
 	const { cartItems } = React.useContext(ShopContext);

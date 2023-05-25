@@ -30,7 +30,7 @@
 	"account": {
 		"login": {
 			"sign-in": "Sign in",
-			"email": "Email Address",
+			"login": "Username or Email Address",
 			"password": "Password",
 			"remember": "Remember me",
 			"forgot": "Forgot password?",
@@ -40,6 +40,7 @@
 			"sign-up": "Sign up",
 			"first-name": "First Name",
 			"last-name": "Last Name",
+			"username": "Username",
 			"email": "Email Address",
 			"password": "Password",
 			"newsletter": "I want to receive inspiration, marketing promotions and updates via email.",
