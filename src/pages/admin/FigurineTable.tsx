@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Box } from "@mui/material";
 
-import FigurineService from "../../services/figurine.service";
+import FigurineService from "../../services/old/figurine.service";
 import { enqueueSnackbar } from "notistack";
 import { addServiceSnackbarWrapper } from "../../utils";
 import { useTranslation } from "react-i18next";

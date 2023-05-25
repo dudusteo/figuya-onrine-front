@@ -1,4 +1,4 @@
-import { Options } from "../interfaces";
+import { Options } from "../../interfaces";
 
 const getOptions = async (): Promise<Options> => {
 	return new Promise((resolve, reject) => {

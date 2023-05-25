@@ -12,7 +12,7 @@ import {
 	Paper,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import FigurineService from "../../services/figurine.service";
+import FigurineService from "../../services/old/figurine.service";
 import Item from "./Item";
 import { Figurine } from "../../interfaces";
 

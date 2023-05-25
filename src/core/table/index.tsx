@@ -23,7 +23,7 @@ import {
 	MuiEvent,
 } from "@mui/x-data-grid";
 
-import UtilsService from "../../services/utils.service";
+import UtilsService from "../../services/old/utils.service";
 
 interface EditToolbarProps {
 	setRows: React.Dispatch<React.SetStateAction<Row[]>>;

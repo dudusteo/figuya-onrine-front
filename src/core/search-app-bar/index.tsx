@@ -15,7 +15,7 @@ import IconPopupState from "../icon-popup-state";
 import { ShopContext } from "../../context/shop-context";
 import { Options } from "../../interfaces";
 import figuya_logo from "../../assets/figuya_logo.svg";
-import OptionService from "../../services/options.service";
+import OptionService from "../../services/old/options.service";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",

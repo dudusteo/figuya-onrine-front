@@ -9,7 +9,7 @@ import {
 	Typography,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-import FigurineService from "../../services/figurine.service";
+import FigurineService from "../../services/old/figurine.service";
 import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
 import ImageProduct from "./ImageProduct";
