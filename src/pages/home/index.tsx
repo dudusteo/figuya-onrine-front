@@ -2,7 +2,7 @@ import { Box, CssBaseline, Grid } from "@mui/material";
 import * as React from "react";
 
 import Panel from "./Panel";
-import FigurineService from "../../services/old/figurine.service";
+import FigurineService from "../../services/figurineService";
 import { Figurine } from "../../interfaces";
 
 const Home = () => {
