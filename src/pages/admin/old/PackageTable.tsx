@@ -2,10 +2,10 @@ import * as React from "react";
 
 import { Box } from "@mui/material";
 
-import Table from "../../core/table";
-import { addServiceSnackbarWrapper } from "../../utils";
 import { enqueueSnackbar } from "notistack";
-import PackageService from "../../services/old/packages.service";
+import { addServiceSnackbarWrapper } from "../../../utils";
+import PackageService from "../../../services/old/packages.service";
+import Table from "../../../core/table";
 
 const columns = [
 	{ field: "id", headerName: "ID", width: 80 },

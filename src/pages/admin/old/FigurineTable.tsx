@@ -2,13 +2,13 @@ import * as React from "react";
 
 import { Box } from "@mui/material";
 
-import FigurineService from "../../services/old/figurine.service";
+import FigurineService from "../../../services/old/figurine.service";
 import { enqueueSnackbar } from "notistack";
-import { addServiceSnackbarWrapper } from "../../utils";
+import { addServiceSnackbarWrapper } from "../../../utils";
 import { useTranslation } from "react-i18next";
-import Table from "../../core/table";
-import ImageCell from "../../core/table/ImageCell";
-import { Figurine } from "../../interfaces";
+import Table from "../../../core/table";
+import ImageCell from "../../../core/table/ImageCell";
+import { Figurine } from "../../../interfaces";
 
 interface FigurineTableProps {
 	currentPackageId: number;

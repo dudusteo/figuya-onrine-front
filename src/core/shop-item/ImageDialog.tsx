@@ -12,7 +12,7 @@ import {
 	Typography,
 } from "@mui/material";
 import * as React from "react";
-import StaticImage from "../../core/static-image";
+import StaticImage from "../static-image";
 
 import PhotoLibrary from "@mui/icons-material/PhotoLibrary";
 import { Image } from "../../interfaces";

@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import StaticImage from "../../core/static-image";
+import StaticImage from "../static-image";
 import { Box, ImageList, ImageListItem } from "@mui/material";
 import ImageDialog from "./ImageDialog";
 import { Image } from "../../interfaces";

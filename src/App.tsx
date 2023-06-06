@@ -13,6 +13,7 @@ import Register from "./pages/account/register";
 import Home from "./pages/home";
 import Item from "./pages/item";
 import Account from "./pages/account";
+import Admin from "./pages/admin";
 
 const App = () => {
 	return (
@@ -27,6 +28,7 @@ const App = () => {
 						<Route path="/cart" element={<Cart />} />
 						<Route path="/cart/checkout" element={<Checkout />} />
 						<Route path="/account" element={<Account />} />
+						<Route path="/admin" element={<Admin />} />
 						<Route path="/account/login" element={<Login />} />
 						<Route
 							path="/account/register"

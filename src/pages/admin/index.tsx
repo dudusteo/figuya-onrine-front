@@ -1,15 +1,39 @@
 import * as React from "react";
 
-import { Box, CssBaseline } from "@mui/material";
-import AuthService from "../../services/authService";
+import {
+	Box,
+	CssBaseline,
+	ToggleButton,
+	ToggleButtonGroup,
+} from "@mui/material";
+import ShopItem from "../../core/shop-item";
+import { Figurine } from "../../interfaces";
+import EditShopItem from "../../core/shop-item/EditShopItem";
 
-import PackageTable from "./PackageTable";
-import FigurineTable from "./FigurineTable";
+const emptyFigurine: Figurine = {
+	id: 0,
+	name: "placeholderName",
+	character: "placeholderCharacter",
+	origin: "placeholderOrigin",
+	company: "placeholderCompany",
+	type: "placeholderType",
+	condition: "placeholderCondition",
+	price: 0,
+	images: [],
+};
 
 const Admin = () => {
-	const [showAdminBoard, setShowAdminBoard] = React.useState<boolean>(false);
+	const [figurine, setFigurine] = React.useState<Figurine>(emptyFigurine);
+	const [preview, setPreview] = React.useState<boolean>(false);
 
-	const [currentPackageId, setCurrentPackageId] = React.useState<number>(0);
+	const handleChange = (
+		event: React.MouseEvent<HTMLElement>,
+		newPreview: boolean | null
+	) => {
+		if (newPreview !== null) {
+			setPreview(newPreview);
+		}
+	};
 
 	return (
 		<Box
@@ -20,20 +44,22 @@ const Admin = () => {
 			}}
 		>
 			<CssBaseline />
-			{showAdminBoard && (
-				<>
-					<PackageTable
-						setCurrentId={setCurrentPackageId}
-					></PackageTable>
-					{currentPackageId ? (
-						<FigurineTable
-							currentPackageId={currentPackageId}
-						></FigurineTable>
-					) : (
-						<div></div>
-					)}
-				</>
+			<ToggleButtonGroup
+				value={preview}
+				exclusive
+				onChange={handleChange}
+				aria-label="text alignment"
+			>
+				<ToggleButton value={false}>Edit</ToggleButton>
+				<ToggleButton value={true}>Preview</ToggleButton>
+			</ToggleButtonGroup>
+			{!preview && (
+				<EditShopItem
+					item={figurine}
+					setItem={setFigurine}
+				></EditShopItem>
 			)}
+			{preview && <ShopItem item={figurine}></ShopItem>}
 		</Box>
 	);
 };
