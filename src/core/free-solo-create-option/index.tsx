@@ -1,5 +1,4 @@
 import * as React from "react";
-import TextField from "@mui/material/TextField";
 import Autocomplete, {
 	AutocompleteRenderInputParams,
 	createFilterOptions,
@@ -13,33 +12,32 @@ interface OptionType {
 const filter = createFilterOptions<OptionType>();
 
 interface FreeSoloCreateOptionProps {
+	value: string;
+	setValue: (newValue: string) => void;
 	id: string;
 	options: OptionType[];
 	renderInput: (params: AutocompleteRenderInputParams) => React.ReactNode;
 }
 
 const FreeSoloCreateOption = ({
+	value,
+	setValue,
 	id,
 	options,
 	renderInput,
 }: FreeSoloCreateOptionProps) => {
-	const [value, setValue] = React.useState<OptionType | null>(null);
-
 	return (
 		<Autocomplete
 			value={value}
 			onChange={(event, newValue) => {
 				if (typeof newValue === "string") {
-					setValue({
-						name: newValue,
-					});
-				} else if (newValue && newValue.inputValue) {
-					// Create a new value from the user input
-					setValue({
-						name: newValue.inputValue,
-					});
-				} else {
 					setValue(newValue);
+				} else if (newValue) {
+					if (newValue.inputValue) {
+						setValue(newValue.inputValue);
+					} else {
+						setValue(newValue.name);
+					}
 				}
 			}}
 			filterOptions={(options, params) => {

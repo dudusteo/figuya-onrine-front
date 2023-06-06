@@ -2,6 +2,7 @@ import * as React from "react";
 
 import {
 	Box,
+	Button,
 	CssBaseline,
 	ToggleButton,
 	ToggleButtonGroup,
@@ -9,6 +10,7 @@ import {
 import ShopItem from "../../core/shop-item";
 import { Figurine } from "../../interfaces";
 import EditShopItem from "../../core/shop-item/EditShopItem";
+import AdminService from "../../services/adminService";
 
 const emptyFigurine: Figurine = {
 	id: 0,
@@ -17,8 +19,8 @@ const emptyFigurine: Figurine = {
 	origin: "placeholderOrigin",
 	company: "placeholderCompany",
 	type: "placeholderType",
-	condition: "placeholderCondition",
-	price: 0,
+	condition: "Used",
+	price: "0.00",
 	images: [],
 };
 
@@ -33,6 +35,10 @@ const Admin = () => {
 		if (newPreview !== null) {
 			setPreview(newPreview);
 		}
+	};
+
+	const handleSubmit = () => {
+		AdminService.createFigurine(figurine).then(() => {});
 	};
 
 	return (
@@ -53,6 +59,7 @@ const Admin = () => {
 				<ToggleButton value={false}>Edit</ToggleButton>
 				<ToggleButton value={true}>Preview</ToggleButton>
 			</ToggleButtonGroup>
+			<Button variant="contained" onClick={handleSubmit}></Button>
 			{!preview && (
 				<EditShopItem
 					item={figurine}

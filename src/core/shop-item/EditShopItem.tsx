@@ -2,8 +2,6 @@ import * as React from "react";
 
 import {
 	Box,
-	Button,
-	CssBaseline,
 	FormControlLabel,
 	Radio,
 	RadioGroup,
@@ -25,8 +23,31 @@ const EditShopItem = ({ item, setItem }: EditShopItemProps) => {
 		setItem((oldItem) => ({ ...oldItem, name: newName }));
 	};
 
+	const handlePrice = (newPrice: string) => {
+		setItem((oldItem) => ({ ...oldItem, price: newPrice }));
+	};
+
+	const handleCondition = (event: React.ChangeEvent<HTMLInputElement>) => {
+		setItem((oldItem) => ({
+			...oldItem,
+			condition: (event.target as HTMLInputElement).value,
+		}));
+	};
+
 	const handleCharacter = (newCharacter: string) => {
 		setItem((oldItem) => ({ ...oldItem, character: newCharacter }));
+	};
+
+	const handleOrigin = (newOrigin: string) => {
+		setItem((oldItem) => ({ ...oldItem, origin: newOrigin }));
+	};
+
+	const handleCompany = (newCompany: string) => {
+		setItem((oldItem) => ({ ...oldItem, company: newCompany }));
+	};
+
+	const handleType = (newType: string) => {
+		setItem((oldItem) => ({ ...oldItem, type: newType }));
 	};
 
 	return (
@@ -38,133 +59,119 @@ const EditShopItem = ({ item, setItem }: EditShopItemProps) => {
 				m: 4,
 			}}
 		>
-			<CssBaseline />
-			<>
-				<Box
-					component="form"
-					//onSubmit={handleSubmit}
-					noValidate
-					sx={{
-						display: "flex",
-						flexDirection: "row",
-					}}
-				>
+			<TextField
+				id="name"
+				name="name"
+				label={t("item.productName")}
+				value={item.name}
+				onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+					handleName(event.target.value);
+				}}
+			/>
+
+			<FreeSoloCreateOption
+				// addOption={(value) =>
+				// 	addServiceSnackbarWrapper(
+				// 		FigurineService.addCharacterOption(value)
+				// 	)
+				// }
+				value={item.character}
+				setValue={handleCharacter}
+				id="character"
+				options={[{ name: "Hatsune Miku" }]}
+				renderInput={(params: object) => (
 					<TextField
-						id="name"
-						name="name"
-						label={t("item.productName")}
-						value={item.name}
-						onChange={(
-							event: React.ChangeEvent<HTMLInputElement>
-						) => {
-							handleName(event.target.value);
-						}}
+						{...params}
+						label={t("item.character")}
+						name="character"
 					/>
+				)}
+			/>
 
-					<FreeSoloCreateOption
-						// addOption={(value) =>
-						// 	addServiceSnackbarWrapper(
-						// 		FigurineService.addCharacterOption(value)
-						// 	)
-						// }
-						id="character"
-						options={[{ name: "Hatsune Miku" }]}
-						renderInput={(params: object) => (
-							<TextField
-								{...params}
-								label={t("item.character")}
-								name="character"
-							/>
-						)}
-					/>
-					{/*
-					<FreeSoloCreateOption
-						addOption={(value) =>
-							addServiceSnackbarWrapper(
-								FigurineService.addOriginOption(value)
-							)
-						}
-						id="origin"
-						options={options.origin}
-						renderInput={(params) => (
-							<TextField
-								{...params}
-								label={t("item.origin")}
-								name="origin"
-							/>
-						)}
-					/>
-					<FreeSoloCreateOption
-						addOption={(value) =>
-							addServiceSnackbarWrapper(
-								FigurineService.addCompanyOption(value)
-							)
-						}
-						id="company"
-						options={options.company}
-						renderInput={(params) => (
-							<TextField
-								{...params}
-								label={t("item.company")}
-								name="company"
-							/>
-						)}
-					/>
-					<FreeSoloCreateOption
-						addOption={(value) =>
-							addServiceSnackbarWrapper(
-								FigurineService.addTypeOption(value)
-							)
-						}
-						id="type"
-						options={options.type}
-						renderInput={(params) => (
-							<TextField
-								{...params}
-								label={t("item.type")}
-								name="type"
-							/>
-						)}
-					/> */}
-
-					<RadioGroup defaultValue="Used" name="condition">
-						<FormControlLabel
-							value="New"
-							control={<Radio />}
-							label={t("item.new")}
-						/>
-						<FormControlLabel
-							value="Used"
-							control={<Radio />}
-							label={t("item.used")}
-						/>
-						<FormControlLabel
-							value="Damaged"
-							control={<Radio />}
-							label={t("item.damaged")}
-						/>
-					</RadioGroup>
-
+			<FreeSoloCreateOption
+				// addOption={(value) =>
+				// 	addServiceSnackbarWrapper(
+				// 		FigurineService.addOriginOption(value)
+				// 	)
+				// }
+				value={item.origin}
+				setValue={handleOrigin}
+				id="origin"
+				options={[{ name: "Vocaloid" }]}
+				renderInput={(params) => (
 					<TextField
-						id="price"
-						name="price"
-						label={t("item.price")}
+						{...params}
+						label={t("item.origin")}
+						name="origin"
 					/>
-					<Button variant="contained" component="label">
-						{t("button.upload")}
-						<input
-							hidden
-							accept="image/jpeg"
-							multiple
-							type="file"
-							name="images"
-						/>
-					</Button>
-					<Button variant="contained" type="submit">
-						{t("button.add")}
-					</Button>
-				</Box>
-			</>
+				)}
+			/>
+
+			<FreeSoloCreateOption
+				// addOption={(value) =>
+				// 	addServiceSnackbarWrapper(
+				// 		FigurineService.addCompanyOption(value)
+				// 	)
+				// }
+				value={item.company}
+				setValue={handleCompany}
+				id="company"
+				options={[{ name: "SEGA" }]}
+				renderInput={(params) => (
+					<TextField
+						{...params}
+						label={t("item.company")}
+						name="company"
+					/>
+				)}
+			/>
+			<FreeSoloCreateOption
+				// addOption={(value) =>
+				// 	addServiceSnackbarWrapper(
+				// 		FigurineService.addTypeOption(value)
+				// 	)
+				// }
+				value={item.type}
+				setValue={handleType}
+				id="type"
+				options={[{ name: "Prize" }]}
+				renderInput={(params) => (
+					<TextField {...params} label={t("item.type")} name="type" />
+				)}
+			/>
+
+			<RadioGroup
+				defaultValue="Used"
+				name="condition"
+				value={item.condition}
+				onChange={handleCondition}
+			>
+				<FormControlLabel
+					value="New"
+					control={<Radio />}
+					label={t("item.new")}
+				/>
+				<FormControlLabel
+					value="Used"
+					control={<Radio />}
+					label={t("item.used")}
+				/>
+				<FormControlLabel
+					value="Damaged"
+					control={<Radio />}
+					label={t("item.damaged")}
+				/>
+			</RadioGroup>
+
+			<TextField
+				value={item.price}
+				onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+					handlePrice(event.target.value);
+				}}
+				id="price"
+				name="price"
+				label={t("item.price")}
+			/>
 		</Box>
 	);
 };

@@ -13,7 +13,7 @@ export interface Figurine {
 	company: string;
 	type: string;
 	condition: string;
-	price: number;
+	price: string;
 	images: Image[];
 }
 

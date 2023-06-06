@@ -14,7 +14,7 @@ const Cart = () => {
 	React.useEffect(() => {
 		setTotalCost(() =>
 			cartItems.reduce(
-				(sum: number, item: Figurine) => sum + item.price,
+				(sum: number, item: Figurine) => sum + parseFloat(item.price),
 				0 as number
 			)
 		);
