@@ -1,4 +1,4 @@
-export interface Image {
+export interface Image extends File {
 	id: number;
 	path: string;
 	createdAt: Date;

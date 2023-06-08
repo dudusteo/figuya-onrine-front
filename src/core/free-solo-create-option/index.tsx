@@ -75,7 +75,7 @@ const FreeSoloCreateOption = ({
 				return option.name;
 			}}
 			renderOption={(props, option) => <li {...props}>{option.name}</li>}
-			sx={{ width: 300 }}
+			sx={{ flexGrow: 1 }}
 			freeSolo
 			renderInput={renderInput}
 		/>
