@@ -4,7 +4,6 @@ import { Box, Button, CssBaseline, Stack, Typography } from "@mui/material";
 import { ShopContext } from "../../context/shop-context";
 
 import CartItem from "./CartItem";
-import { Figurine } from "../../interfaces";
 import PurchaseSummary from "./PurchaseSummary";
 
 const Cart = () => {

@@ -15,7 +15,6 @@ import * as React from "react";
 import StaticImage from "../static-image";
 
 import PhotoLibrary from "@mui/icons-material/PhotoLibrary";
-import { Image } from "../../interfaces";
 
 interface ImageDialogProps {
 	images: Image[];

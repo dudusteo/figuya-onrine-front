@@ -1,7 +1,6 @@
 import * as React from "react";
-import { Image } from "../../interfaces";
 
-const STATIC_URL = process.env.REACT_APP_STATIC_URL;
+const STATIC_URL = import.meta.env.VITE_STATIC_URL;
 
 interface ImageCellProps {
 	images: Image[];

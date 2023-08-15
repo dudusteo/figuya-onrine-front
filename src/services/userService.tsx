@@ -1,6 +1,5 @@
 import { AxiosError, AxiosResponse } from "axios";
 import axiosInstance from "./axiosInstance";
-import { User } from "../interfaces";
 
 interface UserResponse {
 	id: number;

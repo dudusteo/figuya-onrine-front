@@ -3,7 +3,7 @@ import * as React from "react";
 import StaticImage from "../static-image";
 import { Box, ImageList, ImageListItem } from "@mui/material";
 import ImageDialog from "./ImageDialog";
-import { Image } from "../../interfaces";
+import ReactImage from "../react-image";
 
 interface ImageProductProps {
 	images: Image[];
@@ -32,15 +32,18 @@ const ImageProduct = ({ images }: ImageProductProps) => {
 				flexDirection: "row",
 			}}
 		>
-			<StaticImage
+			<Box
 				sx={{
 					height: "27rem",
 					width: "21rem",
 					mr: "0.5rem",
+					position: "relative",
+					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);",
 				}}
-				src={main.path}
 				onClick={() => setOpenDialog(true)}
-			/>
+			>
+				<ReactImage image={main} />
+			</Box>
 			<ImageList
 				variant="masonry"
 				cols={1}

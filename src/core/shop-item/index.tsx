@@ -10,7 +10,6 @@ import {
 } from "@mui/material";
 import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
-import { Figurine } from "../../interfaces";
 import ImageProduct from "./ImageProduct";
 
 interface ShopItemProps {

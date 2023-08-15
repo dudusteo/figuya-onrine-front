@@ -9,7 +9,6 @@ import {
 	TextField,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import { Figurine, Image } from "../../interfaces";
 import FreeSoloCreateOption from "../free-solo-create-option";
 import UploadIcon from "@mui/icons-material/Upload";
 

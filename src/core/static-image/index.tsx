@@ -10,7 +10,7 @@ const Image = styled("img")({
 	transform: "translateX(-50%) translateY(-50%)",
 });
 
-const STATIC_URL = process.env.REACT_APP_STATIC_URL;
+const STATIC_URL = import.meta.env.VITE_STATIC_URL;
 
 interface StaticImageProps extends React.HTMLAttributes<HTMLDivElement> {
 	src: string;

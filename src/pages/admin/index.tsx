@@ -8,7 +8,6 @@ import {
 	ToggleButtonGroup,
 } from "@mui/material";
 import ShopItem from "../../core/shop-item";
-import { Figurine } from "../../interfaces";
 import EditShopItem from "../../core/shop-item/EditShopItem";
 import AdminService from "../../services/adminService";
 
@@ -38,7 +37,8 @@ const Admin = () => {
 	};
 
 	const handleSubmit = () => {
-		AdminService.createFigurine(figurine).then(() => {});
+		console.log(figurine);
+		//AdminService.createFigurine(figurine).then(() => {});
 	};
 
 	return (
@@ -59,14 +59,11 @@ const Admin = () => {
 				<ToggleButton value={false}>Edit</ToggleButton>
 				<ToggleButton value={true}>Preview</ToggleButton>
 			</ToggleButtonGroup>
-			<Button variant="contained" onClick={handleSubmit}></Button>
-			{!preview && (
-				<EditShopItem
-					item={figurine}
-					setItem={setFigurine}
-				></EditShopItem>
-			)}
-			{preview && <ShopItem item={figurine}></ShopItem>}
+			<Button sx={{ p: 1 }} variant="contained" onClick={handleSubmit}>
+				{"Submit"}
+			</Button>
+			{!preview && <EditShopItem item={figurine} setItem={setFigurine} />}
+			{preview && <ShopItem item={figurine} />}
 		</Box>
 	);
 };

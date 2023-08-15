@@ -1,7 +1,6 @@
 import * as React from "react";
 import { Box, SxProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
-import { Image } from "../../interfaces";
 
 const BigImage = styled("img")(({ theme }) => ({
 	height: "100%",
@@ -31,7 +30,7 @@ const size = {
 	},
 };
 
-const STATIC_URL = process.env.REACT_APP_STATIC_URL;
+const STATIC_URL = import.meta.env.VITE_STATIC_URL;
 
 interface PanelProps {
 	image: Image;

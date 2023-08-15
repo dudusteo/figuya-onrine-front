@@ -12,7 +12,6 @@ import { useParams } from "react-router-dom";
 import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
 import ImageProduct from "../../core/shop-item/ImageProduct";
-import { Figurine } from "../../interfaces";
 import FigurineService from "../../services/figurineService";
 import ShopItem from "../../core/shop-item";
 

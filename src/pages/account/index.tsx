@@ -2,7 +2,6 @@ import * as React from "react";
 
 import { Box, CssBaseline } from "@mui/material";
 import UserService from "../../services/userService";
-import { User } from "../../interfaces";
 
 const Account = () => {
 	const [currentUser, setCurrentUser] = React.useState<User>();

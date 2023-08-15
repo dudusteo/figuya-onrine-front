@@ -1,4 +1,3 @@
-import { Figurine } from "../../interfaces";
 import axiosInstance from "../axiosInstance";
 
 const addFigurine = async (formData: FormData): Promise<string> => {

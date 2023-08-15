@@ -13,7 +13,6 @@ import { useTranslation } from "react-i18next";
 import AuthService from "../../services/authService";
 import IconPopupState from "../icon-popup-state";
 import { ShopContext } from "../../context/shop-context";
-import { Options } from "../../interfaces";
 import figuya_logo from "../../assets/figuya_logo.svg";
 import OptionService from "../../services/old/options.service";
 

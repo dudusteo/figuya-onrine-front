@@ -5,7 +5,6 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { Figurine } from "../../interfaces";
 
 const Image = styled("img")(({ theme }) => ({
 	height: "100%",
@@ -15,7 +14,7 @@ const Image = styled("img")(({ theme }) => ({
 	transform: "translateX(-50%) translateY(-50%)",
 }));
 
-const STATIC_URL = process.env.REACT_APP_STATIC_URL;
+const STATIC_URL = import.meta.env.VITE_STATIC_URL;
 
 interface ItemProps {
 	item: Figurine;

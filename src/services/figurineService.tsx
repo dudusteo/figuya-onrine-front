@@ -1,6 +1,5 @@
 import { AxiosError, AxiosResponse } from "axios";
 import axiosInstance from "./axiosInstance";
-import { Figurine } from "../interfaces";
 
 interface FigurinesResponse extends Array<Figurine> {
 	error?: string;

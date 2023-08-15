@@ -14,7 +14,6 @@ import {
 import { useTranslation } from "react-i18next";
 import FigurineService from "../../services/figurineService";
 import Item from "./Item";
-import { Figurine } from "../../interfaces";
 
 const data = {
 	type: [

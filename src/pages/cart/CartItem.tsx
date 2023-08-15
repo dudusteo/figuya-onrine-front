@@ -11,7 +11,6 @@ import {
 import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
 import StaticImage from "../../core/static-image";
-import { Figurine } from "../../interfaces";
 
 interface CartItemProps {
 	item: Figurine;

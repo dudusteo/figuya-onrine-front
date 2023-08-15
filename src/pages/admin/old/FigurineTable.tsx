@@ -8,7 +8,6 @@ import { addServiceSnackbarWrapper } from "../../../utils";
 import { useTranslation } from "react-i18next";
 import Table from "../../../core/table";
 import ImageCell from "../../../core/table/ImageCell";
-import { Figurine } from "../../../interfaces";
 
 interface FigurineTableProps {
 	currentPackageId: number;

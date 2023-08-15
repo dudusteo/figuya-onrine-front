@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useLocalStorage } from "../hooks/useLocalStorage";
-import { Figurine } from "../interfaces";
 
 const KEY = "cart";
 
