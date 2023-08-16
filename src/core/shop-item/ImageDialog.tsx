@@ -41,9 +41,9 @@ const ImageDialog = ({ images = [], open, onClose }: ImageDialogProps) => {
 					<Grid container spacing={2}>
 						<Grid item xs={12} sm={6}>
 							<List disablePadding>
-								{images.map((image) => (
+								{images.map((image, index) => (
 									<ListItem
-										key={image.id}
+										key={index}
 										button
 										selected={
 											selectedImage?.id === image.id

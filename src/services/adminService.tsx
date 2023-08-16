@@ -12,7 +12,7 @@ const createFigurine = async (figurine: Figurine) => {
 			figurine
 		);
 
-		return;
+		return response.status;
 	} catch (error) {
 		const axiosError = error as AxiosError<AdminResponse>;
 		throw new Error(axiosError.response?.data?.error);

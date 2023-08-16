@@ -38,7 +38,9 @@ const Admin = () => {
 
 	const handleSubmit = () => {
 		console.log(figurine);
-		//AdminService.createFigurine(figurine).then(() => {});
+		AdminService.createFigurine(figurine).then((status: number) => {
+			console.log("AdminService.createFigurine status: " + status);
+		});
 	};
 
 	return (

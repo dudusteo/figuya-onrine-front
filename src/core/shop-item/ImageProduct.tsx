@@ -32,18 +32,8 @@ const ImageProduct = ({ images }: ImageProductProps) => {
 				flexDirection: "row",
 			}}
 		>
-			<Box
-				sx={{
-					height: "27rem",
-					width: "21rem",
-					mr: "0.5rem",
-					position: "relative",
-					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);",
-				}}
-				onClick={() => setOpenDialog(true)}
-			>
-				<ReactImage image={main} />
-			</Box>
+			<ReactImage image={main} onClick={() => setOpenDialog(true)} />
+
 			<ImageList
 				variant="masonry"
 				cols={1}
@@ -52,12 +42,12 @@ const ImageProduct = ({ images }: ImageProductProps) => {
 			>
 				{rest.map((image, index) => (
 					<ImageListItem key={index} onClick={() => setMain(image)}>
-						<StaticImage
+						<ReactImage
 							sx={{
 								height: "5rem",
 								width: "5rem",
 							}}
-							src={image.path}
+							image={image}
 						/>
 					</ImageListItem>
 				))}
