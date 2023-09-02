@@ -12,7 +12,9 @@ import {
 	Paper,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import Item from "./Item";
+import ProductService from "../../services/productService";
+import { ProductAttr } from "@spree/storefront-api-v2-sdk/dist/*";
+import ProductCard from "./ProductCard";
 
 const data = {
 	type: [
@@ -40,7 +42,7 @@ interface BooleanList {
 
 const Shop = () => {
 	const { t } = useTranslation();
-	const [items, setItems] = React.useState<Figurine[]>([]);
+	const [products, setProducts] = React.useState<ProductAttr[]>([]);
 	const [list, setList] = React.useState<BooleanList>({
 		type: true,
 		condition: true,
@@ -66,9 +68,9 @@ const Shop = () => {
 	};
 
 	React.useEffect(() => {
-		// FigurineService.getAllFigurines().then((data: Figurine[]) =>
-		// 	setItems(data)
-		// );
+		ProductService.getProducts().then((products) => {
+			setProducts(products);
+		});
 	}, []);
 
 	return (
@@ -85,7 +87,7 @@ const Shop = () => {
 				<Paper
 					variant="outlined"
 					sx={{
-						backgroundColor: (theme) =>
+						backgroundColor: (theme: any) =>
 							theme.palette.primary.light + 50,
 					}}
 				>
@@ -97,7 +99,7 @@ const Shop = () => {
 						<ListItemButton onClick={() => setType(!list.type)}>
 							<ListItemText primary={t("shop.type")} />
 						</ListItemButton>
-						<Collapse in={list.type} timeout="auto" unmountOnExit>
+						<Collapse in={list.type} timeout="auto">
 							<List component="div" disablePadding>
 								{data.type.map((type, index) => (
 									<ListItemButton key={index} sx={{ pl: 4 }}>
@@ -118,11 +120,7 @@ const Shop = () => {
 						>
 							<ListItemText primary={t("shop.condition")} />
 						</ListItemButton>
-						<Collapse
-							in={list.condition}
-							timeout="auto"
-							unmountOnExit
-						>
+						<Collapse in={list.condition} timeout="auto">
 							<List component="div" disablePadding>
 								{data.condition.map((condition, index) => (
 									<ListItemButton key={index} sx={{ pl: 4 }}>
@@ -147,11 +145,7 @@ const Shop = () => {
 						>
 							<ListItemText primary={t("shop.popular")} />
 						</ListItemButton>
-						<Collapse
-							in={list.popularSeries}
-							timeout="auto"
-							unmountOnExit
-						>
+						<Collapse in={list.popularSeries} timeout="auto">
 							<List component="div" disablePadding>
 								{data.popularSeries.map((condition, index) => (
 									<ListItemButton key={index} sx={{ pl: 4 }}>
@@ -171,9 +165,9 @@ const Shop = () => {
 			</Box>
 			<Box>
 				<Grid container spacing={2} sx={{ pl: 2 }}>
-					{items.map((item) => (
-						<Grid item key={item.id}>
-							<Item item={item} />
+					{products.map((product) => (
+						<Grid item key={product.id}>
+							<ProductCard product={product} />
 						</Grid>
 					))}
 				</Grid>

@@ -1,26 +1,26 @@
-import { makeClient } from "@spree/storefront-api-v2-sdk";
-import createAxiosFetcher from "@spree/axios-fetcher/dist/server/index";
+import {
+	IProductsResult,
+	ProductAttr,
+} from "@spree/storefront-api-v2-sdk/dist/*";
+import client from "./client";
 
-const client = makeClient({
-	host: "http://localhost:4000",
-	createFetcher: createAxiosFetcher,
-});
+// export interface Product {
+// 	id: string;
+// 	name: string;
+// 	price: number;
+// }
 
-export interface Product {
-	id: string;
-	name: string;
-	price: number;
-}
-
-export class ProductService {
-	async getProducts(): Promise<void> {
+const ProductService = {
+	async getProducts(): Promise<ProductAttr[]> {
 		return client.products
 			.list({
-				include: "default_variant",
+				include: "images",
 				page: 1,
 			})
-			.then((spreeResponse) => {
-				console.log(spreeResponse.success());
+			.then((spreeResponse: IProductsResult) => {
+				return spreeResponse.success().data;
 			});
-	}
-}
+	},
+};
+
+export default ProductService;

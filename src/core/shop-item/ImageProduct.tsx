@@ -3,7 +3,7 @@ import * as React from "react";
 import StaticImage from "../static-image";
 import { Box, ImageList, ImageListItem } from "@mui/material";
 import ImageDialog from "./ImageDialog";
-import ReactImage from "../react-image";
+import ReactImage from "../react-image-old";
 
 interface ImageProductProps {
 	images: Image[];

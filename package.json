@@ -6,9 +6,7 @@
 	"dependencies": {
 		"@emotion/styled": "^11.10.6",
 		"@mui/icons-material": "^5.11.11",
-		"@mui/material": "^5.11.13",
 		"@mui/x-data-grid": "^6.2.0",
-		"@spree/axios-fetcher": "^1.0.0",
 		"@spree/storefront-api-v2-sdk": "^6.0.6",
 		"axios": "^0.25.0",
 		"i18next": "^23.4.4",
@@ -25,6 +23,8 @@
 	},
 	"devDependencies": {
 		"@emotion/react": "^11.10.5",
+		"@mui/material": "^5.14.7",
+		"@mui/types": "^7.2.4",
 		"@swc/plugin-emotion": "^2.5.68",
 		"@types/node": "^20.5.0",
 		"@types/react": "^18.2.12",
