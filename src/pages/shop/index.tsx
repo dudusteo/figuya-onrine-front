@@ -12,8 +12,7 @@ import {
 	Paper,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import ProductService from "../../services/productService";
-import { ProductAttr } from "@spree/storefront-api-v2-sdk/dist/*";
+import ProductService, { Product } from "../../services/productService";
 import ProductCard from "./ProductCard";
 
 const data = {
@@ -42,7 +41,7 @@ interface BooleanList {
 
 const Shop = () => {
 	const { t } = useTranslation();
-	const [products, setProducts] = React.useState<ProductAttr[]>([]);
+	const [products, setProducts] = React.useState<Product[]>([]);
 	const [list, setList] = React.useState<BooleanList>({
 		type: true,
 		condition: true,
@@ -164,13 +163,15 @@ const Shop = () => {
 				</Paper>
 			</Box>
 			<Box>
-				<Grid container spacing={2} sx={{ pl: 2 }}>
-					{products.map((product) => (
-						<Grid item key={product.id}>
-							<ProductCard product={product} />
-						</Grid>
-					))}
-				</Grid>
+				{products && (
+					<Grid container spacing={2} sx={{ pl: 2 }}>
+						{products.map((product) => (
+							<Grid item key={product.id}>
+								<ProductCard product={product} />
+							</Grid>
+						))}
+					</Grid>
+				)}
 			</Box>
 		</Box>
 	);

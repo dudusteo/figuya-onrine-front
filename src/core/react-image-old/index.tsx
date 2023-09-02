@@ -1,32 +1,12 @@
 import { Box, SxProps } from "@mui/material";
 import * as React from "react";
 
-const STATIC_URL = import.meta.env.VITE_STATIC_URL;
-
 interface ReactImageProps extends React.HTMLAttributes<HTMLDivElement> {
-	image: Image;
+	image: string;
 	sx?: SxProps;
 }
 
 const ReactImageOld = ({ image, sx, ...rest }: ReactImageProps) => {
-	const [imageData, setImageData] = React.useState<string | undefined>(
-		undefined
-	);
-
-	React.useEffect(() => {
-		const reader = new FileReader();
-
-		if (image && !image.path) {
-			reader.onload = () => {
-				setImageData(reader.result as string);
-			};
-
-			reader.readAsDataURL(image);
-		} else {
-			setImageData(STATIC_URL + image.path);
-		}
-	}, [image]);
-
 	return (
 		<Box
 			sx={{
@@ -39,7 +19,7 @@ const ReactImageOld = ({ image, sx, ...rest }: ReactImageProps) => {
 			}}
 			{...rest}
 		>
-			<img alt={imageData} src={imageData} height="100%" />
+			<img alt={image} src={image} height="100%" />
 		</Box>
 	);
 };

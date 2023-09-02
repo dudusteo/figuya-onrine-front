@@ -5,13 +5,11 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import { ProductAttr } from "@spree/storefront-api-v2-sdk";
 import ReactImage from "../../core/react-image-old";
-
-const STATIC_URL = import.meta.env.VITE_STATIC_URL;
+import { Product } from "../../services/productService";
 
 interface ProductCardProps {
-	product: ProductAttr;
+	product: Product;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
@@ -41,7 +39,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);",
 				}}
 			>
-				{/* <ReactImage image={product.relationships?.images}} /> */}
+				<ReactImage image={product.images[0]} />
 			</Box>
 			<Box sx={{ flexGrow: 1, py: 1 }}>
 				<Typography variant="subtitle2" sx={{ color: "primary.main" }}>
