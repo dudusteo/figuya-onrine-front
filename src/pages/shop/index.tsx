@@ -12,7 +12,6 @@ import {
 	Paper,
 } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import FigurineService from "../../services/figurineService";
 import Item from "./Item";
 
 const data = {
@@ -67,9 +66,9 @@ const Shop = () => {
 	};
 
 	React.useEffect(() => {
-		FigurineService.getAllFigurines().then((data: Figurine[]) =>
-			setItems(data)
-		);
+		// FigurineService.getAllFigurines().then((data: Figurine[]) =>
+		// 	setItems(data)
+		// );
 	}, []);
 
 	return (

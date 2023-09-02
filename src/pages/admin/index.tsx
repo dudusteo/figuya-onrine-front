@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import ShopItem from "../../core/shop-item";
 import EditShopItem from "../../core/shop-item/EditShopItem";
-import AdminService from "../../services/adminService";
 
 const emptyFigurine: Figurine = {
 	id: 0,
@@ -38,9 +37,9 @@ const Admin = () => {
 
 	const handleSubmit = () => {
 		console.log(figurine);
-		AdminService.createFigurine(figurine).then((status: number) => {
-			console.log("AdminService.createFigurine status: " + status);
-		});
+		// AdminService.createFigurine(figurine).then((status: number) => {
+		// 	console.log("AdminService.createFigurine status: " + status);
+		// });
 	};
 
 	return (

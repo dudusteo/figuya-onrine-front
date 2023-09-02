@@ -1,16 +1,9 @@
 import * as React from "react";
 
 import { Box, CssBaseline } from "@mui/material";
-import UserService from "../../services/userService";
 
 const Account = () => {
 	const [currentUser, setCurrentUser] = React.useState<User>();
-
-	React.useEffect(() => {
-		UserService.getCurrentUser()
-			.then((currentUser) => setCurrentUser(currentUser))
-			.catch((error: Error) => {});
-	}, []);
 
 	if (!currentUser) {
 		return <div>loading...</div>;

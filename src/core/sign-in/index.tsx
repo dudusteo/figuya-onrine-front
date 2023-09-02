@@ -11,7 +11,6 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import AuthService from "../../services/authService";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -23,17 +22,17 @@ export default function SignIn() {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 
-		AuthService.login({
-			login: data.get("login") as string,
-			password: data.get("password") as string,
-		})
-			.then((token: string) => {
-				navigate("/account");
-			})
-			.catch((error: Error) => {
-				// Handle login error
-				console.error("Login failed:", error.message);
-			});
+		// AuthService.login({
+		// 	login: data.get("login") as string,
+		// 	password: data.get("password") as string,
+		// })
+		// 	.then((token: string) => {
+		// 		navigate("/account");
+		// 	})
+		// 	.catch((error: Error) => {
+		// 		// Handle login error
+		// 		console.error("Login failed:", error.message);
+		// 	});
 	};
 
 	return (

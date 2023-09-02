@@ -12,7 +12,6 @@ import { useParams } from "react-router-dom";
 import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
 import ImageProduct from "../../core/shop-item/ImageProduct";
-import FigurineService from "../../services/figurineService";
 import ShopItem from "../../core/shop-item";
 
 const Item = () => {
@@ -23,9 +22,9 @@ const Item = () => {
 
 	React.useEffect(() => {
 		if (itemId) {
-			FigurineService.getFigurineById(parseInt(itemId)).then(
-				(data: Figurine) => setItem(data)
-			);
+			// FigurineService.getFigurineById(parseInt(itemId)).then(
+			// 	(data: Figurine) => setItem(data)
+			// );
 		}
 	}, [itemId]);
 

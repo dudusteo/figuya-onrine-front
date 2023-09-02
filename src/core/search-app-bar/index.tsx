@@ -10,11 +10,9 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import MenuPopupState from "../menu-popup-state";
 import { Avatar, Badge, Box, Button, IconButton, Link } from "@mui/material";
 import { useTranslation } from "react-i18next";
-import AuthService from "../../services/authService";
 import IconPopupState from "../icon-popup-state";
 import { ShopContext } from "../../context/shop-context";
 import figuya_logo from "../../assets/figuya_logo.svg";
-import OptionService from "../../services/old/options.service";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -75,7 +73,7 @@ const SearchAppBar = () => {
 	});
 
 	React.useEffect(() => {
-		OptionService.getOptions().then((data: Options) => setOptions(data));
+		// OptionService.getOptions().then((data: Options) => setOptions(data));
 	}, []);
 
 	const { cartItems } = React.useContext(ShopContext);
@@ -121,7 +119,6 @@ const SearchAppBar = () => {
 							{
 								name: t("nav-bar.menu1.sign-out"),
 								href: "/",
-								onClick: () => AuthService.logout(),
 							},
 							{
 								name: "Admin",
