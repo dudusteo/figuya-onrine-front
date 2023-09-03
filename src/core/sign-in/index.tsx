@@ -15,10 +15,13 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import AuthenticationService from "../../services/authenticationService";
 import { IOAuthToken } from "@spree/storefront-api-v2-sdk";
+import { useAppDispatch } from "../../hooks";
+import { setToken } from "../../features/token/token-slice";
 
 export default function SignIn() {
 	const { t } = useTranslation();
 	const navigate = useNavigate();
+	const dispatch = useAppDispatch();
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -29,6 +32,7 @@ export default function SignIn() {
 			password: data.get("password") as string,
 		})
 			.then((token: IOAuthToken) => {
+				dispatch(setToken(token.access_token));
 				navigate("/account");
 			})
 			.catch((error: Error) =>

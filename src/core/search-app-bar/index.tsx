@@ -13,6 +13,8 @@ import { useTranslation } from "react-i18next";
 import IconPopupState from "../icon-popup-state";
 import figuya_logo from "../../assets/figuya_logo.svg";
 import AuthenticationService from "../../services/authenticationService";
+import { useDispatch } from "react-redux";
+import { clearToken } from "../../features/token/token-slice";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -64,6 +66,7 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 
 const SearchAppBar = () => {
 	const { t } = useTranslation();
+	const dispatch = useDispatch();
 
 	return (
 		<>
@@ -107,6 +110,7 @@ const SearchAppBar = () => {
 								name: t("nav-bar.menu1.sign-out"),
 								href: "/",
 								onClick: () => {
+									dispatch(clearToken());
 									AuthenticationService.revokeToken("");
 								},
 							},

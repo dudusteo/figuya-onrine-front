@@ -3,15 +3,17 @@ import * as React from "react";
 import { Box, CssBaseline } from "@mui/material";
 import { IAccount } from "@spree/storefront-api-v2-sdk";
 import AccountService from "../../services/accountService";
+import { useAppSelector } from "../../hooks";
 
 const Account = () => {
 	const [currentUser, setCurrentUser] = React.useState<IAccount>();
+	const token = useAppSelector((state) => state.token.value);
 
 	React.useEffect(() => {
-		AccountService.accountInfo("token").then((user: IAccount) => {
+		AccountService.accountInfo(token).then((user: IAccount) => {
 			setCurrentUser(user);
 		});
-	}, []);
+	}, [token]);
 
 	if (!currentUser) {
 		return <div>loading...</div>;

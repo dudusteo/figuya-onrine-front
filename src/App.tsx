@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { SnackbarProvider } from "notistack";
 
 import SearchAppBar from "./core/search-app-bar";
 import StickyFooter from "./core/sticky-footer";
@@ -15,23 +14,21 @@ import Account from "./pages/account";
 
 const App = () => {
 	return (
-		<SnackbarProvider maxSnack={10}>
-			<BrowserRouter>
-				<SearchAppBar />
-				<Routes>
-					<Route path="/" element={<Home />} />
-					<Route path="/item/:itemId" element={<Item />} />
-					<Route path="/shop" element={<Shop />} />
-					<Route path="/cart" element={<Cart />} />
-					<Route path="/cart/checkout" element={<Checkout />} />
-					<Route path="/account" element={<Account />} />
-					<Route path="/account/login" element={<Login />} />
-					<Route path="/account/register" element={<Register />} />
-					<Route path="*" element={<div>404</div>} />
-				</Routes>
-				<StickyFooter />
-			</BrowserRouter>
-		</SnackbarProvider>
+		<BrowserRouter>
+			<SearchAppBar />
+			<Routes>
+				<Route path="/" element={<Home />} />
+				<Route path="/item/:itemId" element={<Item />} />
+				<Route path="/shop" element={<Shop />} />
+				<Route path="/cart" element={<Cart />} />
+				<Route path="/cart/checkout" element={<Checkout />} />
+				<Route path="/account" element={<Account />} />
+				<Route path="/account/login" element={<Login />} />
+				<Route path="/account/register" element={<Register />} />
+				<Route path="*" element={<div>404</div>} />
+			</Routes>
+			<StickyFooter />
+		</BrowserRouter>
 	);
 };
 

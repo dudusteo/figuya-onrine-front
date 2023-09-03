@@ -1,8 +1,8 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import CssBaseline from "@mui/material/CssBaseline";
 
 import {
+	CssBaseline,
+	Box,
 	Collapse,
 	Divider,
 	Grid,
@@ -11,6 +11,7 @@ import {
 	ListItemText,
 	Paper,
 } from "@mui/material";
+
 import { useTranslation } from "react-i18next";
 import ProductService, { Product } from "../../services/productService";
 import ProductCard from "./ProductCard";
