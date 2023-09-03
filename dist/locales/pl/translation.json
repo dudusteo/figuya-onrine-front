@@ -30,7 +30,7 @@
 	"account": {
 		"login": {
 			"sign-in": "Zaloguj się",
-			"login": "Nazwa użytkownika lub Adres mailowy",
+			"login": "Adres mailowy",
 			"password": "Hasło",
 			"remember": "Zapamiętaj mnie",
 			"forgot": "Zapomniałeś hasła?",
@@ -40,7 +40,6 @@
 			"sign-up": "Zarejestruj się",
 			"first-name": "Imię",
 			"last-name": "Nazwisko",
-			"username": "Nazwa użytkownika",
 			"email": "Adres mailowy",
 			"password": "Hasło",
 			"newsletter": "Chcę dostawać promocje i aktualizacja na maila",

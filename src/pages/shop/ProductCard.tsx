@@ -1,8 +1,6 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
 import { Box, Button, Paper, Typography } from "@mui/material";
 
-import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import ReactImage from "../../core/react-image-old";
@@ -15,7 +13,6 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
 	const navigate = useNavigate();
 	const { t } = useTranslation();
-	const { addToCart } = React.useContext(ShopContext);
 
 	const title = product.attributes.name;
 	const priceTitle = product.attributes.display_price;

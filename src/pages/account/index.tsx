@@ -1,9 +1,17 @@
 import * as React from "react";
 
 import { Box, CssBaseline } from "@mui/material";
+import { IAccount } from "@spree/storefront-api-v2-sdk";
+import AccountService from "../../services/accountService";
 
 const Account = () => {
-	const [currentUser, setCurrentUser] = React.useState<User>();
+	const [currentUser, setCurrentUser] = React.useState<IAccount>();
+
+	React.useEffect(() => {
+		AccountService.accountInfo("token").then((user: IAccount) => {
+			setCurrentUser(user);
+		});
+	}, []);
 
 	if (!currentUser) {
 		return <div>loading...</div>;
@@ -21,29 +29,16 @@ const Account = () => {
 			<div>
 				<header>
 					<h3>
-						<strong>{currentUser?.username}</strong> Profile
+						<strong>{`${currentUser.data.attributes.first_name} ${currentUser.data.attributes.last_name}`}</strong>{" "}
+						Profile
 					</h3>
 				</header>
 				<p>
-					<strong>Token:</strong>{" "}
-					{currentUser?.token.substring(0, 20)} ...{" "}
-					{currentUser?.token.substr(currentUser?.token.length - 20)}
+					<strong>Id:</strong> {currentUser.data.id}
 				</p>
 				<p>
-					<strong>Id:</strong> {currentUser?.id}
+					<strong>Email:</strong> {currentUser.data.attributes.email}
 				</p>
-				<p>
-					<strong>Email:</strong> {currentUser?.email}
-				</p>
-				{/* <strong>Authorities:</strong>
-				<ul>
-					{currentUser?.roles &&
-						currentUser?.roles.map(
-							(role: string, index: number) => (
-								<li key={index}>{role}</li>
-							)
-						)}
-				</ul> */}
 			</div>
 		</Box>
 	);

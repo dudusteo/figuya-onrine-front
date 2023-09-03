@@ -31,15 +31,6 @@ interface Option {
 	updatedAt?: Date;
 }
 
-interface User {
-	id: number;
-	firstName: string;
-	lastName: string;
-	username: string;
-	email: string;
-	token: string;
-}
-
 interface ImportMeta {
 	env: {
 		VITE_API_URL?: string;

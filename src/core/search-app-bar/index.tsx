@@ -11,8 +11,8 @@ import MenuPopupState from "../menu-popup-state";
 import { Avatar, Badge, Box, Button, IconButton, Link } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import IconPopupState from "../icon-popup-state";
-import { ShopContext } from "../../context/shop-context";
 import figuya_logo from "../../assets/figuya_logo.svg";
+import AuthenticationService from "../../services/authenticationService";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -65,19 +65,6 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 const SearchAppBar = () => {
 	const { t } = useTranslation();
 
-	const [options, setOptions] = React.useState<Options>({
-		character: [],
-		origin: [],
-		company: [],
-		type: [],
-	});
-
-	React.useEffect(() => {
-		// OptionService.getOptions().then((data: Options) => setOptions(data));
-	}, []);
-
-	const { cartItems } = React.useContext(ShopContext);
-
 	return (
 		<>
 			<AppBar position="static">
@@ -119,10 +106,9 @@ const SearchAppBar = () => {
 							{
 								name: t("nav-bar.menu1.sign-out"),
 								href: "/",
-							},
-							{
-								name: "Admin",
-								href: "/admin",
+								onClick: () => {
+									AuthenticationService.revokeToken("");
+								},
 							},
 						]}
 						sx={{ ml: 1 }}
@@ -136,13 +122,7 @@ const SearchAppBar = () => {
 								vertical: "bottom",
 								horizontal: "right",
 							}}
-							badgeContent={
-								cartItems.length && (
-									<SmallAvatar>
-										{cartItems.length}
-									</SmallAvatar>
-								)
-							}
+							badgeContent={<SmallAvatar>{3}</SmallAvatar>}
 						>
 							<ShoppingCartIcon fontSize="large" />
 						</Badge>
@@ -155,11 +135,11 @@ const SearchAppBar = () => {
 						<MenuPopupState
 							href="/shop"
 							text={t("nav-bar.bar1")}
-							items={options.origin}
+							items={[{ name: "" }]}
 						/>
 						<MenuPopupState
 							text={t("nav-bar.bar2")}
-							items={options.company}
+							items={[{ name: "" }]}
 						/>
 						<MenuPopupState
 							text={t("nav-bar.bar3")}

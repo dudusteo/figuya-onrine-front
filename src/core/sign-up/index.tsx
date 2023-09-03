@@ -13,6 +13,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import AccountService from "../../services/accountService";
+import { IAccount } from "@spree/storefront-api-v2-sdk";
 
 export default function SignUp() {
 	const { t } = useTranslation();
@@ -22,19 +24,19 @@ export default function SignUp() {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 
-		// AuthService.register({
-		// 	firstName: data.get("firstName") as string,
-		// 	lastName: data.get("lastName") as string,
-		// 	username: data.get("username") as string,
-		// 	email: data.get("email") as string,
-		// 	password: data.get("password") as string,
-		// })
-		// 	.then((token: string) => {
-		// 		navigate("/account");
-		// 	})
-		// 	.catch((error: Error) =>
-		// 		console.error("Registration failed:", error.message)
-		// 	);
+		AccountService.createAccount({
+			first_name: data.get("first_name") as string,
+			last_name: data.get("last_name") as string,
+			email: data.get("email") as string,
+			password: data.get("password") as string,
+			password_confirmation: data.get("password") as string,
+		})
+			.then((accountResult: IAccount) => {
+				navigate("/account");
+			})
+			.catch((error: Error) =>
+				console.error("Registration failed:", error.message)
+			);
 	};
 
 	return (
@@ -64,10 +66,10 @@ export default function SignUp() {
 						<Grid item xs={12} sm={6}>
 							<TextField
 								autoComplete="given-name"
-								name="firstName"
+								name="first_name"
 								required
 								fullWidth
-								id="firstName"
+								id="first_name"
 								label={t("account.register.first-name")}
 								autoFocus
 							/>
@@ -76,20 +78,10 @@ export default function SignUp() {
 							<TextField
 								required
 								fullWidth
-								id="lastName"
+								id="last_name"
 								label={t("account.register.last-name")}
-								name="lastName"
+								name="last_name"
 								autoComplete="family-name"
-							/>
-						</Grid>
-						<Grid item xs={12}>
-							<TextField
-								required
-								fullWidth
-								id="username"
-								label={t("account.register.username")}
-								name="username"
-								autoComplete="username"
 							/>
 						</Grid>
 						<Grid item xs={12}>

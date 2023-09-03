@@ -8,7 +8,7 @@ import {
 	Link,
 	Typography,
 } from "@mui/material";
-import { ShopContext } from "../../context/shop-context";
+
 import { useTranslation } from "react-i18next";
 import ImageProduct from "./ImageProduct";
 
@@ -17,8 +17,6 @@ interface ShopItemProps {
 }
 
 const ShopItem = ({ item }: ShopItemProps) => {
-	const { addToCart } = React.useContext(ShopContext);
-
 	const { t } = useTranslation();
 
 	if (!item) {
@@ -98,7 +96,7 @@ const ShopItem = ({ item }: ShopItemProps) => {
 						</Typography>
 						<Button
 							variant="contained"
-							onClick={() => addToCart(item)}
+							// onClick={() => addToCart(item)}
 							sx={{ width: "11rem" }}
 						>
 							{t("add-to-cart")}

@@ -13,6 +13,8 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import AuthenticationService from "../../services/authenticationService";
+import { IOAuthToken } from "@spree/storefront-api-v2-sdk";
 
 export default function SignIn() {
 	const { t } = useTranslation();
@@ -22,17 +24,16 @@ export default function SignIn() {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
 
-		// AuthService.login({
-		// 	login: data.get("login") as string,
-		// 	password: data.get("password") as string,
-		// })
-		// 	.then((token: string) => {
-		// 		navigate("/account");
-		// 	})
-		// 	.catch((error: Error) => {
-		// 		// Handle login error
-		// 		console.error("Login failed:", error.message);
-		// 	});
+		AuthenticationService.getToken({
+			username: data.get("login") as string,
+			password: data.get("password") as string,
+		})
+			.then((token: IOAuthToken) => {
+				navigate("/account");
+			})
+			.catch((error: Error) =>
+				console.error("Login failed:", error.message)
+			);
 	};
 
 	return (
