@@ -17,15 +17,15 @@ import StaticImage from "../static-image";
 import PhotoLibrary from "@mui/icons-material/PhotoLibrary";
 
 interface ImageDialogProps {
-	images: Image[];
+	images: string[];
 	open: boolean;
 	onClose: () => void;
 }
 
 const ImageDialog = ({ images = [], open, onClose }: ImageDialogProps) => {
-	const [selectedImage, setSelectedImage] = React.useState<Image>(images[0]);
+	const [selectedImage, setSelectedImage] = React.useState<string>(images[0]);
 
-	const handleListItemClick = (image: Image) => {
+	const handleListItemClick = (image: string) => {
 		setSelectedImage(image);
 	};
 
@@ -45,9 +45,7 @@ const ImageDialog = ({ images = [], open, onClose }: ImageDialogProps) => {
 									<ListItem
 										key={index}
 										button
-										selected={
-											selectedImage?.id === image.id
-										}
+										selected={selectedImage === image}
 										onClick={() =>
 											handleListItemClick(image)
 										}
@@ -55,7 +53,7 @@ const ImageDialog = ({ images = [], open, onClose }: ImageDialogProps) => {
 										<ListItemIcon>
 											<PhotoLibrary />
 										</ListItemIcon>
-										<ListItemText primary={image.path} />
+										<ListItemText primary={index} />
 									</ListItem>
 								))}
 							</List>
@@ -69,7 +67,7 @@ const ImageDialog = ({ images = [], open, onClose }: ImageDialogProps) => {
 								Selected image
 							</Typography>
 							{selectedImage ? (
-								<StaticImage src={selectedImage.path} />
+								<StaticImage src={selectedImage} />
 							) : (
 								<Typography
 									variant="body2"

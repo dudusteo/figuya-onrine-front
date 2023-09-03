@@ -4,7 +4,7 @@ import {
 	IOAuthToken,
 	IOAuthTokenResult,
 } from "@spree/storefront-api-v2-sdk";
-import client from "./client";
+import { bodyClient } from "./client";
 
 interface UserLogin {
 	username: string;
@@ -13,7 +13,7 @@ interface UserLogin {
 
 const AuthenticationService = {
 	async getToken(userLogin: UserLogin): Promise<IOAuthToken> {
-		const response = client.authentication.getToken({
+		const response = bodyClient.authentication.getToken({
 			...userLogin,
 		});
 
@@ -23,7 +23,7 @@ const AuthenticationService = {
 	},
 
 	async revokeToken(token: string): Promise<EmptyObjectResponse> {
-		const response = client.authentication.revokeToken({
+		const response = bodyClient.authentication.revokeToken({
 			token: token,
 		});
 

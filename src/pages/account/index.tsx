@@ -10,9 +10,11 @@ const Account = () => {
 	const token = useAppSelector((state) => state.token.value);
 
 	React.useEffect(() => {
-		AccountService.accountInfo(token).then((user: IAccount) => {
-			setCurrentUser(user);
-		});
+		if (token) {
+			AccountService.accountInfo(token).then((user: IAccount) => {
+				setCurrentUser(user);
+			});
+		}
 	}, [token]);
 
 	if (!currentUser) {

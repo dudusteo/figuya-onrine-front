@@ -9,8 +9,8 @@ import Checkout from "./pages/cart/checkout";
 import Login from "./pages/account/login";
 import Register from "./pages/account/register";
 import Home from "./pages/home";
-import Item from "./pages/item";
 import Account from "./pages/account";
+import Product from "./pages/product";
 
 const App = () => {
 	return (
@@ -18,7 +18,7 @@ const App = () => {
 			<SearchAppBar />
 			<Routes>
 				<Route path="/" element={<Home />} />
-				<Route path="/item/:itemId" element={<Item />} />
+				<Route path="/shop/product/:productId" element={<Product />} />
 				<Route path="/shop" element={<Shop />} />
 				<Route path="/cart" element={<Cart />} />
 				<Route path="/cart/checkout" element={<Checkout />} />

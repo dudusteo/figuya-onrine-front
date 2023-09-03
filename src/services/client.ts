@@ -12,16 +12,22 @@ const axiosFetcher = async (options: AxiosRequestConfig): Promise<any> => {
 	return response.data;
 };
 
-const client = makeClient({
-	host: "http://localhost:4000",
+export const queryClient = makeClient({
+	host: import.meta.env.VITE_API_URL || "http://localhost:4000",
 	createFetcher: (options: CreateFetcherConfig) => {
 		return {
 			fetch: async (fetchOptions: FetchConfig) => {
+				const responseType =
+					fetchOptions.responseParsing === "automatic"
+						? undefined
+						: fetchOptions.responseParsing;
+
 				const axiosOptions: AxiosRequestConfig = {
 					url: `${options.host}/${fetchOptions.url}`,
 					method: fetchOptions.method,
 					headers: fetchOptions.headers,
-					data: fetchOptions.params,
+					params: fetchOptions.params,
+					responseType: responseType,
 				};
 				const data = await axiosFetcher(axiosOptions);
 				return { data };
@@ -30,4 +36,26 @@ const client = makeClient({
 	},
 });
 
-export default client;
+export const bodyClient = makeClient({
+	host: import.meta.env.VITE_API_URL || "http://localhost:4000",
+	createFetcher: (options: CreateFetcherConfig) => {
+		return {
+			fetch: async (fetchOptions: FetchConfig) => {
+				const responseType =
+					fetchOptions.responseParsing === "automatic"
+						? undefined
+						: fetchOptions.responseParsing;
+
+				const axiosOptions: AxiosRequestConfig = {
+					url: `${options.host}/${fetchOptions.url}`,
+					method: fetchOptions.method,
+					headers: fetchOptions.headers,
+					data: fetchOptions.params,
+					responseType: responseType,
+				};
+				const data = await axiosFetcher(axiosOptions);
+				return { data };
+			},
+		} as Fetcher;
+	},
+});

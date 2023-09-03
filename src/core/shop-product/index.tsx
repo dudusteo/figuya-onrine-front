@@ -11,20 +11,21 @@ import {
 
 import { useTranslation } from "react-i18next";
 import ImageProduct from "./ImageProduct";
+import { Product } from "../../services/productService";
 
-interface ShopItemProps {
-	item: Figurine;
+interface ShopProductProps {
+	product: Product;
 }
 
-const ShopItem = ({ item }: ShopItemProps) => {
+const ShopProduct = ({ product }: ShopProductProps) => {
 	const { t } = useTranslation();
 
-	if (!item) {
+	if (!product) {
 		return <div>Loading...</div>;
 	}
 
-	const title = item.name + " - " + item.origin + " - " + item.company;
-	const priceTitle = t("price") + " " + item.price + " " + t("unit");
+	const title = product.attributes.name;
+	const priceTitle = product.attributes.display_price;
 
 	return (
 		<Box
@@ -55,9 +56,9 @@ const ShopItem = ({ item }: ShopItemProps) => {
 						<Link underline="hover" href="/">
 							Figuya Onrine
 						</Link>
-						<Link underline="hover" href="/">
-							{item.origin}
-						</Link>
+						{/* <Link underline="hover" href="/">
+							{product.origin}
+						</Link> */}
 					</Breadcrumbs>
 					<Typography>{"Similiar products"}</Typography>
 				</Box>
@@ -67,7 +68,7 @@ const ShopItem = ({ item }: ShopItemProps) => {
 						flexDirection: "row",
 					}}
 				>
-					<ImageProduct images={item.images}></ImageProduct>
+					<ImageProduct images={product.images}></ImageProduct>
 					<Box
 						sx={{
 							display: "flex",
@@ -78,12 +79,12 @@ const ShopItem = ({ item }: ShopItemProps) => {
 						<Typography variant="h5" sx={{ color: "primary.main" }}>
 							{title}
 						</Typography>
-						<Typography
+						{/* <Typography
 							variant="subtitle1"
 							sx={{ color: "primary.main", flexGrow: 1 }}
 						>
-							{item.condition}
-						</Typography>
+							{product.condition}
+						</Typography> */}
 						<Typography
 							variant="h4"
 							sx={{
@@ -96,7 +97,7 @@ const ShopItem = ({ item }: ShopItemProps) => {
 						</Typography>
 						<Button
 							variant="contained"
-							// onClick={() => addToCart(item)}
+							// onClick={() => addToCart(product)}
 							sx={{ width: "11rem" }}
 						>
 							{t("add-to-cart")}
@@ -115,4 +116,4 @@ const ShopItem = ({ item }: ShopItemProps) => {
 	);
 };
 
-export default ShopItem;
+export default ShopProduct;

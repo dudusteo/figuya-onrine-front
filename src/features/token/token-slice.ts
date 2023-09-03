@@ -23,11 +23,11 @@ const tokenSlice = createSlice({
 	initialState,
 	reducers: {
 		setToken: (state: TokenState, action: PayloadAction<string>) => {
-			document.cookie = `access_token=${action.payload}; path=/`;
+			document.cookie = `access_token=${action.payload}; path=/; SameSite=Strict;`;
 			state.value = action.payload;
 		},
 		clearToken: (state: TokenState) => {
-			document.cookie = `access_token=`;
+			document.cookie = `access_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; SameSite=Strict;`;
 			state.value = "";
 		},
 	},

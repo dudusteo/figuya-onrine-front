@@ -30,10 +30,8 @@ const size = {
 	},
 };
 
-const STATIC_URL = import.meta.env.VITE_STATIC_URL;
-
 interface PanelProps {
-	image: Image;
+	image: string;
 	sx?: SxProps;
 	small?: boolean;
 }
@@ -51,9 +49,9 @@ const Panel = ({ image, sx, small }: PanelProps) => {
 			}}
 		>
 			{small ? (
-				<SmallImage alt="" src={STATIC_URL + image.path} />
+				<SmallImage alt="" src={image} />
 			) : (
-				<BigImage alt="" src={STATIC_URL + image.path} />
+				<BigImage alt="" src={image} />
 			)}
 		</Box>
 	);

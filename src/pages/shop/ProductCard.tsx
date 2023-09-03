@@ -3,7 +3,7 @@ import { Box, Button, Paper, Typography } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import ReactImage from "../../core/react-image-old";
+import ReactImage from "../../core/react-image";
 import { Product } from "../../services/productService";
 
 interface ProductCardProps {
@@ -17,6 +17,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
 	const title = product.attributes.name;
 	const priceTitle = product.attributes.display_price;
 
+	const handleNavigation = () => {
+		navigate(`/shop/product/${product.id}`);
+	};
+
 	return (
 		<Paper
 			variant="outlined"
@@ -28,18 +32,22 @@ const ProductCard = ({ product }: ProductCardProps) => {
 				flexDirection: "column",
 			}}
 		>
-			<Box
+			<ReactImage
 				sx={{
-					position: "relative",
 					height: "18rem",
 					width: "14rem",
-					clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);",
+					cursor: "pointer",
 				}}
-			>
-				<ReactImage image={product.images[0]} />
-			</Box>
+				onClick={handleNavigation}
+				image={product.images[0]}
+			/>
+
 			<Box sx={{ flexGrow: 1, py: 1 }}>
-				<Typography variant="subtitle2" sx={{ color: "primary.main" }}>
+				<Typography
+					variant="subtitle2"
+					sx={{ color: "primary.main", cursor: "pointer" }}
+					onClick={handleNavigation}
+				>
 					{title}
 				</Typography>
 			</Box>

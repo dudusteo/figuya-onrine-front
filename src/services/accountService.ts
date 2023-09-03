@@ -1,5 +1,5 @@
 import { IAccount, IAccountResult } from "@spree/storefront-api-v2-sdk";
-import client from "./client";
+import { bodyClient } from "./client";
 
 interface User {
 	email: string;
@@ -17,7 +17,7 @@ interface User {
 
 const AccountService = {
 	async createAccount(user: User): Promise<IAccount> {
-		return client.account
+		return bodyClient.account
 			.create({
 				user: user,
 			})
@@ -27,7 +27,7 @@ const AccountService = {
 	},
 
 	async accountInfo(bearer_token: string): Promise<IAccount> {
-		return client.account
+		return bodyClient.account
 			.accountInfo({
 				bearer_token: bearer_token,
 			})

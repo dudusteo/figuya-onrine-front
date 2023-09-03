@@ -1,22 +1,23 @@
 import { Box, Grid } from "@mui/material";
-import Panel from "../../pages/home/Panel";
+import Panel from "./Panel";
+import { Product } from "../../services/productService";
 
 interface HomePanelProps {
-	items: Figurine[];
+	products: Product[];
 }
 
-const HomePanel = ({ items }: HomePanelProps) => {
-	const main: Figurine[] = items.slice(0, 2);
-	const sub: Figurine[] = items.slice(2, 6);
+const HomePanel = ({ products }: HomePanelProps) => {
+	const main: Product[] = products.slice(0, 2);
+	const sub: Product[] = products.slice(2, 6);
 
-	const rows: Figurine[][] = sub.reduce(function (
-		rows: Figurine[][],
-		key: Figurine,
+	const rows: Product[][] = sub.reduce(function (
+		rows: Product[][],
+		key: Product,
 		index: number
 	) {
 		return ((index % 2 === 0
 			? rows.push([key])
-			: rows[rows.length - 1].push(key)) && rows) as Figurine[][];
+			: rows[rows.length - 1].push(key)) && rows) as Product[][];
 	},
 	[]);
 

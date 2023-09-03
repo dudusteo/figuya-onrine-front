@@ -1,14 +1,6 @@
 import * as React from "react";
-import {
-	Box,
-	Button,
-	ButtonBase,
-	Grid,
-	Paper,
-	Typography,
-} from "@mui/material";
+import { Grid, Paper, Typography } from "@mui/material";
 
-import { ShopContext } from "../../context/shop-context";
 import { useTranslation } from "react-i18next";
 import StaticImage from "../../core/static-image";
 
@@ -17,7 +9,6 @@ interface CartItemProps {
 }
 
 const CartItem = ({ item }: CartItemProps) => {
-	const { removeFromCart } = React.useContext(ShopContext);
 	const { t } = useTranslation();
 
 	const title = item.name + " - " + item.origin + " - " + item.company;
@@ -50,7 +41,7 @@ const CartItem = ({ item }: CartItemProps) => {
 							align="right"
 							sx={{ cursor: "pointer" }}
 							variant="body2"
-							onClick={() => removeFromCart(item.id)}
+							// onClick={() => removeFromCart(item.id)}
 						>
 							Usuń
 						</Typography>

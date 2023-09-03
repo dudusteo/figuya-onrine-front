@@ -1,18 +1,17 @@
 import * as React from "react";
 
-import StaticImage from "../static-image";
 import { Box, ImageList, ImageListItem } from "@mui/material";
 import ImageDialog from "./ImageDialog";
-import ReactImage from "../react-image-old";
+import ReactImage from "../react-image";
 
 interface ImageProductProps {
-	images: Image[];
+	images: string[];
 }
 
 const ImageProduct = ({ images }: ImageProductProps) => {
 	const [openDialog, setOpenDialog] = React.useState(false);
-	const [main, setMain] = React.useState<Image>();
-	const [rest, setRest] = React.useState<Image[]>([]);
+	const [main, setMain] = React.useState<string | null>(null);
+	const [rest, setRest] = React.useState<string[]>([]);
 
 	React.useEffect(() => {
 		if (images) {
@@ -21,7 +20,7 @@ const ImageProduct = ({ images }: ImageProductProps) => {
 		}
 	}, [images]);
 
-	if (!main) {
+	if (main === null) {
 		return <div>Loading...</div>;
 	}
 

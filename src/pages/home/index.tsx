@@ -2,14 +2,15 @@ import { Box, CssBaseline } from "@mui/material";
 import * as React from "react";
 
 import HomePanel from "../../core/home-panel";
+import ProductService, { Product } from "../../services/productService";
 
 const Home = () => {
-	const [items, setItems] = React.useState<Figurine[]>([]);
+	const [products, setProducts] = React.useState<Product[]>([]);
 
 	React.useEffect(() => {
-		// FigurineService.getAllFigurines().then((data: Figurine[]) =>
-		// 	setItems(data)
-		// );
+		ProductService.getProducts().then((products: Product[]) =>
+			setProducts(products)
+		);
 	}, []);
 
 	return (
@@ -22,7 +23,7 @@ const Home = () => {
 			}}
 		>
 			<CssBaseline />
-			<HomePanel items={items} />
+			<HomePanel products={products} />
 		</Box>
 	);
 };
