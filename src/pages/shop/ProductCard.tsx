@@ -5,6 +5,13 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import ReactImage from "../../core/react-image";
 import { Product } from "../../services/productService";
+import CartService from "../../services/cartService";
+import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import {
+	getOrderToken,
+	setOrderToken,
+} from "../../features/token/orderTokenSlice";
 
 interface ProductCardProps {
 	product: Product;
@@ -14,11 +21,26 @@ const ProductCard = ({ product }: ProductCardProps) => {
 	const navigate = useNavigate();
 	const { t } = useTranslation();
 
+	const orderToken = useAppSelector(getOrderToken);
+	const dispatch = useAppDispatch();
+
 	const title = product.attributes.name;
 	const priceTitle = product.attributes.display_price;
 
 	const handleNavigation = () => {
 		navigate(`/shop/product/${product.id}`);
+	};
+
+	const handleAddItem = () => {
+		if (!orderToken) {
+			CartService.create().then((token: IOrder) => {
+				dispatch(setOrderToken(token.data.attributes.token));
+			});
+		}
+
+		if (orderToken) {
+			CartService.addItem(orderToken, product.id, 1);
+		}
 	};
 
 	return (
@@ -61,10 +83,10 @@ const ProductCard = ({ product }: ProductCardProps) => {
 			</Typography>
 			<Button
 				variant="contained"
-				// onClick={(e) => {
-				// 	e.stopPropagation();
-				// 	addToCart(item);
-				// }}
+				onClick={(e) => {
+					e.stopPropagation();
+					handleAddItem();
+				}}
 			>
 				{t("add-to-cart")}
 			</Button>

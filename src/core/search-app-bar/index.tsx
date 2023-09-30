@@ -14,7 +14,7 @@ import IconPopupState from "../icon-popup-state";
 import figuya_logo from "../../assets/figuya_logo.svg";
 import AuthenticationService from "../../services/authenticationService";
 import { useDispatch } from "react-redux";
-import { clearToken } from "../../features/token/token-slice";
+import { clearBearerToken } from "../../features/token/bearerTokenSlice";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -110,7 +110,7 @@ const SearchAppBar = () => {
 								name: t("nav-bar.menu1.sign-out"),
 								href: "/",
 								onClick: () => {
-									dispatch(clearToken());
+									dispatch(clearBearerToken());
 									AuthenticationService.revokeToken("");
 								},
 							},

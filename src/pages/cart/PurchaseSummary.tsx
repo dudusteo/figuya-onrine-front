@@ -1,13 +1,5 @@
 import * as React from "react";
-import {
-	Box,
-	Button,
-	ButtonBase,
-	Card,
-	Grid,
-	Paper,
-	Typography,
-} from "@mui/material";
+import { Button, Card, Grid, Typography } from "@mui/material";
 
 interface PurchaseSummaryProps {
 	totalCost: number;
@@ -45,7 +37,13 @@ const PurchaseSummary = ({ totalCost, shipmentCost }: PurchaseSummaryProps) => {
 				</Grid>
 				<Grid item container>
 					<Grid item xs />
-					<Button href="cart/checkout" variant="contained">
+					<Button
+						// href="cart/checkout"
+						variant="contained"
+						onClick={() => {
+							//set
+						}}
+					>
 						ZAMAWIAM
 					</Button>
 				</Grid>

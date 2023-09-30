@@ -2,20 +2,25 @@ import * as React from "react";
 
 import { Box, CssBaseline, Stack, Typography } from "@mui/material";
 
-import CartItem from "./CartItem";
 import PurchaseSummary from "./PurchaseSummary";
+import CartService from "../../services/cartService";
+import { useAppSelector } from "../../app/hooks";
+import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
+import CartProduct from "./CartProduct";
+import { getOrderToken } from "../../features/token/orderTokenSlice";
 
 const Cart = () => {
-	const [totalCost, setTotalCost] = React.useState<number>(0);
+	const [cartProducts, setCardProducts] = React.useState<IOrder | null>(null);
+	const orderToken = useAppSelector(getOrderToken);
 
-	// React.useEffect(() => {
-	// 	setTotalCost(() =>
-	// 		cartItems.reduce(
-	// 			(sum: number, item: Figurine) => sum + parseFloat(item.price),
-	// 			0 as number
-	// 		)
-	// 	);
-	// }, [cartItems]);
+	React.useEffect(() => {
+		console.log("cart");
+		if (orderToken) {
+			CartService.show(orderToken).then((cart: IOrder) => {
+				setCardProducts(cart);
+			});
+		}
+	}, [orderToken]);
 
 	return (
 		<Box
@@ -38,12 +43,15 @@ const Cart = () => {
 			>
 				Zawartość koszyka
 			</Typography>
+
 			<Stack spacing={2} sx={{ my: 2 }}>
-				{/* {cartItems.map((item: Figurine, index: number) => (
-					<CartItem item={item} key={index} />
-				))} */}
+				{/* {cartProducts &&
+					cartProducts.included.map((item: Figurine, index: number) => (
+						<CartProduct item={item} key={index} />
+					))} */}
 			</Stack>
-			<PurchaseSummary totalCost={totalCost} shipmentCost={13.0} />
+
+			<PurchaseSummary totalCost={0} shipmentCost={13.0} />
 		</Box>
 	);
 };

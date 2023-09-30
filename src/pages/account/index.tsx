@@ -3,7 +3,7 @@ import * as React from "react";
 import { Box, CssBaseline } from "@mui/material";
 import { IAccount } from "@spree/storefront-api-v2-sdk";
 import AccountService from "../../services/accountService";
-import { useAppSelector } from "../../hooks";
+import { useAppSelector } from "../../app/hooks";
 
 const Account = () => {
 	const [currentUser, setCurrentUser] = React.useState<IAccount>();
@@ -18,7 +18,7 @@ const Account = () => {
 	}, [token]);
 
 	if (!currentUser) {
-		return <div>loading...</div>;
+		return <div>Not permitted to see the page</div>;
 	}
 
 	return (

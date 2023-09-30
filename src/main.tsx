@@ -3,7 +3,7 @@ import * as ReactDOM from "react-dom/client";
 import CssBaseline from "@mui/material/CssBaseline";
 import { ThemeProvider } from "@mui/material/styles";
 import { Provider } from "react-redux";
-import { store } from "./store";
+import { store } from "./app/store";
 
 import App from "./App";
 import theme from "./theme";

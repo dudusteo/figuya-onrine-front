@@ -4,11 +4,11 @@ import { Grid, Paper, Typography } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import StaticImage from "../../core/static-image";
 
-interface CartItemProps {
+interface CartProductProps {
 	item: Figurine;
 }
 
-const CartItem = ({ item }: CartItemProps) => {
+const CartProduct = ({ item }: CartProductProps) => {
 	const { t } = useTranslation();
 
 	const title = item.name + " - " + item.origin + " - " + item.company;
@@ -63,4 +63,4 @@ const CartItem = ({ item }: CartItemProps) => {
 	);
 };
 
-export default CartItem;
+export default CartProduct;
