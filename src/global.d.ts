@@ -5,18 +5,6 @@ interface Image extends File {
 	updatedAt: Date;
 }
 
-interface Figurine {
-	id: number;
-	name: string;
-	character: string;
-	origin: string;
-	company: string;
-	type: string;
-	condition: string;
-	price: string;
-	images: Image[];
-}
-
 interface Options {
 	character: Option[];
 	origin: Option[];

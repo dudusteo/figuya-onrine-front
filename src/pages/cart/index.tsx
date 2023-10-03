@@ -4,23 +4,36 @@ import { Box, CssBaseline, Stack, Typography } from "@mui/material";
 
 import PurchaseSummary from "./PurchaseSummary";
 import CartService from "../../services/cartService";
-import { useAppSelector } from "../../app/hooks";
-import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { IOrder, RelationType } from "@spree/storefront-api-v2-sdk/dist/*";
+import {
+	getOrderToken,
+	setOrderToken,
+} from "../../features/token/orderTokenSlice";
 import CartProduct from "./CartProduct";
-import { getOrderToken } from "../../features/token/orderTokenSlice";
 
 const Cart = () => {
-	const [cartProducts, setCardProducts] = React.useState<IOrder | null>(null);
+	const [cart, setCart] = React.useState<IOrder | null>(null);
 	const orderToken = useAppSelector(getOrderToken);
+	const dispatch = useAppDispatch();
 
 	React.useEffect(() => {
-		console.log("cart");
-		if (orderToken) {
-			CartService.show(orderToken).then((cart: IOrder) => {
-				setCardProducts(cart);
+		if (!orderToken) {
+			CartService.create().then((token: IOrder) => {
+				dispatch(setOrderToken(token.data.attributes.token));
 			});
 		}
-	}, [orderToken]);
+
+		if (orderToken) {
+			CartService.show(orderToken).then((cart: IOrder) => {
+				setCart(cart);
+			});
+		}
+	}, [orderToken, dispatch]);
+
+	if (!cart || !orderToken) {
+		return <div>Loading...</div>;
+	}
 
 	return (
 		<Box
@@ -45,13 +58,28 @@ const Cart = () => {
 			</Typography>
 
 			<Stack spacing={2} sx={{ my: 2 }}>
-				{/* {cartProducts &&
-					cartProducts.included.map((item: Figurine, index: number) => (
-						<CartProduct item={item} key={index} />
-					))} */}
+				{Array.isArray(cart?.data.relationships.variants.data) &&
+					Array.isArray(cart?.data.relationships.line_items.data) &&
+					cart.data.relationships.variants.data.map(
+						(product: RelationType, key: number) => (
+							<CartProduct
+								productId={product.id}
+								lineItemId={
+									cart.data.relationships.line_items.data[key]
+										.id
+								}
+								orderToken={orderToken}
+								key={key}
+							/>
+						)
+					)}
 			</Stack>
 
-			<PurchaseSummary totalCost={0} shipmentCost={13.0} />
+			<PurchaseSummary
+				itemCost={cart.data.attributes.display_item_total}
+				shipmentCost={cart.data.attributes.display_ship_total}
+				totalCost={cart.data.attributes.display_total}
+			/>
 		</Box>
 	);
 };

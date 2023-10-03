@@ -2,17 +2,41 @@ import * as React from "react";
 import { Grid, Paper, Typography } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
-import StaticImage from "../../core/static-image";
+import CartService from "../../services/cartService";
+import Product from "../product";
+import ReactImage from "../../core/react-image";
+import ProductService from "../../services/productService";
 
 interface CartProductProps {
-	item: Figurine;
+	productId: string;
+	lineItemId: string;
+	orderToken: string;
 }
 
-const CartProduct = ({ item }: CartProductProps) => {
+const CartProduct = ({
+	productId,
+	lineItemId,
+	orderToken,
+}: CartProductProps) => {
 	const { t } = useTranslation();
+	const [product, setProduct] = React.useState<Product | null>(null);
 
-	const title = item.name + " - " + item.origin + " - " + item.company;
-	const priceTitle = t("price") + " " + item.price + " " + t("unit");
+	React.useEffect(() => {
+		ProductService.getProduct(productId).then((product: Product) => {
+			setProduct(product);
+		});
+	}, [orderToken, productId]);
+
+	if (!product) {
+		return null;
+	}
+
+	const title = product.attributes.name;
+	const priceTitle = product.attributes.display_price;
+
+	const handleRemoveItem = () => {
+		CartService.RemoveItem(orderToken, lineItemId);
+	};
 
 	return (
 		<Paper
@@ -23,9 +47,9 @@ const CartProduct = ({ item }: CartProductProps) => {
 		>
 			<Grid container spacing={2}>
 				<Grid item>
-					<StaticImage
+					<ReactImage
 						sx={{ height: "13.5rem", width: "10.5rem" }}
-						src={item.images[0].path}
+						image={product.images[0]}
 					/>
 				</Grid>
 
@@ -41,7 +65,7 @@ const CartProduct = ({ item }: CartProductProps) => {
 							align="right"
 							sx={{ cursor: "pointer" }}
 							variant="body2"
-							// onClick={() => removeFromCart(item.id)}
+							onClick={() => handleRemoveItem()}
 						>
 							Usuń
 						</Typography>

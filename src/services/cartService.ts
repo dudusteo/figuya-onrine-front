@@ -12,6 +12,16 @@ const CartService = {
 		});
 	},
 
+	async show(order_token: string): Promise<IOrder> {
+		const response = bodyClient.cart.show({
+			order_token: order_token,
+		});
+
+		return response.then((spreeResponse: IOrderResult) => {
+			return spreeResponse.success();
+		});
+	},
+
 	async addItem(
 		order_token: string,
 		variant_id: string,
@@ -28,9 +38,13 @@ const CartService = {
 		});
 	},
 
-	async show(order_token: string): Promise<IOrder> {
-		const response = bodyClient.cart.show({
+	async RemoveItem(
+		order_token: string,
+		line_item_id: string
+	): Promise<IOrder> {
+		const response = bodyClient.cart.removeItem({
 			order_token: order_token,
+			id: line_item_id,
 		});
 
 		return response.then((spreeResponse: IOrderResult) => {

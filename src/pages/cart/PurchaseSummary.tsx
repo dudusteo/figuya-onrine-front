@@ -2,11 +2,16 @@ import * as React from "react";
 import { Button, Card, Grid, Typography } from "@mui/material";
 
 interface PurchaseSummaryProps {
-	totalCost: number;
-	shipmentCost: number;
+	itemCost: string;
+	shipmentCost: string;
+	totalCost: string;
 }
 
-const PurchaseSummary = ({ totalCost, shipmentCost }: PurchaseSummaryProps) => {
+const PurchaseSummary = ({
+	itemCost,
+	shipmentCost,
+	totalCost,
+}: PurchaseSummaryProps) => {
 	return (
 		<Card>
 			<Typography variant="h4" sx={{ p: 2 }}>
@@ -23,7 +28,7 @@ const PurchaseSummary = ({ totalCost, shipmentCost }: PurchaseSummaryProps) => {
 					<Grid item container direction="column" xs={6}>
 						<Grid item container justifyContent="space-between">
 							<Typography>Wartość przedmiotów</Typography>
-							<Typography>{totalCost}</Typography>
+							<Typography>{itemCost}</Typography>
 						</Grid>
 						<Grid item container justifyContent="space-between">
 							<Typography>Wysyłka</Typography>
@@ -31,7 +36,7 @@ const PurchaseSummary = ({ totalCost, shipmentCost }: PurchaseSummaryProps) => {
 						</Grid>
 						<Grid item container justifyContent="space-between">
 							<Typography>Cały koszt</Typography>
-							<Typography>{totalCost + shipmentCost}</Typography>
+							<Typography>{totalCost}</Typography>
 						</Grid>
 					</Grid>
 				</Grid>
