@@ -65,6 +65,7 @@ const Cart = () => {
 							<CartProduct
 								productId={product.id}
 								lineItemId={
+									// @ts-ignore
 									cart.data.relationships.line_items.data[key]
 										.id
 								}
