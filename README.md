@@ -1,5 +1,11 @@
 # Figuya Onrine
 
+## Running the project
+
+-   Download the project via green button "Code"
+-   run "npm install" to download all the needed dependencies
+-   run "npm run start" to start the project locally
+
 Personal project for e-commerce figurine shop - font-end side
 
 Stack:
