@@ -1,8 +1,23 @@
 # Figuya Onrine
 
+## Requirements
+
+-   WSL
+-   Docker
+-   Repository cloned at WSL
+-   IDE with WSL support (fe: vscode with extensions )
+
 ## Running the project
 
--   Download the project via green button "Code"
+-   clone the repo on WSL instance
+
+**NVM**
+
+-   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+-   export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
+-   source ~/.bashrc
+-   nvm install --lts
 -   run "npm install" to download all the needed dependencies
 -   run "npm run start" to start the project locally
 
