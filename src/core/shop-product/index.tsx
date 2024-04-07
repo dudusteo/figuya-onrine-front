@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useDispatch } from "react-redux";
 
 import {
 	Box,
@@ -12,6 +13,7 @@ import {
 import { useTranslation } from "react-i18next";
 import ImageProduct from "./ImageProduct";
 import { Product } from "../../services/productService";
+import { addProduct } from "../../features/basket/basketSlice";
 
 interface ShopProductProps {
 	product: Product;
@@ -19,6 +21,7 @@ interface ShopProductProps {
 
 const ShopProduct = ({ product }: ShopProductProps) => {
 	const { t } = useTranslation();
+	const dispatch = useDispatch();
 
 	if (!product) {
 		return <div>Loading...</div>;
@@ -26,6 +29,10 @@ const ShopProduct = ({ product }: ShopProductProps) => {
 
 	const title = product.attributes.name;
 	const priceTitle = product.attributes.display_price;
+
+	const addToCart = (product: Product) => {
+		dispatch(addProduct(product));
+	};
 
 	return (
 		<Box
@@ -97,7 +104,7 @@ const ShopProduct = ({ product }: ShopProductProps) => {
 						</Typography>
 						<Button
 							variant="contained"
-							// onClick={() => addToCart(product)}
+							onClick={() => addToCart(product)}
 							sx={{ width: "11rem" }}
 						>
 							{t("add-to-cart")}
