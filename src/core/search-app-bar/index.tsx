@@ -16,6 +16,7 @@ import AuthenticationService from "../../services/authenticationService";
 import { useDispatch, useSelector } from "react-redux";
 import { clearBearerToken } from "../../features/token/bearerTokenSlice";
 import { getNumberOfAddedProducts } from "../../features/basket/basketSlice";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -68,7 +69,8 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 const SearchAppBar = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
-	const basketItemsCount = useSelector(getNumberOfAddedProducts);
+	const navigate = useNavigate();
+  	const basketItemsCount = useSelector(getNumberOfAddedProducts);
 
 	return (
 		<>
@@ -121,7 +123,7 @@ const SearchAppBar = () => {
 					>
 						<AccountCircleIcon fontSize="large" />
 					</IconPopupState>
-					<IconButton href="/cart">
+					<IconButton onClick={() => navigate("/cart")}>
 						<Badge
 							overlap="circular"
 							anchorOrigin={{
