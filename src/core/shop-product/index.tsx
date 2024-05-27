@@ -13,11 +13,11 @@ import {
 import { useTranslation } from "react-i18next";
 import ImageProduct from "./ImageProduct";
 import { Product } from "../../services/productService";
-import { addProduct } from "../../features/basket/basketSlice";
+import { updateOrder } from "../../features/basket/basketSlice";
 import CartService from "../../services/cartService";
 import { useAppSelector } from "../../app/hooks";
 import { getOrderToken, setOrderToken } from "../../features/token/orderTokenSlice";
-import { IOrder, RelationType } from "@spree/storefront-api-v2-sdk/dist/*";
+import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
 
 interface ShopProductProps {
 	product: Product;
@@ -40,11 +40,11 @@ const ShopProduct = ({ product }: ShopProductProps) => {
 			CartService.create().then((token: IOrder) => {
 				dispatch(setOrderToken(token.data.attributes.token));
 			});
-		} else {                                                                                                                                                                                                   
-			CartService.addItem(orderToken, product.id, 1).then(() => {
-				dispatch(addProduct(product));
-			});
 		}
+
+		CartService.addItem(orderToken!, product.id, 1).then((order: IOrder) => {
+			dispatch(updateOrder(order));
+		});
 	};
 
 	return (

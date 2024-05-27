@@ -11,10 +11,11 @@ import {
 	setOrderToken,
 } from "../../features/token/orderTokenSlice";
 import CartProduct from "./CartProduct";
+import { getCart, updateOrder } from "../../features/basket/basketSlice";
 
 const Cart = () => {
-	const [cart, setCart] = React.useState<IOrder | null>(null);
 	const orderToken = useAppSelector(getOrderToken);
+	const cart = useAppSelector(getCart)
 	const dispatch = useAppDispatch();
 
 	React.useEffect(() => {
@@ -26,7 +27,7 @@ const Cart = () => {
 
 		if (orderToken) {
 			CartService.show(orderToken).then((cart: IOrder) => {
-				setCart(cart);
+				dispatch(updateOrder(cart));
 			});
 		}
 	}, [orderToken, dispatch]);

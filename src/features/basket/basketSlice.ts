@@ -1,36 +1,28 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState, AppThunk } from "../../app/store";
-import { Product } from "../../services/productService";
+import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
 
 export interface BasketState {
-	products: Product[];
+	order: IOrder | null;
 }
 
 const initialState: BasketState = {
-	products: [],
+	order: null,
 };
 
 export const basketSlice = createSlice({
 	name: "basket",
 	initialState,
 	reducers: {
-		addProduct: (state: BasketState, action: PayloadAction<Product>) => {
-			const newProducts = [...state.products, action.payload];
-			state.products = newProducts;
+		updateOrder: (state: BasketState, action: PayloadAction<IOrder>) => {
+			const newOrder = action.payload;
+			state.order = newOrder;
 		},
-		removeProduct: (state: BasketState, action: PayloadAction<Product>) => {
-            const newProducts = state.products.filter(product => product.id !== action.payload.id);
-            state.products = newProducts;
-        },
-		/* updateProductQuantity: (state: BasketState, action: PayloadAction<{ id: string; quantity: number }>) => {
-            const product: Product = state.products.find(product => product.id === action.payload.id);
-            if (product) {
-                product.quantity = action.payload.quantity;
-            } */
 	},
 });
 
-export const { addProduct, removeProduct } = basketSlice.actions;
-export const getNumberOfAddedProducts = (state: RootState) => state.basket.products.length;
+export const { updateOrder } = basketSlice.actions;
+export const getNumberOfAddedProducts = (state: RootState) => state.basket.order?.data.attributes.item_count;
+export const getCart = (state: RootState) => state.basket.order;
 
 export default basketSlice.reducer;

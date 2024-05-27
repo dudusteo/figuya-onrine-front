@@ -6,6 +6,9 @@ import CartService from "../../services/cartService";
 import Product from "../product";
 import ReactImage from "../../core/react-image";
 import ProductService from "../../services/productService";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
+import { updateOrder } from "../../features/basket/basketSlice";
 
 interface CartProductProps {
 	productId: string;
@@ -20,6 +23,7 @@ const CartProduct = ({
 }: CartProductProps) => {
 	const { t } = useTranslation();
 	const [product, setProduct] = React.useState<Product | null>(null);
+	const dispatch = useAppDispatch();
 
 	React.useEffect(() => {
 		ProductService.getProduct(productId).then((product: Product) => {
@@ -35,7 +39,9 @@ const CartProduct = ({
 	const priceTitle = product.attributes.display_price;
 
 	const handleRemoveItem = () => {
-		CartService.RemoveItem(orderToken, lineItemId);
+		CartService.RemoveItem(orderToken, lineItemId).then((order: IOrder) => {
+			dispatch(updateOrder(order));
+		});
 	};
 
 	return (
