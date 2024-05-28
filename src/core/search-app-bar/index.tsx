@@ -70,7 +70,7 @@ const SearchAppBar = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
-  	const basketItemsCount = useSelector(getNumberOfAddedProducts);
+	const basketItemsCount = useSelector(getNumberOfAddedProducts);
 
 	return (
 		<>

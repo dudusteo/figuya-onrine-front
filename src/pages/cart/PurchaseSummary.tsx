@@ -1,5 +1,7 @@
 import * as React from "react";
 import { Button, Card, Grid, Typography } from "@mui/material";
+import { jsx } from "@emotion/react";
+import { useNavigate } from "react-router-dom";
 
 interface PurchaseSummaryProps {
 	itemCost: string;
@@ -12,6 +14,7 @@ const PurchaseSummary = ({
 	shipmentCost,
 	totalCost,
 }: PurchaseSummaryProps) => {
+	const navigate = useNavigate();
 	return (
 		<Card>
 			<Typography variant="h4" sx={{ p: 2 }}>
@@ -46,7 +49,7 @@ const PurchaseSummary = ({
 						// href="cart/checkout"
 						variant="contained"
 						onClick={() => {
-							//set
+							navigate("/cart/checkout");
 						}}
 					>
 						ZAMAWIAM
