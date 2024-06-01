@@ -13,8 +13,10 @@ import { useTranslation } from "react-i18next";
 import IconPopupState from "../icon-popup-state";
 import figuya_logo from "../../assets/figuya_logo.svg";
 import AuthenticationService from "../../services/authenticationService";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { clearBearerToken } from "../../features/token/bearerTokenSlice";
+import { getNumberOfAddedProducts } from "../../features/basket/basketSlice";
+import { useNavigate } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -67,6 +69,8 @@ const SmallAvatar = styled(Avatar)(({ theme }) => ({
 const SearchAppBar = () => {
 	const { t } = useTranslation();
 	const dispatch = useDispatch();
+	const navigate = useNavigate();
+	const basketItemsCount = useSelector(getNumberOfAddedProducts);
 
 	return (
 		<>
@@ -119,14 +123,14 @@ const SearchAppBar = () => {
 					>
 						<AccountCircleIcon fontSize="large" />
 					</IconPopupState>
-					<IconButton href="/cart">
+					<IconButton onClick={() => navigate("/cart")}>
 						<Badge
 							overlap="circular"
 							anchorOrigin={{
 								vertical: "bottom",
 								horizontal: "right",
 							}}
-							badgeContent={<SmallAvatar>{3}</SmallAvatar>}
+							badgeContent={<SmallAvatar>{basketItemsCount}</SmallAvatar>}
 						>
 							<ShoppingCartIcon fontSize="large" />
 						</Badge>

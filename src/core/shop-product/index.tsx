@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useDispatch } from "react-redux";
 
 import {
 	Box,
@@ -12,6 +13,11 @@ import {
 import { useTranslation } from "react-i18next";
 import ImageProduct from "./ImageProduct";
 import { Product } from "../../services/productService";
+import { updateOrder } from "../../features/basket/basketSlice";
+import CartService from "../../services/cartService";
+import { useAppSelector } from "../../app/hooks";
+import { getOrderToken, setOrderToken } from "../../features/token/orderTokenSlice";
+import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
 
 interface ShopProductProps {
 	product: Product;
@@ -19,6 +25,8 @@ interface ShopProductProps {
 
 const ShopProduct = ({ product }: ShopProductProps) => {
 	const { t } = useTranslation();
+	const dispatch = useDispatch();
+	const orderToken = useAppSelector(getOrderToken);
 
 	if (!product) {
 		return <div>Loading...</div>;
@@ -26,6 +34,18 @@ const ShopProduct = ({ product }: ShopProductProps) => {
 
 	const title = product.attributes.name;
 	const priceTitle = product.attributes.display_price;
+
+	const addToCart = (product: Product) => {
+		if (!orderToken) {
+			CartService.create().then((token: IOrder) => {
+				dispatch(setOrderToken(token.data.attributes.token));
+			});
+		}
+
+		CartService.addItem(orderToken!, product.id, 1).then((order: IOrder) => {
+			dispatch(updateOrder(order));
+		});
+	};
 
 	return (
 		<Box
@@ -97,7 +117,7 @@ const ShopProduct = ({ product }: ShopProductProps) => {
 						</Typography>
 						<Button
 							variant="contained"
-							// onClick={() => addToCart(product)}
+							onClick={() => addToCart(product)}
 							sx={{ width: "11rem" }}
 						>
 							{t("add-to-cart")}

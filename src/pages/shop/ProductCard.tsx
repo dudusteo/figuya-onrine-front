@@ -12,6 +12,7 @@ import {
 	getOrderToken,
 	setOrderToken,
 } from "../../features/token/orderTokenSlice";
+import { updateOrder } from "../../features/basket/basketSlice";
 
 interface ProductCardProps {
 	product: Product;
@@ -39,7 +40,9 @@ const ProductCard = ({ product }: ProductCardProps) => {
 		}
 
 		if (orderToken) {
-			CartService.addItem(orderToken, product.id, 1);
+			CartService.addItem(orderToken, product.id, 1).then((order: IOrder) => {
+				dispatch(updateOrder(order));
+			});
 		}
 	};
 
