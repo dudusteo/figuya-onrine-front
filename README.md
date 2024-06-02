@@ -1,5 +1,7 @@
 # Figuya Onrine
 
+Aleksandra Plewińska Numer albumu: 55262 
+
 ## Requirements
 
 -   WSL
