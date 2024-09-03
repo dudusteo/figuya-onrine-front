@@ -8,7 +8,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import MenuPopupState from "../menu-popup-state";
-import { Avatar, Badge, Box, Button, IconButton, Link } from "@mui/material";
+import { Avatar, Badge, Box, IconButton, Link } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import IconPopupState from "../icon-popup-state";
 import figuya_logo from "../../assets/figuya_logo.svg";

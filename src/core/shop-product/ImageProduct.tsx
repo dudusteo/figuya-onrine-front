@@ -31,7 +31,7 @@ const ImageProduct = ({ images }: ImageProductProps) => {
 				flexDirection: "row",
 			}}
 		>
-			<ReactImage image={main} onClick={() => setOpenDialog(true)} />
+			<ReactImage image={main} sx={{ height: "30rem" }} onClick={() => setOpenDialog(true)} />
 
 			<ImageList
 				variant="masonry"

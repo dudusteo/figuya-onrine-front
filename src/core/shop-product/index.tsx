@@ -42,9 +42,11 @@ const ShopProduct = ({ product }: ShopProductProps) => {
 			});
 		}
 
-		CartService.addItem(orderToken!, product.id, 1).then((order: IOrder) => {
-			dispatch(updateOrder(order));
-		});
+		if (orderToken) {
+			CartService.addItem(orderToken, product.id, 1).then((order: IOrder) => {
+				dispatch(updateOrder(order));
+			});
+		}
 	};
 
 	return (

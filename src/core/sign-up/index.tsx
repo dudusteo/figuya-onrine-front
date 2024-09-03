@@ -14,7 +14,6 @@ import Container from "@mui/material/Container";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import AccountService from "../../services/accountService";
-import { IAccount } from "@spree/storefront-api-v2-sdk";
 
 export default function SignUp() {
 	const { t } = useTranslation();
@@ -31,7 +30,7 @@ export default function SignUp() {
 			password: data.get("password") as string,
 			password_confirmation: data.get("password") as string,
 		})
-			.then((accountResult: IAccount) => {
+			.then(() => {
 				navigate("/account");
 			})
 			.catch((error: Error) =>

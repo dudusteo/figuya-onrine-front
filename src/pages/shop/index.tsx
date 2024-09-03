@@ -12,7 +12,6 @@ import {
 	Paper,
 	useMediaQuery,
 	Theme,
-	ListItem,
 } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
@@ -20,24 +19,6 @@ import ProductService, { Product } from "../../services/productService";
 import ProductCard from "./ProductCard";
 import TaxonService from "../../services/taxonService";
 import { RelationType, TaxonAttr } from "@spree/storefront-api-v2-sdk/dist/*";
-
-const data = {
-	type: [
-		{ name: "prize", count: 0 },
-		{ name: "scale", count: 0 },
-		{ name: "mini", count: 0 },
-		{ name: "action", count: 0 },
-		{ name: "gadget", count: 0 },
-	],
-	condition: [
-		{ name: "new", count: 0 },
-		{ name: "used", count: 0 },
-	],
-	popularSeries: [
-		{ name: "Vocaloid", count: 0 },
-		{ name: "Love live", count: 0 },
-	],
-};
 
 
 interface Taxon extends TaxonAttr {
@@ -137,13 +118,13 @@ const Shop = () => {
 						{taxonTree.map((taxonRoot, rootIndex) => (
 							<div key={taxonRoot.id}>
 								<ListItemButton onClick={() => updateCollapse(rootIndex)}>
-									<ListItemText primary={t(`item.${taxonRoot.attributes.name.toLowerCase()}`)} />
+									<ListItemText primary={t(`shop.${taxonRoot.attributes.name.toLowerCase()}`)} />
 								</ListItemButton>
 								<Collapse in={(collapse & (1 << rootIndex)) === 0} timeout="auto">
 									<List component="div" disablePadding>
 										{taxonRoot.children?.map((taxon, childIndex) => (
 											<ListItemButton key={childIndex} sx={{ pl: 4 }} onClick={() => onButtonClicked(taxon.id)}>
-												<ListItemText primary={t(`item.${taxon.attributes.name.toLowerCase()}`)} />
+												<ListItemText primary={t(`shop.${taxon.attributes.name.toLowerCase()}`)} />
 											</ListItemButton>
 										))}
 									</List>

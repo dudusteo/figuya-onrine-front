@@ -4,7 +4,8 @@ import { Box, CssBaseline } from "@mui/material";
 import { useParams } from "react-router-dom";
 
 import ShopProduct from "../../core/shop-product";
-import ProductService, { Product } from "../../services/productService";
+import type { Product } from "../../services/productService";
+import ProductService from "../../services/productService";
 
 const Product = () => {
 	const { productId } = useParams<{ productId: string }>();
@@ -33,7 +34,7 @@ const Product = () => {
 		>
 			<CssBaseline />
 
-			<ShopProduct product={product}></ShopProduct>
+			<ShopProduct product={product} ></ShopProduct>
 		</Box>
 	);
 };

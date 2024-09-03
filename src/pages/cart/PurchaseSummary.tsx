@@ -1,6 +1,5 @@
 import * as React from "react";
 import { Button, Card, Grid, Typography } from "@mui/material";
-import { jsx } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 
 interface PurchaseSummaryProps {

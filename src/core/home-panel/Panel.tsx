@@ -2,7 +2,7 @@ import * as React from "react";
 import { Box, SxProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
-const BigImage = styled("img")(({ theme }) => ({
+const BigImage = styled("img")(() => ({
 	height: "100%",
 	position: "absolute",
 	top: "50%",
@@ -10,7 +10,7 @@ const BigImage = styled("img")(({ theme }) => ({
 	transform: "translateX(-50%) translateY(-50%)",
 }));
 
-const SmallImage = styled("img")(({ theme }) => ({
+const SmallImage = styled("img")(() => ({
 	height: "180%",
 	position: "absolute",
 	left: "50%",

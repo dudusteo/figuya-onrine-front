@@ -6,7 +6,7 @@ import CartService from "../../services/cartService";
 import Product from "../product";
 import ReactImage from "../../core/react-image";
 import ProductService from "../../services/productService";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { useAppDispatch } from "../../app/hooks";
 import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
 import { updateOrder } from "../../features/basket/basketSlice";
 
@@ -73,7 +73,7 @@ const CartProduct = ({
 							variant="body2"
 							onClick={() => handleRemoveItem()}
 						>
-							Usuń
+							{t("cart.remove")}
 						</Typography>
 						<Typography
 							align="right"
