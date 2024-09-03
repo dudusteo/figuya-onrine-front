@@ -10,6 +10,7 @@ import {
 	ListItemButton,
 	ListItemText,
 	Paper,
+	useMediaQuery,
 } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
@@ -49,6 +50,10 @@ const Shop = () => {
 		popularSeries: true,
 	});
 
+	const isSmallScreen = useMediaQuery((theme: any) =>
+		theme.breakpoints.down("md")
+	);
+
 	const setType = (newType: boolean) => {
 		setList((prevList) => {
 			return { ...prevList, type: newType };
@@ -73,13 +78,15 @@ const Shop = () => {
 		});
 	}, []);
 
+
+
 	return (
 		<Box
 			sx={{
 				display: "flex",
-				flexDirection: "row",
+				flexDirection: isSmallScreen ? "column" : "row",
 				minHeight: "100vh",
-				m: 4,
+				m: 2,
 			}}
 		>
 			<CssBaseline />
@@ -163,11 +170,11 @@ const Shop = () => {
 					</List>
 				</Paper>
 			</Box>
-			<Box>
+			<Box sx={{ flexGrow: 1 }}>
 				{products && (
-					<Grid container spacing={2} sx={{ pl: 2 }}>
+					<Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 8, lg: 12, xl: 12 }} >
 						{products.map((product) => (
-							<Grid item key={product.id}>
+							<Grid item key={product.id} xs={4} sm={4} md={4} lg={4} xl={3} >
 								<ProductCard product={product} />
 							</Grid>
 						))}

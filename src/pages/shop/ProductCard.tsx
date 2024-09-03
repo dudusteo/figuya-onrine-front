@@ -51,48 +51,59 @@ const ProductCard = ({ product }: ProductCardProps) => {
 			variant="outlined"
 			sx={{
 				p: 2,
-				width: "16rem",
 				height: "30rem",
-				display: "flex",
-				flexDirection: "column",
+				width: "100%",
 			}}
 		>
-			<ReactImage
-				sx={{
-					height: "18rem",
-					width: "14rem",
-					cursor: "pointer",
-				}}
-				onClick={handleNavigation}
-				image={product.images[0]}
-			/>
-
-			<Box sx={{ flexGrow: 1, py: 1 }}>
-				<Typography
-					variant="subtitle2"
-					sx={{ color: "primary.main", cursor: "pointer" }}
+			<Box sx={{
+				height: "70%",
+				display: "flex",
+				justifyContent: "center",
+			}}>
+				<ReactImage
+					sx={{
+						aspectRatio: "14/18",
+						height: "100%",
+						cursor: "pointer",
+					}}
 					onClick={handleNavigation}
-				>
-					{title}
-				</Typography>
+					image={product.images[0]}
+				/>
 			</Box>
+			<Box sx={{
+				height: "30%",
+				display: "flex",
+				justifyContent: "space-between",
+				flexDirection: "column",
+			}}>
+				<Box sx={{ py: 1 }}>
+					<Typography
+						variant="subtitle2"
+						sx={{ color: "primary.main", cursor: "pointer" }}
+						onClick={handleNavigation}
+					>
+						{title}
+					</Typography>
+				</Box>
 
-			<Typography
-				variant="h6"
-				align="right"
-				sx={{ color: "primary.main" }}
-			>
-				{priceTitle}
-			</Typography>
-			<Button
-				variant="contained"
-				onClick={(e) => {
-					e.stopPropagation();
-					handleAddItem();
-				}}
-			>
-				{t("add-to-cart")}
-			</Button>
+				<Typography
+					variant="h6"
+					align="right"
+					sx={{ color: "primary.main" }}
+				>
+					{priceTitle}
+				</Typography>
+
+				<Button
+					variant="contained"
+					onClick={(e) => {
+						e.stopPropagation();
+						handleAddItem();
+					}}
+				>
+					{t("add-to-cart")}
+				</Button>
+			</Box>
 		</Paper>
 	);
 };

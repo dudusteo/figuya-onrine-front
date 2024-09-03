@@ -10,16 +10,21 @@ const ReactImage = ({ image, sx, ...rest }: ReactImageProps) => {
 	return (
 		<Box
 			sx={{
-				height: "27rem",
-				width: "21rem",
-				mr: "0.5rem",
 				position: "relative",
-				clipPath: "polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);",
+				overflow: "hidden",
 				...sx,
 			}}
 			{...rest}
 		>
-			<img alt={image} src={image} height="100%" />
+			<img
+				alt={image}
+				src={image}
+				style={{
+					height: "100%",
+					width: "100%",
+					objectFit: "cover",
+				}}
+			/>
 		</Box>
 	);
 };
