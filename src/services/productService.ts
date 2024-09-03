@@ -35,11 +35,18 @@ const InjectImage = (
 	};
 };
 
+interface FilterObject {
+	[key: string]: number | string;
+}
+
+
 const ProductService = {
-	async getProducts(): Promise<Product[]> {
+	async getProducts(filterObject: FilterObject): Promise<Product[]> {
 		const response = queryClient.products.list({
 			include: "images",
 			page: 1,
+			per_page: 12,
+			...filterObject,
 		});
 
 		const products = response.then((spreeResponse: IProductsResult) => {

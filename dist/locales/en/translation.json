@@ -53,7 +53,7 @@
 		"company": "Company",
 		"type": "Type",
 		"soldAt": "Sold At",
-		"conditon": "Condition",
+		"condition": "Condition",
 		"new": "New",
 		"used": "Used",
 		"price": "Price",

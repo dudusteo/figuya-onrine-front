@@ -11,11 +11,15 @@ import {
 	ListItemText,
 	Paper,
 	useMediaQuery,
+	Theme,
+	ListItem,
 } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
 import ProductService, { Product } from "../../services/productService";
 import ProductCard from "./ProductCard";
+import TaxonService from "../../services/taxonService";
+import { RelationType, TaxonAttr } from "@spree/storefront-api-v2-sdk/dist/*";
 
 const data = {
 	type: [
@@ -35,50 +39,78 @@ const data = {
 	],
 };
 
-interface BooleanList {
-	type: boolean;
-	condition: boolean;
-	popularSeries: boolean;
+
+interface Taxon extends TaxonAttr {
+	children?: Taxon[];
 }
+
+const buildTaxonTree = (taxons: TaxonAttr[]): Taxon[] => {
+	const taxonMap: { [key: string]: Taxon } = {};
+	const roots: Taxon[] = [];
+
+	// Initialize taxon map
+	taxons.forEach((taxon) => {
+		taxonMap[taxon.id] = { ...taxon, children: [] };
+	});
+
+	// Build the tree
+	taxons.forEach((taxon) => {
+		if (taxon.attributes.is_root === false) {
+			let relationType: RelationType;
+			if (Array.isArray(taxon.relationships.parent.data))
+				relationType = taxon.relationships.parent.data[0];
+			else
+				relationType = taxon.relationships.parent.data;
+			const parent = taxonMap[relationType.id];
+			if (parent) {
+				parent.children?.push(taxonMap[taxon.id]);
+			}
+		} else {
+			roots.push(taxonMap[taxon.id]);
+		}
+	});
+
+	return roots;
+};
 
 const Shop = () => {
 	const { t } = useTranslation();
 	const [products, setProducts] = React.useState<Product[]>([]);
-	const [list, setList] = React.useState<BooleanList>({
-		type: true,
-		condition: true,
-		popularSeries: true,
-	});
+	const [taxonTree, setTaxonTree] = React.useState<Taxon[]>([]);
+	const [collapse, setCollapse] = React.useState<number>(0);
 
-	const isSmallScreen = useMediaQuery((theme: any) =>
-		theme.breakpoints.down("md")
-	);
-
-	const setType = (newType: boolean) => {
-		setList((prevList) => {
-			return { ...prevList, type: newType };
-		});
-	};
-
-	const setCondition = (newCondition: boolean) => {
-		setList((prevList) => {
-			return { ...prevList, condition: newCondition };
-		});
-	};
-
-	const setPopularSeries = (newPopularSeries: boolean) => {
-		setList((prevList) => {
-			return { ...prevList, popularSeries: newPopularSeries };
-		});
-	};
+	const [filter, setFilter] = React.useState<{ [key: string]: number | string }>({});
 
 	React.useEffect(() => {
-		ProductService.getProducts().then((products) => {
-			setProducts(products);
+		TaxonService.getTaxons().then((response) => {
+			const taxons: TaxonAttr[] = response.data;
+			const tree = buildTaxonTree(taxons);
+			setTaxonTree(tree);
+			console.log(tree);
 		});
 	}, []);
 
 
+
+	const isSmallScreen = useMediaQuery((theme: Theme) =>
+		theme.breakpoints.down("md")
+	);
+
+	const updateCollapse = (collapseIndex: number) => {
+		setCollapse((prevCollapse) => {
+			return prevCollapse ^ (1 << collapseIndex);
+		});
+	};
+
+	const onButtonClicked = (taxonNumber: string) => {
+		setFilter({ "filter[taxons]": taxonNumber });
+	};
+
+	React.useEffect(() => {
+		ProductService.getProducts(filter).then((products) => {
+			setProducts(products);
+		});
+	}, [filter]);
 
 	return (
 		<Box
@@ -94,7 +126,7 @@ const Shop = () => {
 				<Paper
 					variant="outlined"
 					sx={{
-						backgroundColor: (theme: any) =>
+						backgroundColor: (theme: Theme) =>
 							theme.palette.primary.light + 50,
 					}}
 				>
@@ -103,70 +135,24 @@ const Shop = () => {
 						aria-label="mailbox folders"
 						sx={{ color: "primary.main" }}
 					>
-						<ListItemButton onClick={() => setType(!list.type)}>
-							<ListItemText primary={t("shop.type")} />
-						</ListItemButton>
-						<Collapse in={list.type} timeout="auto">
-							<List component="div" disablePadding>
-								{data.type.map((type, index) => (
-									<ListItemButton key={index} sx={{ pl: 4 }}>
-										<ListItemText
-											primary={t("shop." + type.name)}
-										/>
-										<ListItemText
-											sx={{ textAlign: "right" }}
-											primary={type.count}
-										/>
-									</ListItemButton>
-								))}
-							</List>
-						</Collapse>
-						<Divider />
-						<ListItemButton
-							onClick={() => setCondition(!list.condition)}
-						>
-							<ListItemText primary={t("shop.condition")} />
-						</ListItemButton>
-						<Collapse in={list.condition} timeout="auto">
-							<List component="div" disablePadding>
-								{data.condition.map((condition, index) => (
-									<ListItemButton key={index} sx={{ pl: 4 }}>
-										<ListItemText
-											primary={t(
-												"shop." + condition.name
-											)}
-										/>
-										<ListItemText
-											sx={{ textAlign: "right" }}
-											primary={condition.count}
-										/>
-									</ListItemButton>
-								))}
-							</List>
-						</Collapse>
-						<Divider />
-						<ListItemButton
-							onClick={() =>
-								setPopularSeries(!list.popularSeries)
-							}
-						>
-							<ListItemText primary={t("shop.popular")} />
-						</ListItemButton>
-						<Collapse in={list.popularSeries} timeout="auto">
-							<List component="div" disablePadding>
-								{data.popularSeries.map((condition, index) => (
-									<ListItemButton key={index} sx={{ pl: 4 }}>
-										<ListItemText
-											primary={condition.name}
-										/>
-										<ListItemText
-											sx={{ textAlign: "right" }}
-											primary={condition.count}
-										/>
-									</ListItemButton>
-								))}
-							</List>
-						</Collapse>
+						{taxonTree.map((taxonRoot, rootIndex) => (
+							<div key={taxonRoot.id}>
+								<ListItemButton onClick={() => updateCollapse(rootIndex)}>
+									<ListItemText primary={t(`item.${taxonRoot.attributes.name.toLowerCase()}`)} />
+								</ListItemButton>
+								<Collapse in={(collapse & (1 << rootIndex)) === 0} timeout="auto">
+									<List component="div" disablePadding>
+										{taxonRoot.children?.map((taxon, childIndex) => (
+											<ListItemButton key={childIndex} sx={{ pl: 4 }} onClick={() => onButtonClicked(taxon.id)}>
+												<ListItemText primary={t(`item.${taxon.attributes.name.toLowerCase()}`)} />
+												<ListItemText sx={{ textAlign: "right" }} primary={"???"} />
+											</ListItemButton>
+										))}
+									</List>
+								</Collapse>
+								<Divider />
+							</div>
+						))}
 					</List>
 				</Paper>
 			</Box>
