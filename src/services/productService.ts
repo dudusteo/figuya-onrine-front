@@ -41,7 +41,7 @@ interface FilterObject {
 
 
 const ProductService = {
-	async getProducts(filterObject: FilterObject): Promise<Product[]> {
+	async getProducts(filterObject?: FilterObject): Promise<Product[]> {
 		const response = queryClient.products.list({
 			include: "images",
 			page: 1,

@@ -86,7 +86,6 @@ const Shop = () => {
 			const taxons: TaxonAttr[] = response.data;
 			const tree = buildTaxonTree(taxons);
 			setTaxonTree(tree);
-			console.log(tree);
 		});
 	}, []);
 
