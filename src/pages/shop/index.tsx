@@ -144,7 +144,6 @@ const Shop = () => {
 										{taxonRoot.children?.map((taxon, childIndex) => (
 											<ListItemButton key={childIndex} sx={{ pl: 4 }} onClick={() => onButtonClicked(taxon.id)}>
 												<ListItemText primary={t(`item.${taxon.attributes.name.toLowerCase()}`)} />
-												<ListItemText sx={{ textAlign: "right" }} primary={"???"} />
 											</ListItemButton>
 										))}
 									</List>

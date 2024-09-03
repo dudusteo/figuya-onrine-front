@@ -52,6 +52,8 @@
 		"origin": "Origin",
 		"company": "Company",
 		"type": "Type",
+		"scale": "Scale",
+		"prize": "Prize",
 		"soldAt": "Sold At",
 		"condition": "Condition",
 		"new": "New",

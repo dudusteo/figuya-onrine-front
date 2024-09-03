@@ -52,6 +52,8 @@
 		"origin": "Seria",
 		"company": "Producent",
 		"type": "Typ",
+		"scale": "Scale",
+		"prize": "Prize",
 		"soldAt": "Data sprzedaży",
 		"condition": "Stan",
 		"new": "Nowy",
