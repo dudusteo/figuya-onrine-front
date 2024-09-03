@@ -54,6 +54,7 @@
 		"type": "Typ",
 		"scale": "Scale",
 		"prize": "Prize",
+		"plushies": "Pluszak",
 		"soldAt": "Data sprzedaży",
 		"condition": "Stan",
 		"new": "Nowy",
