@@ -27,7 +27,7 @@ const Search = styled("div")(({ theme }) => ({
 	},
 	marginLeft: 0,
 	width: "100%",
-	[theme.breakpoints.up("sm")]: {
+	[theme.breakpoints.up("md")]: {
 		marginLeft: theme.spacing(1),
 		width: "auto",
 	},
@@ -76,7 +76,7 @@ const SearchAppBar = () => {
 		<>
 			<AppBar position="static">
 				<Toolbar sx={{ mt: 1, mb: 0 }}>
-					<Box sx={{ flexGrow: 1 }}>
+					<Box sx={{ flexGrow: 1, pr: 2 }}>
 						<Link href="/">
 							<img
 								color="white"
@@ -149,10 +149,10 @@ const SearchAppBar = () => {
 							text={t("nav-bar.bar2")}
 							items={[{ name: "" }]}
 						/>
-						<MenuPopupState
+						{/* <MenuPopupState
 							text={t("nav-bar.bar3")}
 							items={[{ name: "" }]}
-						/>
+						/> */}
 						<MenuPopupState
 							text={t("nav-bar.bar4")}
 							items={[{ name: "" }]}
