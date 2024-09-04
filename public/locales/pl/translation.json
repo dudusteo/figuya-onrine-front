@@ -66,14 +66,31 @@
 		"upload": "Załącz"
 	},
 	"cart": {
-		"cart": "Koszyk",
-		"remove": "Usuń",
-		"purchase-summary": "Podsumowanie",
-		"cart-content": "Zawartość koszyka",
-		"item-cost": "Wartość przedmiotów",
-		"shipment-cost": "Koszt dostawy",
-		"total-cost": "Koszt całkowity",
-		"empty": "Twój koszyk jest pusty",
-		"checkout": "Dostawa i płatność"
+		"back": "Cofnij",
+		"next": "Dalej",
+		"place-order": "Złóż zamówienie",
+		"shipping-address": "Adres dostawy",
+		"payment-details": "Dane płatności",
+		"review-your-order": "Podsumowanie zamówienia",
+		"selected-products": "Wybrane produkty",
+		"address-form": {
+			"first-name": "Imię",
+			"first-name-placeholder": "Jan",
+			"last-name": "Nazwisko",
+			"last-name-placeholder": "Kowalski",
+			"address1": "Adres",
+			"address1-placeholder": "Nazwa ulicy i numer domu",
+			"address2": "Adres 2",
+			"address2-placeholder": "Mieszkanie, apartament, itp. (opcjonalnie)",
+			"city": "Miasto",
+			"city-placeholder": "Warszawa",
+			"state": "Województwo",
+			"state-placeholder": "Mazowieckie",
+			"zip": "Kod pocztowy",
+			"zip-placeholder": "00-000",
+			"country": "Kraj",
+			"country-placeholder": "Polska",
+			"save-address": "Użyj tego samego adresu do płatności"
+		}
 	}
 }

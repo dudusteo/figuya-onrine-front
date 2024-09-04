@@ -54,7 +54,7 @@
 		"company": "Company",
 		"type": "Type",
 		"soldAt": "Sold At",
-		"conditon": "Condition",
+		"condition": "Condition",
 		"new": "New",
 		"used": "Used",
 		"price": "Price",
@@ -64,5 +64,33 @@
 		"add": "Add",
 		"cancel": "Cancel",
 		"upload": "Upload"
+	},
+	"cart": {
+		"back": "Back",
+		"next": "Next",
+		"place-order": "Place order",
+		"shipping-address": "Shipping address",
+		"payment-details": "Payment details",
+		"review-your-order": "Review your order",
+		"selected-products": "Selected products",
+		"address-form": {
+			"first-name": "First name",
+			"first-name-placeholder": "John",
+			"last-name": "Last name",
+			"last-name-placeholder": "Snow",
+			"address1": "Address line 1",
+			"address1-placeholder": "Street name and number",
+			"address2": "Address line 2",
+			"address2-placeholder": "Apartment, suite, unit, etc. (optional)",
+			"city": "City",
+			"city-placeholder": "New York",
+			"state": "State",
+			"state-placeholder": "NY",
+			"zip": "Zip / Postal code",
+			"zip-placeholder": "12345",
+			"country": "Country",
+			"country-placeholder": "United States",
+			"save-address": "Use this address for payment details"
+		}
 	}
 }

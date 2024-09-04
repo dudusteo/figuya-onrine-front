@@ -6,6 +6,7 @@ import FormLabel from '@mui/material/FormLabel';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import { styled } from '@mui/system';
 import { Grid } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 const FormGrid = styled(Grid)(() => ({
     display: 'flex',
@@ -13,6 +14,7 @@ const FormGrid = styled(Grid)(() => ({
 }));
 
 export default function AddressForm() {
+    const { t } = useTranslation();
     return (
         <Grid container spacing={3}>
             <FormGrid
@@ -21,13 +23,13 @@ export default function AddressForm() {
                 md={6}
             >
                 <FormLabel htmlFor="first-name" required>
-                    First name
+                    {t('cart.address-form.first-name')}
                 </FormLabel>
                 <OutlinedInput
                     id="first-name"
                     name="first-name"
                     type="name"
-                    placeholder="John"
+                    placeholder={t('cart.address-form.first-name-placeholder')}
                     autoComplete="first name"
                     required
                     size="small"
@@ -39,13 +41,13 @@ export default function AddressForm() {
                 md={6}
             >
                 <FormLabel htmlFor="last-name" required>
-                    Last name
+                    {t('cart.address-form.last-name')}
                 </FormLabel>
                 <OutlinedInput
                     id="last-name"
                     name="last-name"
                     type="last-name"
-                    placeholder="Snow"
+                    placeholder={t('cart.address-form.last-name-placeholder')}
                     autoComplete="last name"
                     required
                     size="small"
@@ -56,13 +58,13 @@ export default function AddressForm() {
                 xs={12}
             >
                 <FormLabel htmlFor="address1" required>
-                    Address line 1
+                    {t('cart.address-form.address1')}
                 </FormLabel>
                 <OutlinedInput
                     id="address1"
                     name="address1"
                     type="address1"
-                    placeholder="Street name and number"
+                    placeholder={t('cart.address-form.address1-placeholder')}
                     autoComplete="shipping address-line1"
                     required
                     size="small"
@@ -72,12 +74,12 @@ export default function AddressForm() {
                 item
                 xs={12}
             >
-                <FormLabel htmlFor="address2">Address line 2</FormLabel>
+                <FormLabel htmlFor="address2">{t("cart.address-form.address2")}</FormLabel>
                 <OutlinedInput
                     id="address2"
                     name="address2"
                     type="address2"
-                    placeholder="Apartment, suite, unit, etc. (optional)"
+                    placeholder={t('cart.address-form.address2-placeholder')}
                     autoComplete="shipping address-line2"
                     required
                     size="small"
@@ -88,13 +90,13 @@ export default function AddressForm() {
                 xs={6}
             >
                 <FormLabel htmlFor="city" required>
-                    City
+                    {t('cart.address-form.city')}
                 </FormLabel>
                 <OutlinedInput
                     id="city"
                     name="city"
                     type="city"
-                    placeholder="New York"
+                    placeholder={t('cart.address-form.city-placeholder')}
                     autoComplete="City"
                     required
                     size="small"
@@ -105,13 +107,13 @@ export default function AddressForm() {
                 xs={6}
             >
                 <FormLabel htmlFor="state" required>
-                    State
+                    {t('cart.address-form.state')}
                 </FormLabel>
                 <OutlinedInput
                     id="state"
                     name="state"
                     type="state"
-                    placeholder="NY"
+                    placeholder={t('cart.address-form.state-placeholder')}
                     autoComplete="State"
                     required
                     size="small"
@@ -122,13 +124,13 @@ export default function AddressForm() {
                 xs={6}
             >
                 <FormLabel htmlFor="zip" required>
-                    Zip / Postal code
+                    {t('cart.address-form.zip')}
                 </FormLabel>
                 <OutlinedInput
                     id="zip"
                     name="zip"
                     type="zip"
-                    placeholder="12345"
+                    placeholder={t('cart.address-form.zip-placeholder')}
                     autoComplete="shipping postal-code"
                     required
                     size="small"
@@ -139,13 +141,13 @@ export default function AddressForm() {
                 xs={6}
             >
                 <FormLabel htmlFor="country" required>
-                    Country
+                    {t('cart.address-form.country')}
                 </FormLabel>
                 <OutlinedInput
                     id="country"
                     name="country"
                     type="country"
-                    placeholder="United States"
+                    placeholder={t('cart.address-form.country-placeholder')}
                     autoComplete="shipping country"
                     required
                     size="small"
@@ -157,7 +159,7 @@ export default function AddressForm() {
             >
                 <FormControlLabel
                     control={<Checkbox name="saveAddress" value="yes" />}
-                    label="Use this address for payment details"
+                    label={t('cart.address-form.save-address')}
                 />
             </FormGrid>
         </Grid>

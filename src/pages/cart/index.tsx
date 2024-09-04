@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { Box, Button, Card, CardContent, Grid, Link, Stack, Step, StepLabel, Stepper, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Grid, Stack, Step, StepLabel, Stepper, Typography } from "@mui/material";
 
 import CartService from "../../services/cartService";
 import { useAppDispatch, useAppSelector } from "../../app/hooks";
@@ -14,7 +14,6 @@ import { useTranslation } from "react-i18next";
 import AddressForm from "./address-form";
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
-import figuya_logo from "../../assets/figuya_logo.svg";
 import Info from "./info";
 
 function getStepContent(step: number) {
@@ -30,7 +29,7 @@ function getStepContent(step: number) {
 	}
 }
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
+const steps = ['shipping-address', 'payment-details', 'review-your-order'];
 
 const Cart = () => {
 	const { t } = useTranslation();
@@ -110,7 +109,7 @@ const Cart = () => {
 									sx={{ ':first-child': { pl: 0 }, ':last-child': { pr: 0 } }}
 									key={label}
 								>
-									<StepLabel>{label}</StepLabel>
+									<StepLabel>{t(`cart.${label}`)}</StepLabel>
 								</Step>
 							))}
 						</Stepper>
@@ -127,7 +126,7 @@ const Cart = () => {
 					>
 						<div>
 							<Typography variant="subtitle2" gutterBottom>
-								Selected products
+								{t("cart.selected-products")}
 							</Typography>
 							<Typography variant="body1">
 								{activeStep >= 2 ? '$144.97' : '$134.98'}
@@ -213,7 +212,7 @@ const Cart = () => {
 										variant="text"
 										sx={{ display: { xs: 'none', sm: 'flex' } }}
 									>
-										Previous
+										{t('cart.back')}
 									</Button>
 								)}
 								{activeStep !== 0 && (
@@ -224,7 +223,7 @@ const Cart = () => {
 										fullWidth
 										sx={{ display: { xs: 'flex', sm: 'none' } }}
 									>
-										Previous
+										{t('cart.back')}
 									</Button>
 								)}
 								<Button
@@ -233,7 +232,7 @@ const Cart = () => {
 									onClick={handleNext}
 									sx={{ width: { xs: '100%', sm: 'fit-content' } }}
 								>
-									{activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+									{activeStep === steps.length - 1 ? t("cart.place-order") : t('cart.next')}
 								</Button>
 							</Box>
 						</React.Fragment>
