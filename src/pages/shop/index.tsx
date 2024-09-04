@@ -59,6 +59,7 @@ const Shop = () => {
 	const [products, setProducts] = React.useState<Product[]>([]);
 	const [taxonTree, setTaxonTree] = React.useState<Taxon[]>([]);
 	const [collapse, setCollapse] = React.useState<number>(0);
+	const [selectedTaxon, setSelectedTaxon] = React.useState<string>("");
 
 	const [filter, setFilter] = React.useState<{ [key: string]: number | string }>({});
 
@@ -82,8 +83,9 @@ const Shop = () => {
 		});
 	};
 
-	const onButtonClicked = (taxonNumber: string) => {
-		setFilter({ "filter[taxons]": taxonNumber });
+	const onButtonClicked = (clickedTaxon: string) => {
+		setFilter({ "filter[taxons]": clickedTaxon });
+		setSelectedTaxon(clickedTaxon);
 	};
 
 	React.useEffect(() => {
@@ -123,7 +125,7 @@ const Shop = () => {
 								<Collapse in={(collapse & (1 << rootIndex)) === 0} timeout="auto">
 									<List component="div" disablePadding>
 										{taxonRoot.children?.map((taxon, childIndex) => (
-											<ListItemButton key={childIndex} sx={{ pl: 4 }} onClick={() => onButtonClicked(taxon.id)}>
+											<ListItemButton key={childIndex} sx={{ pl: 4 }} selected={selectedTaxon === taxon.id} onClick={() => onButtonClicked(taxon.id)}>
 												<ListItemText primary={t(`shop.${taxon.attributes.name.toLowerCase()}`)} />
 											</ListItemButton>
 										))}
