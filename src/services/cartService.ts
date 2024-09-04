@@ -1,5 +1,5 @@
 import { IOrder, IOrderResult } from "@spree/storefront-api-v2-sdk";
-import { bodyClient } from "./client";
+import { bodyClient, queryClient } from "./client";
 
 const CartService = {
 	async create(bearer_token?: string): Promise<IOrder> {
@@ -13,7 +13,8 @@ const CartService = {
 	},
 
 	async show(order_token: string): Promise<IOrder> {
-		const response = bodyClient.cart.show({
+		const response = queryClient.cart.show({
+			include: "line_items",
 			order_token: order_token,
 		});
 

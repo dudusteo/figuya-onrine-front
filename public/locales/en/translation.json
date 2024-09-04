@@ -73,6 +73,9 @@
 		"payment-details": "Payment details",
 		"review-your-order": "Review your order",
 		"selected-products": "Selected products",
+		"info": {
+			"total": "Total"
+		},
 		"address-form": {
 			"first-name": "First name",
 			"first-name-placeholder": "John",

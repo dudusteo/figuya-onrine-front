@@ -73,6 +73,9 @@
 		"payment-details": "Dane płatności",
 		"review-your-order": "Podsumowanie zamówienia",
 		"selected-products": "Wybrane produkty",
+		"info": {
+			"total": "Łącznie"
+		},
 		"address-form": {
 			"first-name": "Imię",
 			"first-name-placeholder": "Jan",

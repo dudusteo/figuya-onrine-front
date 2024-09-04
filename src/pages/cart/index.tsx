@@ -129,7 +129,7 @@ const Cart = () => {
 								{t("cart.selected-products")}
 							</Typography>
 							<Typography variant="body1">
-								{activeStep >= 2 ? '$144.97' : '$134.98'}
+								{cart.data.attributes.display_item_total}
 							</Typography>
 						</div>
 						{/* <InfoMobile totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} /> */}
@@ -264,7 +264,7 @@ const Cart = () => {
 						maxWidth: 500,
 					}}
 				>
-					<Info totalPrice={activeStep >= 2 ? '$144.97' : '$134.98'} />
+					<Info cart={cart} />
 				</Box>
 			</Grid>
 		</Grid>
