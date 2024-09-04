@@ -91,7 +91,7 @@ const SearchAppBar = () => {
 							<SearchIcon />
 						</SearchIconWrapper>
 						<StyledInputBase
-							placeholder={t("nav-bar.search") as string}
+							placeholder={t("nav-bar.search")}
 							inputProps={{ "aria-label": "search" }}
 						/>
 					</Search>

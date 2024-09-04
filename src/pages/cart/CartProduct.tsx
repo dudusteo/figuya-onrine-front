@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
 import CartService from "../../services/cartService";
@@ -67,14 +67,15 @@ const CartProduct = ({
 					</Grid>
 
 					<Grid item>
-						<Typography
-							align="right"
-							sx={{ cursor: "pointer" }}
-							variant="body2"
-							onClick={() => handleRemoveItem()}
-						>
-							{t("cart.remove")}
-						</Typography>
+						<Box sx={{ flexGrow: 1, display: "flex", justifyContent: "right" }}>
+							<Typography
+								sx={{ cursor: "pointer" }}
+								variant="body2"
+								onClick={() => handleRemoveItem()}
+							>
+								{t("cart.remove")}
+							</Typography>
+						</Box>
 						<Typography
 							align="right"
 							variant="h4"

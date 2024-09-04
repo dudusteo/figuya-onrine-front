@@ -12,8 +12,10 @@ import {
 } from "../../features/token/orderTokenSlice";
 import CartProduct from "./CartProduct";
 import { getCart, updateOrder } from "../../features/basket/basketSlice";
+import { useTranslation } from "react-i18next";
 
 const Cart = () => {
+	const { t } = useTranslation();
 	const orderToken = useAppSelector(getOrderToken);
 	const cart = useAppSelector(getCart)
 	const dispatch = useAppDispatch();
@@ -55,7 +57,7 @@ const Cart = () => {
 					fontWeight: "bold",
 				}}
 			>
-				Zawartość koszyka
+				{t("cart.cart-content")}
 			</Typography>
 
 			<Stack spacing={2} sx={{ my: 2 }}>
@@ -67,8 +69,7 @@ const Cart = () => {
 								productId={product.id}
 								lineItemId={
 									// @ts-ignore
-									cart.data.relationships.line_items.data[key]
-										.id
+									cart.data.relationships.line_items.data[key].id
 								}
 								orderToken={orderToken}
 								key={key}

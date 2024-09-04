@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Button, Card, Grid, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface PurchaseSummaryProps {
 	itemCost: string;
@@ -13,11 +14,12 @@ const PurchaseSummary = ({
 	shipmentCost,
 	totalCost,
 }: PurchaseSummaryProps) => {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 	return (
 		<Card>
 			<Typography variant="h4" sx={{ p: 2 }}>
-				Podsumowanie
+				{t("cart.purchase-summary")}
 			</Typography>
 
 			<Grid
@@ -29,15 +31,15 @@ const PurchaseSummary = ({
 					<Grid item xs={6} />
 					<Grid item container direction="column" xs={6}>
 						<Grid item container justifyContent="space-between">
-							<Typography>Wartość przedmiotów</Typography>
+							<Typography>{t("cart.item-cost")}</Typography>
 							<Typography>{itemCost}</Typography>
 						</Grid>
 						<Grid item container justifyContent="space-between">
-							<Typography>Wysyłka</Typography>
+							<Typography>{t("cart.shipment-cost")}</Typography>
 							<Typography>{shipmentCost}</Typography>
 						</Grid>
 						<Grid item container justifyContent="space-between">
-							<Typography>Cały koszt</Typography>
+							<Typography>{t("cart.total-cost")}</Typography>
 							<Typography>{totalCost}</Typography>
 						</Grid>
 					</Grid>
@@ -51,7 +53,7 @@ const PurchaseSummary = ({
 							navigate("/cart/checkout");
 						}}
 					>
-						ZAMAWIAM
+						{t("cart.checkout")}
 					</Button>
 				</Grid>
 			</Grid>

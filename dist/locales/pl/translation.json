@@ -58,5 +58,16 @@
 		"add": "Dodaj",
 		"cancel": "Anuluj",
 		"upload": "Załącz"
+	},
+	"cart": {
+		"cart": "Koszyk",
+		"remove": "Usuń",
+		"purchase-summary": "Podsumowanie",
+		"cart-content": "Zawartość koszyka",
+		"item-cost": "Wartość przedmiotów",
+		"shipment-cost": "Koszt dostawy",
+		"total-cost": "Koszt całkowity",
+		"empty": "Twój koszyk jest pusty",
+		"checkout": "Dostawa i płatność"
 	}
 }
