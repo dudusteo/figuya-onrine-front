@@ -8,6 +8,7 @@ import { queryClient } from "./client";
 
 export interface Product extends ProductAttr {
 	images: string[];
+	true_id: string;
 }
 
 const InjectImage = (
@@ -29,11 +30,20 @@ const InjectImage = (
 		});
 	}
 
+	let trueId: string;
+
+	if (Array.isArray(productAttr.relationships.default_variant.data))
+		trueId = productAttr.relationships.default_variant.data[0].id;
+	else
+		trueId = productAttr.relationships.default_variant.data.id;
+
 	return {
 		...productAttr,
 		images: images,
+		true_id: trueId
 	};
 };
+
 
 interface FilterObject {
 	[key: string]: number | string;

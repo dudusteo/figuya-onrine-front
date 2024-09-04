@@ -29,7 +29,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 	const priceTitle = product.attributes.display_price;
 
 	const handleNavigation = () => {
-		navigate(`/shop/product/${product.id}`);
+		navigate(`/shop/product/${product.attributes.slug}`);
 	};
 
 	const handleAddItem = () => {
@@ -40,7 +40,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 		}
 
 		if (orderToken) {
-			CartService.addItem(orderToken, product.id, 1).then((order: IOrder) => {
+			CartService.addItem(orderToken, product.true_id, 1).then((order: IOrder) => {
 				dispatch(updateOrder(order));
 			});
 		}

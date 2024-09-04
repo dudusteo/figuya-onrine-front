@@ -43,7 +43,7 @@ const ShopProduct = ({ product }: ShopProductProps) => {
 		}
 
 		if (orderToken) {
-			CartService.addItem(orderToken, product.id, 1).then((order: IOrder) => {
+			CartService.addItem(orderToken, product.true_id, 1).then((order: IOrder) => {
 				dispatch(updateOrder(order));
 			});
 		}

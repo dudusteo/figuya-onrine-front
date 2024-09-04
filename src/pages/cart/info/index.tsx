@@ -7,32 +7,50 @@ import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import { IOrder } from '@spree/storefront-api-v2-sdk/dist/*';
 import ProductService, { Product } from '../../../services/productService';
+import { ListItemAvatar } from '@mui/material';
+import ReactImage from '../../../core/react-image';
 
 interface InfoProps {
     cart: IOrder;
 }
 
-interface CardProduct extends Product {
+interface CartProduct extends Product {
     quantity: number;
-    lineItemId: string;
+    line_item_id: string;
 }
 
 const Info = ({ cart }: InfoProps) => {
     const { t } = useTranslation();
-    const [products, setProducts] = React.useState<Product[]>([]);
+    const [products, setProducts] = React.useState<CartProduct[]>([]);
 
     React.useEffect(() => {
-        let relationType = [];
-        if (Array.isArray(cart.data.relationships.variants.data)) {
-            relationType = cart.data.relationships.variants.data;
+        if (!cart.included) {
+            return;
         }
-        else
-            relationType.push(cart.data.relationships.variants.data);
 
-        const filter = { "filter[ids]": relationType.map((item) => item.id).join(',') };
+        const lineItems = cart.included.filter((item) => item.type === 'line_item');
+        const variantItems = cart.included.filter((item) => item.type === 'variant');
+        const filter = { "filter[ids]": variantItems.map((item) => item.relationships.product.data.id).join(',') };
+
         ProductService.getProducts(filter).then((products) => {
-            setProducts(products);
+            const cardProducts = products.filter((product) => {
+                const variantId = variantItems.find((item) => item.relationships.product.data.id === product.id)?.id;
+                return lineItems.some((item) => item.relationships.variant.data.id === variantId);
+            }).map((product) => {
+                const variantId = variantItems.find((item) => item.relationships.product.data.id === product.id)?.id;
+                const lineItem = lineItems.find((item) => item.relationships.variant.data.id === variantId);
+                if (!lineItem) {
+                    return product as CartProduct;
+                }
+                return {
+                    quantity: lineItem.attributes.quantity,
+                    line_item_id: lineItem.id,
+                    ...product
+                } as CartProduct;
+            });
+            setProducts(cardProducts);
         });
+
     }, [cart])
 
     return (
@@ -45,10 +63,16 @@ const Info = ({ cart }: InfoProps) => {
             </Typography>
             <List disablePadding>
                 {products.map((product) => (
-                    <ListItem key={product.attributes.name} sx={{ py: 1, px: 0 }}>
+                    <ListItem key={product.line_item_id} sx={{ py: 1, px: 0 }}>
+                        <ListItemAvatar sx={{ mr: 2 }}>
+                            <ReactImage
+                                image={product.images[0]} sx={{ width: "3.5rem", height: "5rem" }}
+                            />
+                        </ListItemAvatar>
+
                         <ListItemText
                             sx={{ mr: 2 }}
-                            primary={product.attributes.name}
+                            primary={product.quantity + "x " + product.attributes.name}
                             secondary={product.attributes.description}
                         />
                         <Typography variant="body1" sx={{ fontWeight: 'medium' }}>

@@ -14,7 +14,7 @@ const CartService = {
 
 	async show(order_token: string): Promise<IOrder> {
 		const response = queryClient.cart.show({
-			include: "line_items",
+			include: "line_items,variants",
 			order_token: order_token,
 		});
 
