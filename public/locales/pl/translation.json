@@ -69,9 +69,9 @@
 		"back": "Cofnij",
 		"next": "Dalej",
 		"place-order": "Złóż zamówienie",
-		"shipping-address": "Adres dostawy",
-		"shipment-method": "Metoda dostawy",
-		"payment-details": "Dane płatności",
+		"address": "Adres dostawy",
+		"delivery": "Metoda dostawy",
+		"payment": "Dane płatności",
 		"review-your-order": "Podsumowanie zamówienia",
 		"selected-products": "Wybrane produkty",
 		"info": {

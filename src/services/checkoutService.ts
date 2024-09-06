@@ -1,4 +1,4 @@
-import { IOrder, ShippingRates } from "@spree/storefront-api-v2-sdk";
+import { IOrder, IOrderResult, ShippingRates, SpreeSDKError } from "@spree/storefront-api-v2-sdk";
 import { bodyClient, queryClient } from "./client";
 
 const CheckoutService = {
@@ -22,19 +22,12 @@ const CheckoutService = {
         });
     },
 
-    async nextCheckoutStep(order_token: string): Promise<IOrder> {
-        const response = bodyClient.checkout.orderNext({
+    async nextCheckoutStep(order_token: string): Promise<IOrderResult> {
+        const response = await bodyClient.checkout.orderNext({
             order_token: order_token,
         });
 
-        return response.then((spreeResponse) => {
-            if (spreeResponse.isSuccess())
-                return spreeResponse.success();
-            else {
-                console.error(spreeResponse.fail());
-                return spreeResponse.success();
-            }
-        });
+        return response;
     },
 
 

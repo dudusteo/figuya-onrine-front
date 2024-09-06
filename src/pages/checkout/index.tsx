@@ -34,7 +34,7 @@ function getStepContent(step: number, orderToken: string) {
 	}
 }
 
-const steps = ['shipping-address', 'shipment-method', 'payment-details', 'review-your-order'];
+const steps = ['address', 'delivery', 'payment', 'review-your-order'];
 
 const Checkout = () => {
 	const { t } = useTranslation();
@@ -62,9 +62,14 @@ const Checkout = () => {
 	}
 
 	const handleNext = () => {
-		CheckoutService.nextCheckoutStep(orderToken).then((order: IOrder) => {
+		CheckoutService.nextCheckoutStep(orderToken).then((order) => {
 			console.log(order);
-			setActiveStep(activeStep + 1);
+			if (order.isSuccess()) {
+				dispatch(updateOrder(order.success()));
+				setActiveStep(activeStep + 1);
+			}
+			else
+				console.error(order.fail());
 		});
 
 	};

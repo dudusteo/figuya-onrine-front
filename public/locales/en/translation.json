@@ -69,9 +69,9 @@
 		"back": "Back",
 		"next": "Next",
 		"place-order": "Place order",
-		"shipping-address": "Shipping address",
-		"shipment-method": "Shipment method",
-		"payment-details": "Payment details",
+		"address": "Shipping address",
+		"delivery": "Shipment method",
+		"payment": "Payment details",
 		"review-your-order": "Review your order",
 		"selected-products": "Selected products",
 		"info": {

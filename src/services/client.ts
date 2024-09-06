@@ -8,14 +8,8 @@ import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const axiosFetcher = async (options: AxiosRequestConfig): Promise<any> => {
-	try {
-		const response: AxiosResponse = await axios(options);
-		return response.data;
-	} catch (error) {
-		// Handle error appropriately
-		console.error("Error fetching data:", error);
-		throw error;
-	}
+	const response: AxiosResponse = await axios(options);
+	return response.data;
 };
 
 const createFetcher = (options: CreateFetcherConfig, useBody: boolean) => {
@@ -33,7 +27,11 @@ const createFetcher = (options: CreateFetcherConfig, useBody: boolean) => {
 				...(useBody ? { data: fetchOptions.params } : { params: fetchOptions.params }),
 				responseType: responseType,
 			};
+
 			const data = await axiosFetcher(axiosOptions);
+			if (!data) {
+				throw new Error("No data returned from API");
+			}
 			return { data };
 		},
 	} as Fetcher;
