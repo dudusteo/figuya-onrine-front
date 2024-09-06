@@ -13,8 +13,13 @@ const FormGrid = styled(Grid)(() => ({
     flexDirection: 'column',
 }));
 
-export default function AddressForm() {
+interface AddressFormProps {
+    orderToken: string;
+}
+
+const AddressForm = ({ orderToken }: AddressFormProps) => {
     const { t } = useTranslation();
+
     return (
         <Grid container spacing={3}>
             <FormGrid
@@ -165,3 +170,5 @@ export default function AddressForm() {
         </Grid>
     );
 }
+
+export default AddressForm;

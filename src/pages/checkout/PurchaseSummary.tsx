@@ -50,7 +50,7 @@ const PurchaseSummary = ({
 						// href="cart/checkout"
 						variant="contained"
 						onClick={() => {
-							navigate("/cart/checkout");
+							navigate("/checkout/checkout");
 						}}
 					>
 						{t("cart.checkout")}

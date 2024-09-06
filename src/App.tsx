@@ -4,7 +4,7 @@ import SearchAppBar from "./core/search-app-bar";
 import StickyFooter from "./core/sticky-footer";
 
 import Shop from "./pages/shop";
-import Cart from "./pages/cart";
+import Checkout from "./pages/checkout";
 import Login from "./pages/account/login";
 import Register from "./pages/account/register";
 import Home from "./pages/home";
@@ -19,7 +19,7 @@ const App = () => {
 				<Route path="/" element={<Home />} />
 				<Route path="/shop/product/:productId" element={<Product />} />
 				<Route path="/shop" element={<Shop />} />
-				<Route path="/cart" element={<Cart />} />
+				<Route path="/checkout" element={<Checkout />} />
 				<Route path="/account" element={<Account />} />
 				<Route path="/account/login" element={<Login />} />
 				<Route path="/account/register" element={<Register />} />

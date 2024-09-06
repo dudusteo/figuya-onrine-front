@@ -2,7 +2,7 @@ import * as React from "react";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
-import CartService from "../../services/cartService";
+import CartService from "../../services/checkoutService";
 import Product from "../product";
 import ReactImage from "../../core/react-image";
 import ProductService from "../../services/productService";

@@ -11,28 +11,32 @@ import {
 } from "../../features/token/orderTokenSlice";
 import { getCart, updateOrder } from "../../features/basket/basketSlice";
 import { useTranslation } from "react-i18next";
-import AddressForm from "./address-form";
+import AddressForm from "./address-form/AddressForm";
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import Info from "./info";
 import PaymentForm from "./payment-form/PaymentForm";
+import ShipmentForm from "./shipment-form/ShipmentForm";
+import CheckoutService from "../../services/checkoutService";
 
-function getStepContent(step: number) {
+function getStepContent(step: number, orderToken: string) {
 	switch (step) {
 		case 0:
-			return <AddressForm />;
+			return <AddressForm orderToken={orderToken} />;
 		case 1:
+			return <ShipmentForm orderToken={orderToken} />;
+		case 2:
 			return <PaymentForm />;
-		// case 2:
+		// case 3:
 		// 	return <Review />;
 		default:
 			throw new Error('Unknown step');
 	}
 }
 
-const steps = ['shipping-address', 'payment-details', 'review-your-order'];
+const steps = ['shipping-address', 'shipment-method', 'payment-details', 'review-your-order'];
 
-const Cart = () => {
+const Checkout = () => {
 	const { t } = useTranslation();
 	const [activeStep, setActiveStep] = React.useState(0);
 	const orderToken = useAppSelector(getOrderToken);
@@ -53,16 +57,20 @@ const Cart = () => {
 		}
 	}, [orderToken, dispatch]);
 
+	if (!cart || !orderToken) {
+		return <div>Loading...</div>;
+	}
+
 	const handleNext = () => {
-		setActiveStep(activeStep + 1);
+		CheckoutService.nextCheckoutStep(orderToken).then((order: IOrder) => {
+			console.log(order);
+			setActiveStep(activeStep + 1);
+		});
+
 	};
 	const handleBack = () => {
 		setActiveStep(activeStep - 1);
 	};
-
-	if (!cart || !orderToken) {
-		return <div>Loading...</div>;
-	}
 
 	return (
 		<Grid container sx={{ height: { xs: '100%', sm: '100dvh' } }}>
@@ -188,7 +196,7 @@ const Cart = () => {
 						</Stack>
 					) : (
 						<React.Fragment>
-							{getStepContent(activeStep)}
+							{getStepContent(activeStep, orderToken)}
 							<Box
 								sx={[
 									{
@@ -272,4 +280,4 @@ const Cart = () => {
 	);
 };
 
-export default Cart;
+export default Checkout;
