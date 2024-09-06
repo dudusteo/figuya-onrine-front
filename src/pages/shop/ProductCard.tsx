@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Box, Button, Paper, Typography } from "@mui/material";
-
+import { styled } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import ReactImage from "../../core/react-image";
@@ -13,6 +13,11 @@ import {
 	setOrderToken,
 } from "../../features/token/orderTokenSlice";
 import { updateOrder } from "../../features/basket/basketSlice";
+
+const StyledPaper = styled(Paper)(({ theme }) => ({
+	border: `1px solid ${theme.palette.primary.main + "12"}`,
+	boxShadow: `0px 2px 1px -1px ${theme.palette.primary.main + "20"}, 0px 1px 1px 0px ${theme.palette.primary.main + "14"}, 0px 1px 3px 0px ${theme.palette.primary.main + "12"}`,
+}));
 
 interface ProductCardProps {
 	product: Product;
@@ -47,7 +52,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 	};
 
 	return (
-		<Paper
+		<StyledPaper
 			variant="outlined"
 			sx={{
 				p: 2,
@@ -104,7 +109,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 					{t("add-to-cart")}
 				</Button>
 			</Box>
-		</Paper>
+		</StyledPaper>
 	);
 };
 

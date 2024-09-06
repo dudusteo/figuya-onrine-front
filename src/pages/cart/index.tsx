@@ -15,13 +15,14 @@ import AddressForm from "./address-form";
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import Info from "./info";
+import PaymentForm from "./payment-form/PaymentForm";
 
 function getStepContent(step: number) {
 	switch (step) {
 		case 0:
 			return <AddressForm />;
-		// case 1:
-		// 	return <PaymentForm />;
+		case 1:
+			return <PaymentForm />;
 		// case 2:
 		// 	return <Review />;
 		default:

@@ -80,7 +80,7 @@
 			"first-name": "First name",
 			"first-name-placeholder": "John",
 			"last-name": "Last name",
-			"last-name-placeholder": "Snow",
+			"last-name-placeholder": "Smith",
 			"address1": "Address line 1",
 			"address1-placeholder": "Street name and number",
 			"address2": "Address line 2",
@@ -94,6 +94,25 @@
 			"country": "Country",
 			"country-placeholder": "United States",
 			"save-address": "Use this address for payment details"
+		},
+		"payment-form": {
+			"card": "Card",
+			"credit-card": "Credit card",
+			"card-number": "Card number",
+			"card-number-placeholder": "0000 0000 0000 0000",
+			"cvc": "CVC",
+			"cvc-placeholder": "123",
+			"name": "Name",
+			"name-placeholder": "John Smith",
+			"exp": "Expiration date",
+			"exp-placeholder": "MM/YY",
+			"save-card": "Save this card for future purchases",
+			"bank-transfer": "Bank transfer",
+			"bank-transfer-note": "Your order will be processed once we receive the funds.",
+			"bank-account": "Bank account",
+			"bank-transfer-info": "Please transfer the payment to the bank account details shown below.",
+			"bank": "Bank",
+			"account-number": "Account number"
 		}
 	}
 }

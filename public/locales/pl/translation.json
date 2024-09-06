@@ -94,6 +94,25 @@
 			"country": "Kraj",
 			"country-placeholder": "Polska",
 			"save-address": "Użyj tego samego adresu do płatności"
+		},
+		"payment-form": {
+			"card": "Karta",
+			"credit-card": "Karta kredytowa",
+			"card-number": "Numer karty",
+			"card-number-placeholder": "0000 0000 0000 0000",
+			"cvc": "CVC",
+			"cvc-placeholder": "123",
+			"name": "Imię i nazwisko",
+			"name-placeholder": "Jan Kowalski",
+			"exp": "Data ważności",
+			"exp-placeholder": "MM/RR",
+			"save-card": "Zapisz tę kartę do przyszłych zakupów",
+			"bank-transfer": "Przelew bankowy",
+			"bank-transfer-note": "Twoje zamówienie zostanie przetworzone po otrzymaniu środków.",
+			"bank-account": "Konto bankowe",
+			"bank-transfer-info": "Proszę wykonać przelew na poniższe dane konta bankowego.",
+			"bank": "Bank",
+			"account-number": "Numer konta"
 		}
 	}
 }
