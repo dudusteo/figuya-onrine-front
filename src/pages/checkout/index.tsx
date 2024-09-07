@@ -17,15 +17,17 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import Info from "./info";
 import PaymentForm from "./payment-form/PaymentForm";
 import ShipmentForm from "./shipment-form/ShipmentForm";
-import CheckoutService from "../../services/checkoutService";
+import CheckoutService, { OrderUpdateOptions } from "../../services/checkoutService";
 
-function getStepContent(step: number, orderToken: string) {
+function getStepContent(step: number, orderToken: string, formData: OrderUpdateOptions, handleFormChange: (name: string, value: string | boolean) => void) {
 	switch (step) {
 		case 0:
-			return <AddressForm orderToken={orderToken} />;
+			return <div>Cart</div>;
 		case 1:
-			return <ShipmentForm orderToken={orderToken} />;
+			return <AddressForm formData={formData} onFormChange={handleFormChange} />;
 		case 2:
+			return <ShipmentForm orderToken={orderToken} />;
+		case 3:
 			return <PaymentForm />;
 		// case 3:
 		// 	return <Review />;
@@ -34,11 +36,36 @@ function getStepContent(step: number, orderToken: string) {
 	}
 }
 
-const steps = ['address', 'delivery', 'payment', 'review-your-order'];
+const defaultOrderData: OrderUpdateOptions = {
+	email: '',
+	bill_address_attributes: {
+		firstname: '',
+		lastname: '',
+		address1: '',
+		city: '',
+		zipcode: '',
+		state_name: '',
+		country_iso: 'POL',
+		phone: '',
+	},
+	ship_address_attributes: {
+		firstname: '',
+		lastname: '',
+		address1: '',
+		city: '',
+		zipcode: '',
+		state_name: '',
+		country_iso: 'POL',
+		phone: '',
+	},
+};
+
+const steps = ['cart', 'address', 'delivery', 'payment', 'review-your-order'];
 
 const Checkout = () => {
 	const { t } = useTranslation();
-	const [activeStep, setActiveStep] = React.useState(0);
+	const [activeStep, setActiveStep] = React.useState<number>(0);
+	const [orderData, setOrderData] = React.useState<OrderUpdateOptions>(defaultOrderData);
 	const orderToken = useAppSelector(getOrderToken);
 	const cart = useAppSelector(getCart)
 	const dispatch = useAppDispatch();
@@ -57,6 +84,14 @@ const Checkout = () => {
 		}
 	}, [orderToken, dispatch]);
 
+	React.useEffect(() => {
+		if (!cart) {
+			return;
+		}
+		const currentStep = steps.indexOf(cart.data.attributes.state) !== -1 ? steps.indexOf(cart.data.attributes.state) : 0;
+		setActiveStep(currentStep);
+	}, [cart]);
+
 	if (!cart || !orderToken) {
 		return <div>Loading...</div>;
 	}
@@ -73,6 +108,60 @@ const Checkout = () => {
 		});
 
 	};
+
+	const handleFormChange = (name: string, value: string | boolean) => {
+		const keys = name.split('.');
+		setOrderData((prevData) => {
+			const updatedData = { ...prevData };
+			let currentLevel: any = updatedData;
+
+			for (let i = 0; i < keys.length - 1; i++) {
+				const key = keys[i] as keyof typeof currentLevel;
+				if (!currentLevel[key]) {
+					currentLevel[key] = {};
+				}
+				currentLevel = currentLevel[key];
+			}
+
+			currentLevel[keys[keys.length - 1] as keyof typeof currentLevel] = value;
+			return updatedData;
+		});
+		console.log('Order Data:', orderData);
+	};
+
+	const handleSubmit = (e: React.FormEvent) => {
+		e.preventDefault();
+		console.log('Form Data:', orderData);
+		if (steps[activeStep] === "cart") {
+			handleNext();
+		}
+		if (steps[activeStep] === "address") {
+			orderData.ship_address_attributes = orderData.bill_address_attributes;
+			CheckoutService.update(orderToken, orderData).then((order) => {
+				console.log(order);
+				if (order.isSuccess()) {
+					dispatch(updateOrder(order.success()));
+					handleNext();
+				}
+				else
+					console.error(order.fail());
+			});
+		}
+
+		if (steps[activeStep] === "delivery") {
+			const orderDataCopy: OrderUpdateOptions = { shipments_attributes: orderData.shipments_attributes };
+			CheckoutService.update(orderToken, orderDataCopy).then((order) => {
+				console.log(order);
+				if (order.isSuccess()) {
+					dispatch(updateOrder(order.success()));
+					handleNext();
+				}
+				else
+					console.error(order.fail());
+			});
+		}
+	};
+
 	const handleBack = () => {
 		setActiveStep(activeStep - 1);
 	};
@@ -201,54 +290,56 @@ const Checkout = () => {
 						</Stack>
 					) : (
 						<React.Fragment>
-							{getStepContent(activeStep, orderToken)}
-							<Box
-								sx={[
-									{
-										display: 'flex',
-										flexDirection: { xs: 'column-reverse', sm: 'row' },
-										alignItems: 'end',
-										flexGrow: 1,
-										gap: 1,
-										pb: { xs: 12, sm: 0 },
-										mt: { xs: 2, sm: 0 },
-										mb: '60px',
-									},
-									activeStep !== 0
-										? { justifyContent: 'space-between' }
-										: { justifyContent: 'flex-end' },
-								]}
-							>
-								{activeStep !== 0 && (
-									<Button
-										startIcon={<ChevronLeftRoundedIcon />}
-										onClick={handleBack}
-										variant="text"
-										sx={{ display: { xs: 'none', sm: 'flex' } }}
-									>
-										{t('cart.back')}
-									</Button>
-								)}
-								{activeStep !== 0 && (
-									<Button
-										startIcon={<ChevronLeftRoundedIcon />}
-										onClick={handleBack}
-										variant="outlined"
-										fullWidth
-										sx={{ display: { xs: 'flex', sm: 'none' } }}
-									>
-										{t('cart.back')}
-									</Button>
-								)}
-								<Button
-									variant="contained"
-									endIcon={<ChevronRightRoundedIcon />}
-									onClick={handleNext}
-									sx={{ width: { xs: '100%', sm: 'fit-content' } }}
+							<form onSubmit={handleSubmit}>
+								{getStepContent(activeStep, orderToken, orderData, handleFormChange)}
+								<Box
+									sx={[
+										{
+											display: 'flex',
+											flexDirection: { xs: 'column-reverse', sm: 'row' },
+											alignItems: 'end',
+											flexGrow: 1,
+											gap: 1,
+											pb: { xs: 12, sm: 0 },
+											mt: { xs: 2, sm: 0 },
+											mb: '60px',
+										},
+										activeStep !== 0
+											? { justifyContent: 'space-between' }
+											: { justifyContent: 'flex-end' },
+									]}
 								>
-									{activeStep === steps.length - 1 ? t("cart.place-order") : t('cart.next')}
-								</Button>
-							</Box>
+									{activeStep !== 0 && (
+										<Button
+											startIcon={<ChevronLeftRoundedIcon />}
+											onClick={handleBack}
+											variant="text"
+											sx={{ display: { xs: 'none', sm: 'flex' } }}
+										>
+											{t('cart.back')}
+										</Button>
+									)}
+									{activeStep !== 0 && (
+										<Button
+											startIcon={<ChevronLeftRoundedIcon />}
+											onClick={handleBack}
+											variant="outlined"
+											fullWidth
+											sx={{ display: { xs: 'flex', sm: 'none' } }}
+										>
+											{t('cart.back')}
+										</Button>
+									)}
+									<Button
+										variant="contained"
+										endIcon={<ChevronRightRoundedIcon />}
+										type="submit"
+										sx={{ width: { xs: '100%', sm: 'fit-content' } }}
+									>
+										{activeStep === steps.length - 1 ? t("cart.place-order") : t('cart.next')}
+									</Button>
+								</Box>
+							</form>
 						</React.Fragment>
 					)}
 				</Box>

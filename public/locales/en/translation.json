@@ -69,6 +69,7 @@
 		"back": "Back",
 		"next": "Next",
 		"place-order": "Place order",
+		"cart": "Cart",
 		"address": "Shipping address",
 		"delivery": "Shipment method",
 		"payment": "Payment details",
@@ -93,7 +94,7 @@
 			"zip": "Zip / Postal code",
 			"zip-placeholder": "12345",
 			"country": "Country",
-			"country-placeholder": "United States",
+			"country-placeholder": "Poland",
 			"save-address": "Use this address for payment details"
 		},
 		"payment-form": {
