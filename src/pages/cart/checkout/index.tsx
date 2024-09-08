@@ -2,14 +2,14 @@ import * as React from "react";
 
 import { Box, Button, Card, CardContent, Grid, Stack, Step, StepLabel, Stepper, Typography } from "@mui/material";
 
-import CartService from "../../services/cartService";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import CartService from "../../../services/cartService";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
 import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
 import {
 	getOrderToken,
 	setOrderToken,
-} from "../../features/token/orderTokenSlice";
-import { getCart, updateOrder } from "../../features/basket/basketSlice";
+} from "../../../features/token/orderTokenSlice";
+import { getCart, updateOrder } from "../../../features/basket/basketSlice";
 import { useTranslation } from "react-i18next";
 import AddressForm from "./address-form/AddressForm";
 import ChevronLeftRoundedIcon from '@mui/icons-material/ChevronLeftRounded';
@@ -17,17 +17,15 @@ import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import Info from "./info";
 import PaymentForm from "./payment-form/PaymentForm";
 import ShipmentForm from "./shipment-form/ShipmentForm";
-import CheckoutService, { OrderUpdateOptions } from "../../services/checkoutService";
+import CheckoutService, { OrderUpdateOptions } from "../../../services/checkoutService";
 
 function getStepContent(step: number, orderToken: string, formData: OrderUpdateOptions, handleFormChange: (name: string, value: string | boolean) => void) {
 	switch (step) {
 		case 0:
-			return <div>Cart</div>;
-		case 1:
 			return <AddressForm formData={formData} onFormChange={handleFormChange} />;
-		case 2:
+		case 1:
 			return <ShipmentForm orderToken={orderToken} />;
-		case 3:
+		case 2:
 			return <PaymentForm />;
 		// case 3:
 		// 	return <Review />;
@@ -60,7 +58,7 @@ const defaultOrderData: OrderUpdateOptions = {
 	},
 };
 
-const steps = ['cart', 'address', 'delivery', 'payment', 'review-your-order'];
+const steps = ['address', 'delivery', 'payment', 'review-your-order'];
 
 const Checkout = () => {
 	const { t } = useTranslation();
@@ -132,9 +130,6 @@ const Checkout = () => {
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
 		console.log('Form Data:', orderData);
-		if (steps[activeStep] === "cart") {
-			handleNext();
-		}
 		if (steps[activeStep] === "address") {
 			orderData.ship_address_attributes = orderData.bill_address_attributes;
 			CheckoutService.update(orderToken, orderData).then((order) => {

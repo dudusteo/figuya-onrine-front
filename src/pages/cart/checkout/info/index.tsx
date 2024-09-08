@@ -6,17 +6,13 @@ import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
 import { useTranslation } from 'react-i18next';
 import { IOrder } from '@spree/storefront-api-v2-sdk/dist/*';
-import ProductService, { Product } from '../../../services/productService';
+import ProductService from '../../../../services/productService';
 import { ListItemAvatar } from '@mui/material';
-import ReactImage from '../../../core/react-image';
+import ReactImage from '../../../../core/react-image';
+import { CartProduct } from '../../../../services/cartService';
 
 interface InfoProps {
     cart: IOrder;
-}
-
-interface CartProduct extends Product {
-    quantity: number;
-    line_item_id: string;
 }
 
 const Info = ({ cart }: InfoProps) => {

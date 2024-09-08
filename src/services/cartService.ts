@@ -1,5 +1,11 @@
 import { IOrder, IOrderResult } from "@spree/storefront-api-v2-sdk";
 import { bodyClient, queryClient } from "./client";
+import { Product } from "./productService";
+
+export interface CartProduct extends Product {
+	quantity: number;
+	line_item_id: string;
+}
 
 const CartService = {
 	async create(bearer_token?: string): Promise<IOrder> {

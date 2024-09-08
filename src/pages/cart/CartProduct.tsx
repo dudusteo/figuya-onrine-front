@@ -2,46 +2,30 @@ import * as React from "react";
 import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
-import CartService from "../../services/checkoutService";
-import Product from "../product";
 import ReactImage from "../../core/react-image";
-import ProductService from "../../services/productService";
 import { useAppDispatch } from "../../app/hooks";
-import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
-import { updateOrder } from "../../features/basket/basketSlice";
+import type { CartProduct } from "../../services/cartService";
 
 interface CartProductProps {
-	productId: string;
-	lineItemId: string;
-	orderToken: string;
+	cartProduct: CartProduct;
 }
 
-const CartProduct = ({
-	productId,
-	lineItemId,
-	orderToken,
-}: CartProductProps) => {
+const CartProduct = ({ cartProduct }: CartProductProps) => {
 	const { t } = useTranslation();
-	const [product, setProduct] = React.useState<Product | null>(null);
 	const dispatch = useAppDispatch();
 
-	React.useEffect(() => {
-		ProductService.getProduct(productId).then((product: Product) => {
-			setProduct(product);
-		});
-	}, [orderToken, productId]);
 
-	if (!product) {
+	if (!cartProduct) {
 		return null;
 	}
 
-	const title = product.attributes.name;
-	const priceTitle = product.attributes.display_price;
+	const title = cartProduct.attributes.name;
+	const priceTitle = cartProduct.attributes.display_price;
 
 	const handleRemoveItem = () => {
-		CartService.RemoveItem(orderToken, lineItemId).then((order: IOrder) => {
-			dispatch(updateOrder(order));
-		});
+		// CartService.RemoveItem(orderToken, lineItemId).then((order: IOrder) => {
+		// 	dispatch(updateOrder(order));
+		// });
 	};
 
 	return (
@@ -55,7 +39,7 @@ const CartProduct = ({
 				<Grid item>
 					<ReactImage
 						sx={{ height: "13.5rem", width: "10.5rem" }}
-						image={product.images[0]}
+						image={cartProduct.images[0]}
 					/>
 				</Grid>
 

@@ -123,7 +123,7 @@ const SearchAppBar = () => {
 					>
 						<AccountCircleIcon fontSize="large" />
 					</IconPopupState>
-					<IconButton onClick={() => navigate("/checkout")}>
+					<IconButton onClick={() => navigate("/cart")}>
 						<Badge
 							overlap="circular"
 							anchorOrigin={{

@@ -1,6 +1,6 @@
 import { Stack } from "@mui/material";
 import { useEffect } from "react";
-import CheckoutService from "../../../services/checkoutService";
+import CheckoutService from "../../../../services/checkoutService";
 
 interface ShippingFormProps {
     orderToken: string;

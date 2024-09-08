@@ -47,10 +47,10 @@ const PurchaseSummary = ({
 				<Grid item container>
 					<Grid item xs />
 					<Button
-						// href="cart/checkout"
+						//href="cart/checkout"
 						variant="contained"
 						onClick={() => {
-							navigate("/checkout/checkout");
+							navigate("/cart/checkout");
 						}}
 					>
 						{t("cart.checkout")}
