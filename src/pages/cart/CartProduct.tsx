@@ -3,8 +3,11 @@ import { Box, Grid, Paper, Typography } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
 import ReactImage from "../../core/react-image";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
 import type { CartProduct } from "../../services/cartService";
+import CartService from "../../services/cartService";
+import { getOrderToken } from "../../features/token/orderTokenSlice";
+import { updateOrder } from "../../features/basket/basketSlice";
 
 interface CartProductProps {
 	cartProduct: CartProduct;
@@ -13,9 +16,9 @@ interface CartProductProps {
 const CartProduct = ({ cartProduct }: CartProductProps) => {
 	const { t } = useTranslation();
 	const dispatch = useAppDispatch();
+	const orderToken = useAppSelector(getOrderToken);
 
-
-	if (!cartProduct) {
+	if (!cartProduct || !orderToken) {
 		return null;
 	}
 
@@ -23,9 +26,9 @@ const CartProduct = ({ cartProduct }: CartProductProps) => {
 	const priceTitle = cartProduct.attributes.display_price;
 
 	const handleRemoveItem = () => {
-		// CartService.RemoveItem(orderToken, lineItemId).then((order: IOrder) => {
-		// 	dispatch(updateOrder(order));
-		// });
+		CartService.RemoveItem(orderToken, cartProduct.line_item_id).then((order) => {
+			dispatch(updateOrder(order));
+		});
 	};
 
 	return (
