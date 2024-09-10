@@ -50,6 +50,7 @@ const CartService = {
 		line_item_id: string
 	): Promise<IOrder> {
 		const response = bodyClient.cart.removeItem({
+			include: "line_items,variants",
 			order_token: order_token,
 			id: line_item_id,
 		});

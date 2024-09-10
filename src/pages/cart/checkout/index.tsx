@@ -65,7 +65,7 @@ const Checkout = () => {
 	const [activeStep, setActiveStep] = React.useState<number>(0);
 	const [orderData, setOrderData] = React.useState<OrderUpdateOptions>(defaultOrderData);
 	const orderToken = useAppSelector(getOrderToken);
-	const cart = useAppSelector(getCart)
+	const cart = useAppSelector(getCart);
 	const dispatch = useAppDispatch();
 
 	React.useEffect(() => {

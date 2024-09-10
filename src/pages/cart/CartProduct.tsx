@@ -1,35 +1,19 @@
 import * as React from "react";
-import { Box, Grid, Paper, Typography } from "@mui/material";
-
+import { Grid, Paper, Typography, Skeleton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import ReactImage from "../../core/react-image";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import type { CartProduct } from "../../services/cartService";
-import CartService from "../../services/cartService";
-import { getOrderToken } from "../../features/token/orderTokenSlice";
-import { updateOrder } from "../../features/basket/basketSlice";
+import type { CartProduct as CartProductType } from "../../services/cartService";
 
 interface CartProductProps {
-	cartProduct: CartProduct;
+	cartProduct: CartProductType;
+	handleRemoveItem: (cartProduct: CartProductType) => void;
 }
 
-const CartProduct = ({ cartProduct }: CartProductProps) => {
+const CartProduct = ({ cartProduct, handleRemoveItem }: CartProductProps) => {
 	const { t } = useTranslation();
-	const dispatch = useAppDispatch();
-	const orderToken = useAppSelector(getOrderToken);
-
-	if (!cartProduct || !orderToken) {
-		return null;
-	}
 
 	const title = cartProduct.attributes.name;
 	const priceTitle = cartProduct.attributes.display_price;
-
-	const handleRemoveItem = () => {
-		CartService.RemoveItem(orderToken, cartProduct.line_item_id).then((order) => {
-			dispatch(updateOrder(order));
-		});
-	};
 
 	return (
 		<Paper
@@ -53,18 +37,18 @@ const CartProduct = ({ cartProduct }: CartProductProps) => {
 						</Typography>
 					</Grid>
 
-					<Grid item>
-						<Box sx={{ flexGrow: 1, display: "flex", justifyContent: "right" }}>
-							<Typography
-								sx={{ cursor: "pointer" }}
-								variant="body2"
-								onClick={() => handleRemoveItem()}
-							>
-								{t("cart.remove")}
-							</Typography>
-						</Box>
+					<Grid item sx={{ display: "flex", justifyContent: "right" }}>
 						<Typography
-							align="right"
+							sx={{ cursor: "pointer" }}
+							variant="body2"
+							onClick={() => handleRemoveItem(cartProduct)}
+						>
+							{t("cart.remove")}
+						</Typography>
+					</Grid>
+
+					<Grid item sx={{ display: "flex", justifyContent: "right" }}>
+						<Typography
 							variant="h4"
 							sx={{
 								color: "primary.main",
@@ -81,4 +65,51 @@ const CartProduct = ({ cartProduct }: CartProductProps) => {
 	);
 };
 
-export default CartProduct;
+const LoadingCartProduct = () => {
+	return (
+		<Paper
+			sx={{
+				p: 2,
+				flexGrow: 1,
+			}}
+		>
+			<Grid container spacing={2}>
+				<Grid item>
+					<Skeleton variant="rectangular" width={168} height={216} />
+				</Grid>
+
+				<Grid item sm container direction="column">
+					<Grid item xs>
+						<Typography variant="h5" sx={{ color: "primary.main" }} >
+							<Skeleton width="10rem" />
+						</Typography>
+					</Grid>
+
+					<Grid item sx={{ display: "flex", justifyContent: "right" }}>
+						<Typography
+							sx={{ cursor: "pointer" }}
+							variant="body2"
+						>
+							<Skeleton width="4rem" />
+						</Typography>
+					</Grid>
+					<Grid item sx={{ display: "flex", justifyContent: "right" }}>
+						<Typography
+							align="right"
+							variant="h4"
+							sx={{
+								color: "primary.main",
+								fontWeight: "bold",
+								my: 1,
+							}}
+						>
+							<Skeleton width="6rem" />
+						</Typography>
+					</Grid>
+				</Grid>
+			</Grid>
+		</Paper>
+	);
+};
+
+export { CartProduct, LoadingCartProduct };

@@ -20,7 +20,7 @@ const Cart = () => {
     const { t } = useTranslation();
 
     const orderToken = useAppSelector(getOrderToken);
-    const cart = useAppSelector(getCart)
+    const cart = useAppSelector(getCart);
     const dispatch = useAppDispatch();
 
     React.useEffect(() => {
@@ -33,11 +33,14 @@ const Cart = () => {
         if (orderToken) {
             CartService.show(orderToken).then((cart: IOrder) => {
                 dispatch(updateOrder(cart));
-                setIsLoading(false);
             });
         }
 
     }, [orderToken, dispatch]);
+
+    if (!cart) {
+        return <div>Permission denied</div>
+    }
 
     return (
         <Box
@@ -62,11 +65,14 @@ const Cart = () => {
             </Typography>
             <CartProducts
                 cart={cart}
+                isLoading={isLoading}
+                setIsLoading={setIsLoading}
             >
             </CartProducts>
 
             <PurchaseSummary
                 cart={cart}
+                isLoading={isLoading}
             />
         </Box>
     );
