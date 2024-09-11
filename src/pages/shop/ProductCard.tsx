@@ -1,18 +1,8 @@
-import * as React from "react";
-import { Box, Button, Paper, Typography } from "@mui/material";
+import { Box, Button, Paper, Skeleton, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 import ReactImage from "../../core/react-image";
 import { Product } from "../../services/productService";
-import CartService from "../../services/cartService";
-import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import {
-	getOrderToken,
-	setOrderToken,
-} from "../../features/token/orderTokenSlice";
-import { updateOrder } from "../../features/basket/basketSlice";
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
 	border: `1px solid ${theme.palette.primary.main + "12"}`,
@@ -21,35 +11,15 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
 
 interface ProductCardProps {
 	product: Product;
+	handleNavigation: (product: Product) => void;
+	handleAddItemToCart: (product: Product) => void;
 }
 
-const ProductCard = ({ product }: ProductCardProps) => {
-	const navigate = useNavigate();
+const ProductCard = ({ product, handleNavigation, handleAddItemToCart }: ProductCardProps) => {
 	const { t } = useTranslation();
-
-	const orderToken = useAppSelector(getOrderToken);
-	const dispatch = useAppDispatch();
 
 	const title = product.attributes.name;
 	const priceTitle = product.attributes.display_price;
-
-	const handleNavigation = () => {
-		navigate(`/shop/product/${product.attributes.slug}`);
-	};
-
-	const handleAddItem = () => {
-		if (!orderToken) {
-			CartService.create().then((token: IOrder) => {
-				dispatch(setOrderToken(token.data.attributes.token));
-			});
-		}
-
-		if (orderToken) {
-			CartService.addItem(orderToken, product.true_id, 1).then((order: IOrder) => {
-				dispatch(updateOrder(order));
-			});
-		}
-	};
 
 	return (
 		<StyledPaper
@@ -65,15 +35,21 @@ const ProductCard = ({ product }: ProductCardProps) => {
 				display: "flex",
 				justifyContent: "center",
 			}}>
-				<ReactImage
-					sx={{
-						aspectRatio: "14/18",
-						height: "100%",
-						cursor: "pointer",
-					}}
-					onClick={handleNavigation}
-					image={product.images[0]}
-				/>
+				<Box sx={{
+					aspectRatio: "14/18",
+					height: "100%"
+				}}>
+					<ReactImage
+						sx={{
+							width: "100%",
+							height: "100%",
+							cursor: "pointer",
+						}}
+						onClick={() => handleNavigation(product)}
+						image={product.images[0]}
+					/>
+				</Box>
+
 			</Box>
 			<Box sx={{
 				height: "30%",
@@ -85,7 +61,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 					<Typography
 						variant="subtitle2"
 						sx={{ color: "primary.main", cursor: "pointer" }}
-						onClick={handleNavigation}
+						onClick={() => handleNavigation(product)}
 					>
 						{title}
 					</Typography>
@@ -103,7 +79,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
 					variant="contained"
 					onClick={(e) => {
 						e.stopPropagation();
-						handleAddItem();
+						handleAddItemToCart(product);
 					}}
 				>
 					{t("add-to-cart")}
@@ -113,4 +89,54 @@ const ProductCard = ({ product }: ProductCardProps) => {
 	);
 };
 
-export default ProductCard;
+const SkeletonProductCard = () => {
+	return (
+		<StyledPaper
+			variant="outlined"
+			sx={{
+				p: 2,
+				height: "30rem",
+				width: "100%",
+			}}
+		>
+			<Box sx={{
+				height: "70%",
+				display: "flex",
+				justifyContent: "center",
+			}}>
+				<Box sx={{
+					aspectRatio: "14/18",
+					height: "100%",
+				}}>
+					<Skeleton variant="rectangular" width="100%" height="100%" />
+				</Box>
+			</Box>
+			<Box sx={{
+				height: "30%",
+				display: "flex",
+				justifyContent: "space-between",
+				flexDirection: "column",
+			}}>
+				<Box sx={{ py: 1 }}>
+					<Typography
+						variant="subtitle2"
+						sx={{ color: "primary.main", cursor: "pointer" }}
+					>
+						<Skeleton variant="text" width="60%" />
+					</Typography>
+				</Box>
+				<Typography
+					variant="h6"
+					align="right"
+					sx={{ color: "primary.main" }}
+				>
+					<Skeleton variant="text" width="40%" />
+				</Typography>
+
+				<Skeleton variant="rectangular" width="100%" height={36} />
+			</Box>
+		</StyledPaper>
+	);
+};
+
+export { ProductCard, SkeletonProductCard };

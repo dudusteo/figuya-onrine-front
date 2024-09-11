@@ -16,9 +16,14 @@ import {
 
 import { useTranslation } from "react-i18next";
 import ProductService, { Product } from "../../services/productService";
-import ProductCard from "./ProductCard";
+import { ProductCard, SkeletonProductCard } from "./ProductCard";
 import TaxonService from "../../services/taxonService";
-import { RelationType, TaxonAttr } from "@spree/storefront-api-v2-sdk/dist/*";
+import { IOrder, RelationType, TaxonAttr } from "@spree/storefront-api-v2-sdk/dist/*";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch, useAppSelector } from "../../app/hooks";
+import { getOrderToken, setOrderToken } from "../../features/token/orderTokenSlice";
+import CartService from "../../services/cartService";
+import { updateOrder } from "../../features/basket/basketSlice";
 
 
 interface Taxon extends TaxonAttr {
@@ -55,13 +60,22 @@ const buildTaxonTree = (taxons: TaxonAttr[]): Taxon[] => {
 };
 
 const Shop = () => {
-	const { t } = useTranslation();
+	const [isLoading, setIsLoading] = React.useState<boolean>(true);
 	const [products, setProducts] = React.useState<Product[]>([]);
 	const [taxonTree, setTaxonTree] = React.useState<Taxon[]>([]);
 	const [collapse, setCollapse] = React.useState<number>(0);
 	const [selectedTaxon, setSelectedTaxon] = React.useState<string>("");
+	const [perPage, setPerPage] = React.useState<number>(12);
+	const [filter, setFilter] = React.useState<{ [key: string]: number | string }>({ per_page: perPage });
 
-	const [filter, setFilter] = React.useState<{ [key: string]: number | string }>({});
+	const { t } = useTranslation();
+	const dispatch = useAppDispatch();
+	const navigate = useNavigate();
+
+	const orderToken = useAppSelector(getOrderToken);
+	const isSmallScreen = useMediaQuery((theme: Theme) =>
+		theme.breakpoints.down("md")
+	);
 
 	React.useEffect(() => {
 		TaxonService.getTaxons().then((response) => {
@@ -71,11 +85,13 @@ const Shop = () => {
 		});
 	}, []);
 
-
-
-	const isSmallScreen = useMediaQuery((theme: Theme) =>
-		theme.breakpoints.down("md")
-	);
+	React.useEffect(() => {
+		setIsLoading(true);
+		ProductService.getProducts(filter).then((products) => {
+			setProducts(products);
+			setIsLoading(false);
+		});
+	}, [filter]);
 
 	const updateCollapse = (collapseIndex: number) => {
 		setCollapse((prevCollapse) => {
@@ -84,15 +100,27 @@ const Shop = () => {
 	};
 
 	const onButtonClicked = (clickedTaxon: string) => {
-		setFilter({ "filter[taxons]": clickedTaxon });
+		setFilter((prevFilter) => { return { ...prevFilter, "filter[taxons]": clickedTaxon } });
 		setSelectedTaxon(clickedTaxon);
 	};
 
-	React.useEffect(() => {
-		ProductService.getProducts(filter).then((products) => {
-			setProducts(products);
-		});
-	}, [filter]);
+	const handleNavigation = (product: Product) => {
+		navigate(`/shop/product/${product.attributes.slug}`);
+	};
+
+	const handleAddItemToCart = (product: Product) => {
+		if (!orderToken) {
+			CartService.create().then((token: IOrder) => {
+				dispatch(setOrderToken(token.data.attributes.token));
+			});
+		}
+
+		if (orderToken) {
+			CartService.addItem(orderToken, product.true_id, 1).then((order: IOrder) => {
+				dispatch(updateOrder(order));
+			});
+		}
+	};
 
 	return (
 		<Box
@@ -138,15 +166,17 @@ const Shop = () => {
 				</Paper>
 			</Box>
 			<Box sx={{ flexGrow: 1 }}>
-				{products && (
-					<Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 8, lg: 12, xl: 12 }} >
-						{products.map((product) => (
+				<Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 8, lg: 12, xl: 12 }} >
+					{isLoading ? Array.from({ length: perPage }).map((_, index) => (
+						<Grid item key={index} xs={4} sm={4} md={4} lg={4} xl={3} >
+							<SkeletonProductCard />
+						</Grid>))
+						: products.map((product) => (
 							<Grid item key={product.id} xs={4} sm={4} md={4} lg={4} xl={3} >
-								<ProductCard product={product} />
+								<ProductCard product={product} handleNavigation={handleNavigation} handleAddItemToCart={handleAddItemToCart} />
 							</Grid>
 						))}
-					</Grid>
-				)}
+				</Grid>
 			</Box>
 		</Box>
 	);

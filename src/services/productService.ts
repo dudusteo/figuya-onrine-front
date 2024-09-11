@@ -55,7 +55,6 @@ const ProductService = {
 		const response = queryClient.products.list({
 			include: "images",
 			page: 1,
-			per_page: 12,
 			...filterObject,
 		});
 
