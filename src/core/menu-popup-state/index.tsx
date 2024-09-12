@@ -8,6 +8,7 @@ import {
 	bindMenu,
 } from "material-ui-popup-state/hooks";
 import { Link, SxProps } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 interface LinkItem {
 	name: string;
@@ -23,18 +24,21 @@ interface IconPopupStateProps {
 const MenuPopupState = ({
 	text,
 	items = [],
-	href = "",
+	href,
 	sx,
 }: IconPopupStateProps) => {
 	const popupState = usePopupState({
 		variant: "popover",
 		popupId: "demoMenu",
 	});
+
+	const navigate = useNavigate();
+
 	return (
 		<React.Fragment>
 			<Button
 				color="inherit"
-				href={href}
+				onClick={href ? () => navigate(href) : undefined}
 				{...bindHover(popupState)}
 				sx={{ ...sx }}
 			>

@@ -8,7 +8,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 
 import MenuPopupState from "../menu-popup-state";
-import { Avatar, Badge, Box, IconButton, Link } from "@mui/material";
+import { Avatar, Badge, Box, IconButton } from "@mui/material";
 import { useTranslation } from "react-i18next";
 import IconPopupState from "../icon-popup-state";
 import figuya_logo from "../../assets/figuya_logo.svg";
@@ -16,7 +16,7 @@ import AuthenticationService from "../../services/authenticationService";
 import { useDispatch, useSelector } from "react-redux";
 import { clearBearerToken } from "../../features/token/bearerTokenSlice";
 import { getNumberOfAddedProducts } from "../../features/basket/basketSlice";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
 	position: "relative",
@@ -77,7 +77,7 @@ const SearchAppBar = () => {
 			<AppBar position="static">
 				<Toolbar sx={{ mt: 1, mb: 0 }}>
 					<Box sx={{ flexGrow: 1, pr: 2 }}>
-						<Link href="/">
+						<Link to={"/"}>
 							<img
 								color="white"
 								height="80px"

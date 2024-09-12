@@ -22,7 +22,7 @@ interface IconPopupStateProps {
 	sx?: SxProps;
 }
 
-const IconPopupState = ({ children, items = [], sx }: IconPopupStateProps) => {
+const IconPopupState = ({ children, items = [], href = "", sx }: IconPopupStateProps) => {
 	const navigate = useNavigate();
 
 	const popupState = usePopupState({
@@ -33,6 +33,7 @@ const IconPopupState = ({ children, items = [], sx }: IconPopupStateProps) => {
 		<React.Fragment>
 			<IconButton
 				color="inherit"
+				onClick={() => navigate(href)}
 				{...bindHover(popupState)}
 				sx={{ ...sx }}
 			>
@@ -41,7 +42,6 @@ const IconPopupState = ({ children, items = [], sx }: IconPopupStateProps) => {
 			<HoverMenu {...bindMenu(popupState)}>
 				{items.map((item: LinkItem, index: number) => (
 					<MenuItem
-						href={item.href}
 						onClick={() => {
 							item.onClick && item.onClick();
 							item.href && navigate(item.href);
