@@ -67,8 +67,7 @@ const Cart = () => {
                 cart={cart}
                 isLoading={isLoading}
                 setIsLoading={setIsLoading}
-            >
-            </CartProducts>
+            />
 
             <PurchaseSummary
                 cart={cart}
