@@ -2,7 +2,10 @@ import * as React from "react";
 import { Button, Card, Grid, Skeleton, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
+import { IOrder, RelationType } from "@spree/storefront-api-v2-sdk/dist/*";
+import { useAppSelector } from "../../app/hooks";
+import { getBearerToken } from "../../features/token/bearerTokenSlice";
+import CartService from "../../services/cartService";
 
 interface PurchaseSummaryProps {
 	cart: IOrder;
@@ -12,20 +15,47 @@ interface PurchaseSummaryProps {
 const PurchaseSummary = ({
 	cart, isLoading
 }: PurchaseSummaryProps) => {
-	const [displayItemCost, setDisplayItemCost] = React.useState(cart.data.attributes.display_item_total);
+	const [displayItemTotal, setDisplayItemTotal] = React.useState(cart.data.attributes.display_item_total);
 	const { t } = useTranslation();
 	const navigate = useNavigate();
 
+	const bearerToken = useAppSelector(getBearerToken);
+
 	React.useEffect(() => {
-		setDisplayItemCost(cart.data.attributes.display_item_total);
+		setDisplayItemTotal(cart.data.attributes.display_item_total);
 	}, [cart]);
+
+	const handleProceed = () => {
+		let relationType: RelationType;
+		if (Array.isArray(cart.data.relationships.user.data))
+			relationType = cart.data.relationships.user.data[0];
+		else
+			relationType = cart.data.relationships.user.data;
+
+		if (relationType === null) {
+
+			if (bearerToken) {
+				console.warn("associate customer");
+				CartService.associateCustomer(cart.data.attributes.token, bearerToken).then(() => {
+					navigate("/cart/checkout");
+				});
+			} else {
+				console.warn("Should log in first");
+			}
+
+			return;
+		}
+
+		if (bearerToken) {
+			console.warn("already logged in and associated");
+			navigate("/cart/checkout");
+		} else {
+			navigate("/account/login");
+		}
+	}
 
 	return (
 		<Card>
-			<Typography variant="h4" sx={{ p: 2 }}>
-				{t("cart.purchase-summary")}
-			</Typography>
-
 			<Grid
 				container
 				sx={{ bgcolor: "primary.light", p: 2 }}
@@ -35,11 +65,11 @@ const PurchaseSummary = ({
 					<Grid item xs={6} />
 					<Grid item container direction="column" xs={6}>
 						<Grid item container justifyContent="space-between">
-							<Typography>{t("cart.item-cost")}</Typography>
+							<Typography>{t("cart.item-total")}</Typography>
 							{isLoading ? (
 								<Skeleton variant="text" width={100} />
 							) : (
-								<Typography>{displayItemCost}</Typography>
+								<Typography>{displayItemTotal}</Typography>
 							)}
 						</Grid>
 					</Grid>
@@ -48,11 +78,9 @@ const PurchaseSummary = ({
 					<Grid item xs />
 					<Button
 						variant="contained"
-						onClick={() => {
-							navigate("/cart/checkout");
-						}}
+						onClick={() => handleProceed()}
 					>
-						{t("cart.checkout")}
+						{t("cart.place-order")}
 					</Button>
 				</Grid>
 			</Grid>

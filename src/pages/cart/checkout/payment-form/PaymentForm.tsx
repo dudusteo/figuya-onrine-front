@@ -1,38 +1,38 @@
-import * as React from 'react';
+import * as React from "react";
 
-import Alert from '@mui/material/Alert';
-import Box from '@mui/material/Box';
-import MuiCard from '@mui/material/Card';
-import CardActionArea from '@mui/material/CardActionArea';
-import CardContent from '@mui/material/CardContent';
-import Checkbox from '@mui/material/Checkbox';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import RadioGroup from '@mui/material/RadioGroup';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
+import Alert from "@mui/material/Alert";
+import Box from "@mui/material/Box";
+import MuiCard from "@mui/material/Card";
+import CardActionArea from "@mui/material/CardActionArea";
+import CardContent from "@mui/material/CardContent";
+import Checkbox from "@mui/material/Checkbox";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+import OutlinedInput from "@mui/material/OutlinedInput";
+import RadioGroup from "@mui/material/RadioGroup";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 
-import AccountBalanceRoundedIcon from '@mui/icons-material/AccountBalanceRounded';
-import CreditCardRoundedIcon from '@mui/icons-material/CreditCardRounded';
-import SimCardRoundedIcon from '@mui/icons-material/SimCardRounded';
-import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
-import { useTranslation } from 'react-i18next';
+import AccountBalanceRoundedIcon from "@mui/icons-material/AccountBalanceRounded";
+import CreditCardRoundedIcon from "@mui/icons-material/CreditCardRounded";
+import SimCardRoundedIcon from "@mui/icons-material/SimCardRounded";
+import WarningRoundedIcon from "@mui/icons-material/WarningRounded";
+import { useTranslation } from "react-i18next";
 
 const Card = styled(MuiCard)<{ selected?: boolean }>(({ theme }) => ({
-    border: '1px solid',
+    border: "1px solid",
     borderColor: theme.palette.divider,
-    width: '100%',
-    '&:hover': {
+    width: "100%",
+    "&:hover": {
         background:
-            'linear-gradient(to bottom right, hsla(210, 100%, 97%, 0.5) 25%, hsla(210, 100%, 90%, 0.3) 100%)',
-        borderColor: 'primary.light',
-        boxShadow: '0px 2px 8px hsla(0, 0%, 0%, 0.1)',
+            "linear-gradient(to bottom right, hsla(210, 100%, 97%, 0.5) 25%, hsla(210, 100%, 90%, 0.3) 100%)",
+        borderColor: "primary.light",
+        boxShadow: "0px 2px 8px hsla(0, 0%, 0%, 0.1)",
     },
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
         flexGrow: 1,
         maxWidth: `calc(50% - ${theme.spacing(1)})`,
     },
@@ -47,38 +47,38 @@ const Card = styled(MuiCard)<{ selected?: boolean }>(({ theme }) => ({
 }));
 
 const PaymentContainer = styled('div')(({ theme }) => ({
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    width: '100%',
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    width: "100%",
     height: 375,
     padding: theme.spacing(3),
     borderRadius: `calc(${theme.shape.borderRadius}px + 4px)`,
-    border: '1px solid ',
+    border: "1px solid ",
     borderColor: theme.palette.divider,
     background:
-        'linear-gradient(to bottom right, hsla(220, 35%, 97%, 0.3) 25%, hsla(220, 20%, 88%, 0.3) 100%)',
-    boxShadow: '0px 4px 8px hsla(210, 0%, 0%, 0.05)',
-    [theme.breakpoints.up('xs')]: {
+        "linear-gradient(to bottom right, hsla(220, 35%, 97%, 0.3) 25%, hsla(220, 20%, 88%, 0.3) 100%)",
+    boxShadow: "0px 4px 8px hsla(210, 0%, 0%, 0.05)",
+    [theme.breakpoints.up("xs")]: {
         height: 300,
     },
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up("sm")]: {
         height: 350,
     },
 }));
 
-const FormGrid = styled('div')(() => ({
-    display: 'flex',
-    flexDirection: 'column',
+const FormGrid = styled("div")(() => ({
+    display: "flex",
+    flexDirection: "column",
 }));
 
 const PaymentForm = () => {
     const { t } = useTranslation();
 
-    const [paymentType, setPaymentType] = React.useState('creditCard');
-    const [cardNumber, setCardNumber] = React.useState('');
-    const [cvv, setCvv] = React.useState('');
-    const [expirationDate, setExpirationDate] = React.useState('');
+    const [paymentType, setPaymentType] = React.useState("creditCard");
+    const [cardNumber, setCardNumber] = React.useState("");
+    const [cvv, setCvv] = React.useState("");
+    const [expirationDate, setExpirationDate] = React.useState("");
 
     const handlePaymentTypeChange = (event: {
         target: { value: React.SetStateAction<string> };
@@ -87,23 +87,23 @@ const PaymentForm = () => {
     };
 
     const handleCardNumberChange = (event: { target: { value: string } }) => {
-        const value = event.target.value.replace(/\D/g, '');
-        const formattedValue = value.replace(/(\d{4})(?=\d)/g, '$1 ');
+        const value = event.target.value.replace(/\D/g, "");
+        const formattedValue = value.replace(/(\d{4})(?=\d)/g, "$1 ");
         if (value.length <= 16) {
             setCardNumber(formattedValue);
         }
     };
 
     const handleCvvChange = (event: { target: { value: string } }) => {
-        const value = event.target.value.replace(/\D/g, '');
+        const value = event.target.value.replace(/\D/g, "");
         if (value.length <= 3) {
             setCvv(value);
         }
     };
 
     const handleExpirationDateChange = (event: { target: { value: string } }) => {
-        const value = event.target.value.replace(/\D/g, '');
-        const formattedValue = value.replace(/(\d{2})(?=\d{2})/, '$1/');
+        const value = event.target.value.replace(/\D/g, "");
+        const formattedValue = value.replace(/(\d{2})(?=\d{2})/, "$1/");
         if (value.length <= 4) {
             setExpirationDate(formattedValue);
         }
@@ -118,113 +118,113 @@ const PaymentForm = () => {
                     value={paymentType}
                     onChange={handlePaymentTypeChange}
                     sx={{
-                        display: 'flex',
-                        flexDirection: { xs: 'column', sm: 'row' },
+                        display: "flex",
+                        flexDirection: { xs: "column", sm: "row" },
                         gap: 2,
                     }}
                 >
-                    <Card selected={paymentType === 'creditCard'}>
+                    <Card selected={paymentType === "creditCard"}>
                         <CardActionArea
-                            onClick={() => setPaymentType('creditCard')}
+                            onClick={() => setPaymentType("creditCard")}
                             sx={{
-                                '.MuiCardActionArea-focusHighlight': {
-                                    backgroundColor: 'transparent',
+                                ".MuiCardActionArea-focusHighlight": {
+                                    backgroundColor: "transparent",
                                 },
-                                '&:focus-visible': {
-                                    backgroundColor: 'action.hover',
+                                "&:focus-visible": {
+                                    backgroundColor: "action.hover",
                                 },
                             }}
                         >
-                            <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <CardContent sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                                 <CreditCardRoundedIcon
                                     fontSize="small"
                                     sx={[
                                         (theme) => ({
-                                            color: 'grey.400',
+                                            color: "grey.400",
                                         }),
-                                        paymentType === 'creditCard' && {
-                                            color: 'primary.main',
+                                        paymentType === "creditCard" && {
+                                            color: "primary.main",
                                         },
                                     ]}
                                 />
-                                <Typography sx={{ fontWeight: 'medium' }}>{t("cart.payment-form.card")}</Typography>
+                                <Typography sx={{ fontWeight: "medium" }}>{t("cart.checkout.payment-form.card")}</Typography>
                             </CardContent>
                         </CardActionArea>
                     </Card>
-                    <Card selected={paymentType === 'bankTransfer'}>
+                    <Card selected={paymentType === "bankTransfer"}>
                         <CardActionArea
-                            onClick={() => setPaymentType('bankTransfer')}
+                            onClick={() => setPaymentType("bankTransfer")}
                             sx={{
-                                '.MuiCardActionArea-focusHighlight': {
-                                    backgroundColor: 'transparent',
+                                ".MuiCardActionArea-focusHighlight": {
+                                    backgroundColor: "transparent",
                                 },
-                                '&:focus-visible': {
-                                    backgroundColor: 'action.hover',
+                                "&:focus-visible": {
+                                    backgroundColor: "action.hover",
                                 },
                             }}
                         >
-                            <CardContent sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                            <CardContent sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                                 <AccountBalanceRoundedIcon
                                     fontSize="small"
                                     sx={[
                                         (theme) => ({
-                                            color: 'grey.400',
+                                            color: "grey.400",
                                         }),
-                                        paymentType === 'bankTransfer' && {
-                                            color: 'primary.main',
+                                        paymentType === "bankTransfer" && {
+                                            color: "primary.main",
                                         },
                                     ]}
                                 />
-                                <Typography sx={{ fontWeight: 'medium' }}>{t("cart.payment-form.bank-transfer")}</Typography>
+                                <Typography sx={{ fontWeight: "medium" }}>{t("cart.checkout.payment-form.bank-transfer")}</Typography>
                             </CardContent>
                         </CardActionArea>
                     </Card>
                 </RadioGroup>
             </FormControl>
-            {paymentType === 'creditCard' && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {paymentType === "creditCard" && (
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                     <PaymentContainer>
-                        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
-                            <Typography variant="subtitle2">{t("cart.payment-form.credit-card")}</Typography>
-                            <CreditCardRoundedIcon sx={{ color: 'text.secondary' }} />
+                        <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+                            <Typography variant="subtitle2">{t("cart.checkout.payment-form.credit-card")}</Typography>
+                            <CreditCardRoundedIcon sx={{ color: "text.secondary" }} />
                         </Box>
                         <SimCardRoundedIcon
                             sx={{
                                 fontSize: { xs: 48, sm: 56 },
-                                transform: 'rotate(90deg)',
-                                color: 'text.secondary',
+                                transform: "rotate(90deg)",
+                                color: "text.secondary",
                             }}
                         />
                         <Box
                             sx={{
-                                display: 'flex',
-                                justifyContent: 'space-between',
-                                width: '100%',
+                                display: "flex",
+                                justifyContent: "space-between",
+                                width: "100%",
                                 gap: 2,
                             }}
                         >
                             <FormGrid sx={{ flexGrow: 1 }}>
                                 <FormLabel htmlFor="card-number" required>
-                                    {t("cart.payment-form.card-number")}
+                                    {t("cart.checkout.payment-form.card-number")}
                                 </FormLabel>
                                 <OutlinedInput
                                     id="card-number"
                                     autoComplete="card-number"
-                                    placeholder={t("cart.payment-form.card-number-placeholder")}
+                                    placeholder={t("cart.checkout.payment-form.card-number-placeholder")}
                                     required
                                     size="small"
                                     value={cardNumber}
                                     onChange={handleCardNumberChange}
                                 />
                             </FormGrid>
-                            <FormGrid sx={{ maxWidth: '20%' }}>
+                            <FormGrid sx={{ maxWidth: "20%" }}>
                                 <FormLabel htmlFor="cvv" required>
-                                    {t("cart.payment-form.cvc")}
+                                    {t("cart.checkout.payment-form.cvc")}
                                 </FormLabel>
                                 <OutlinedInput
                                     id="cvv"
                                     autoComplete="CVV"
-                                    placeholder={t("cart.payment-form.cvc-placeholder")}
+                                    placeholder={t("cart.checkout.payment-form.cvc-placeholder")}
                                     required
                                     size="small"
                                     value={cvv}
@@ -232,27 +232,27 @@ const PaymentForm = () => {
                                 />
                             </FormGrid>
                         </Box>
-                        <Box sx={{ display: 'flex', gap: 2 }}>
+                        <Box sx={{ display: "flex", gap: 2 }}>
                             <FormGrid sx={{ flexGrow: 1 }}>
                                 <FormLabel htmlFor="card-name" required>
-                                    {t("cart.payment-form.name")}
+                                    {t("cart.checkout.payment-form.name")}
                                 </FormLabel>
                                 <OutlinedInput
                                     id="card-name"
                                     autoComplete="card-name"
-                                    placeholder={t("cart.payment-form.name-placeholder")}
+                                    placeholder={t("cart.checkout.payment-form.name-placeholder")}
                                     required
                                     size="small"
                                 />
                             </FormGrid>
                             <FormGrid sx={{ flexGrow: 1 }}>
                                 <FormLabel htmlFor="card-expiration" required>
-                                    {t("cart.payment-form.exp")}
+                                    {t("cart.checkout.payment-form.exp")}
                                 </FormLabel>
                                 <OutlinedInput
                                     id="card-expiration"
                                     autoComplete="card-expiration"
-                                    placeholder={t("cart.payment-form.exp-placeholder")}
+                                    placeholder={t("cart.checkout.payment-form.exp-placeholder")}
                                     required
                                     size="small"
                                     value={expirationDate}
@@ -263,42 +263,42 @@ const PaymentForm = () => {
                     </PaymentContainer>
                     <FormControlLabel
                         control={<Checkbox name="saveCard" />}
-                        label={t("cart.payment-form.save-card")}
+                        label={t("cart.checkout.payment-form.save-card")}
                     />
                 </Box>
             )}
-            {paymentType === 'bankTransfer' && (
-                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            {paymentType === "bankTransfer" && (
+                <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                     <Alert severity="warning" icon={<WarningRoundedIcon />}>
-                        {t("cart.payment-form.bank-transfer-note")}
+                        {t("cart.checkout.payment-form.bank-transfer-note")}
                     </Alert>
-                    <Typography variant="subtitle1" sx={{ fontWeight: 'medium' }}>
-                        {t("cart.payment-form.bank-account")}
+                    <Typography variant="subtitle1" sx={{ fontWeight: "medium" }}>
+                        {t("cart.checkout.payment-form.bank-account")}
                     </Typography>
                     <Typography variant="body1" gutterBottom>
-                        {t("cart.payment-form.bank-transfer-info")}
+                        {t("cart.checkout.payment-form.bank-transfer-info")}
                     </Typography>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                        <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                            {t("cart.payment-form.bank")}
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                        <Typography variant="body1" sx={{ color: "text.secondary" }}>
+                            {t("cart.checkout.payment-form.bank")}
                         </Typography>
-                        <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
+                        <Typography variant="body1" sx={{ fontWeight: "medium" }}>
                             Mastercredit
                         </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                        <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                            {t("cart.payment-form.account-number")}
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                        <Typography variant="body1" sx={{ color: "text.secondary" }}>
+                            {t("cart.checkout.payment-form.account-number")}
                         </Typography>
-                        <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
+                        <Typography variant="body1" sx={{ fontWeight: "medium" }}>
                             123456789
                         </Typography>
                     </Box>
-                    <Box sx={{ display: 'flex', gap: 1 }}>
-                        <Typography variant="body1" sx={{ color: 'text.secondary' }}>
-                            {t("cart.payment-form.routing-number")}
+                    <Box sx={{ display: "flex", gap: 1 }}>
+                        <Typography variant="body1" sx={{ color: "text.secondary" }}>
+                            {t("cart.checkout.payment-form.routing-number")}
                         </Typography>
-                        <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
+                        <Typography variant="body1" sx={{ fontWeight: "medium" }}>
                             987654321
                         </Typography>
                     </Box>

@@ -59,6 +59,17 @@ const CartService = {
 			return spreeResponse.success();
 		});
 	},
+
+	async associateCustomer(order_token: string, bearer_token: string): Promise<IOrder> {
+		const response = bodyClient.cart.associateGuestCart({
+			bearer_token: bearer_token,
+			guest_order_token: order_token,
+		});
+
+		return response.then((spreeResponse: IOrderResult) => {
+			return spreeResponse.success();
+		});
+	}
 };
 
 export default CartService;

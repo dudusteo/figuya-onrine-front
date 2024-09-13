@@ -1,15 +1,15 @@
-import * as React from 'react';
+import * as React from "react";
 
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import Typography from '@mui/material/Typography';
-import { useTranslation } from 'react-i18next';
-import { IOrder } from '@spree/storefront-api-v2-sdk/dist/*';
-import ProductService from '../../../../services/productService';
-import { ListItemAvatar } from '@mui/material';
-import ReactImage from '../../../../core/react-image';
-import { CartProduct } from '../../../../services/cartService';
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import Typography from "@mui/material/Typography";
+import { useTranslation } from "react-i18next";
+import { IOrder } from "@spree/storefront-api-v2-sdk/dist/*";
+import ProductService from "../../../../services/productService";
+import { ListItemAvatar } from "@mui/material";
+import ReactImage from "../../../../core/react-image";
+import { CartProduct } from "../../../../services/cartService";
 
 interface InfoProps {
     cart: IOrder;
@@ -24,9 +24,9 @@ const Info = ({ cart }: InfoProps) => {
             return;
         }
 
-        const lineItems = cart.included.filter((item) => item.type === 'line_item');
-        const variantItems = cart.included.filter((item) => item.type === 'variant');
-        const filter = { "filter[ids]": variantItems.map((item) => item.relationships.product.data.id).join(',') };
+        const lineItems = cart.included.filter((item) => item.type === "line_item");
+        const variantItems = cart.included.filter((item) => item.type === "variant");
+        const filter = { "filter[ids]": variantItems.map((item) => item.relationships.product.data.id).join(",") };
 
         ProductService.getProducts(filter).then((products) => {
             const cardProducts = products.filter((product) => {
@@ -51,8 +51,8 @@ const Info = ({ cart }: InfoProps) => {
 
     return (
         <React.Fragment>
-            <Typography variant="subtitle2" sx={{ color: 'text.secondary' }}>
-                {t('cart.info.total')}
+            <Typography variant="subtitle2" sx={{ color: "text.secondary" }}>
+                {t("cart.checkout.info.total")}
             </Typography>
             <Typography variant="h4" gutterBottom>
                 {cart.data.attributes.display_item_total}
@@ -71,7 +71,7 @@ const Info = ({ cart }: InfoProps) => {
                             primary={product.quantity + "x " + product.attributes.name}
                             secondary={product.attributes.description}
                         />
-                        <Typography variant="body1" sx={{ fontWeight: 'medium' }}>
+                        <Typography variant="body1" sx={{ fontWeight: "medium" }}>
                             {product.attributes.display_price}
                         </Typography>
                     </ListItem>
